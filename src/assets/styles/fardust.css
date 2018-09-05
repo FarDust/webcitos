@@ -1,0 +1,354 @@
+body {
+  margin: 0;
+  margin-top: 120px;
+  padding: 0px;
+  font-size: 100%;
+  background-color: white;
+  font-family: 'Roboto', sans-serif;
+  background-color: #d8d8d8;
+}
+
+/*info*/
+div.info{
+  border-radius: 5px;
+
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+div.info p{
+  padding: 10px;
+  margin: 5px;
+}
+
+/*ref menu*/
+#begin{
+  background-color: #37B9A2;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#begin a{
+  text-decoration: none;
+  color: white;
+  margin: 2px;
+}
+
+#begin:hover{
+  background-color: #0AC251;
+}
+
+ul.ref-menu {
+  list-style-type: none;
+  padding: 0;
+  overflow: hidden;
+  background-color:#333;
+  border-radius: 5px;
+}
+
+ul.ref-menu li {
+    display: inline-block;
+    float: none;
+}
+
+ul.ref-menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.ref-menu li a:hover:not(.active) {
+    background-color: #111;
+}
+
+ul.ref-menu li a.active{
+  background-color: #00AB8C;
+  color: white;
+}
+
+ul.ref-menu li.right {
+  float: right;
+}
+
+pre {
+  border:1px solid #A2A2A2;
+  background-color:#F1F1F1;
+  padding:8px;
+  margin:5px;
+  color:#0150c7;
+  overflow:auto
+}
+
+iframe{
+  display: none;
+}
+
+/* Menu */
+ul.topbar {
+    list-style-type: none;
+    margin-top: 56px;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+ul.topbar li {
+    float: left;
+}
+
+ul.topbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.topbar li a:hover:not(.active) {
+    background-color: #111;
+}
+
+ul.topbar li a.active{
+  background-color: #00AB8C;
+  color: white;
+}
+
+ul.topbar li.right {
+  float: right;
+}
+
+@media screen and (max-width: 600px){
+    ul.topbar {display: none;}
+    div.BasesPlayMusic-container{text-align: center;}
+}
+
+/* Form */
+input[type=text], select {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 77.8px;
+    background-color: #37B9A2;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    -webkit-transition: width 2s;
+    transition: width 2s;
+}
+
+input[type=submit]:hover {
+    background-color: #0AC251;
+    /*width: 90px;*/
+}
+
+form {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  align-items: center;
+}
+
+#console{
+  width: 325px;
+}
+/*logo*/
+div.BasesPlayMusic-container{
+  top: 0;
+  width: 100%;
+  padding: 15px;
+  text-align: left;
+  color: white;
+  border-radius: 0px;
+  background-color: #f2f2f2;
+  font-size: 130%;
+  /*font-family: 'Roboto'*/;
+  position: fixed;
+  transition: 1s;
+}
+
+a.BasesPlayMusic-logo{
+  text-decoration: none;
+  color: black;
+}
+
+a.BasesPlayMusic-logo:hover{
+  text-decoration: none;
+  color: rgb(0, 150, 175);
+}
+
+span.Music{
+  color: rgb(0, 150, 175);
+}
+
+/*
+table, td, th {
+    border: 1px solid black;
+}
+*/
+
+/*tablas*/
+div.table {
+  padding: 5px;
+  align-self: center;
+  width: 100%;
+}
+
+table {
+    /*border-collapse: collapse;*/
+    border-radius: 10px;
+    width: 75%;
+    padding: 10px;
+    background-color: white;
+}
+
+th {
+    height: 50px;
+}
+
+th, td{
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+tr {
+  background-color: #f7f7f7;
+}
+
+tr:nth-child(even) {
+  background-color: #f0f0f0;
+}
+
+tr:hover {
+  background-color: #66666b;
+  color: white;
+}
+
+th {
+    border-top-left-radius: 10px;
+    background-color: #00AB8C;
+    color: white;
+}
+
+/*Circle*/
+
+.circle{
+  width: 22.5px;
+  height: 45px;
+  opacity: 0.6;
+  position: fixed;
+  border-bottom-right-radius: 45px;
+  border-top-right-radius: 45px;
+  background-color: black;
+}
+
+/*Arrow*/
+
+i.arrowr  {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+/*Sidebar*/
+
+#right-arrow{
+  transition: 1s;
+  display: none;
+}
+
+#side-open{
+  color: white;
+  opacity: 0.8;
+  float: left;
+  width: 47px;
+  height: 47px;
+  align-content: center;
+}
+
+#side-open:hover{
+  background-color: #525252;
+}
+
+img.side-menu{
+  opacity: 0.6;
+  display: block;
+}
+
+.center {
+    margin: auto;
+    margin-top: 25%;
+    width: 50%;
+    vertical-align: middle;
+    display: block;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 56px;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 60px;
+  transition: 1s;
+  max-width: 170px;
+}
+
+.sidenav a.side{
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #818181;
+  display: block;
+  transition: 1s;
+}
+
+.sidenav a.side:hover, .offcanvas a:focus{
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  text-decoration: none;
+}
+
+#main{
+  transition: 1s;
+  padding: 10px;
+}
+
+@media screen and (max-width: 600px){
+    div.BasesPlayMusic-container{text-align: center;}
+    form{align-items: center;}
+    #console{width: 100%; margin-right: 10px;}
+    input[type=submit]{width: 100%;}
+    input[type=text], select{width: 100%;}
+    table{width: 100%;}
+    #side-open{display: none;}
+    .sidenav {padding-top: 15px; max-width: none;}
+    .sidenav a.side {font-size: 18px;}
+    #right-arrow{display: block;}
+}
