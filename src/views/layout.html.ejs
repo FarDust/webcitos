@@ -3,18 +3,45 @@
 
   <head>
     <meta charset="utf-8">
-    <title>IIC2513 - CHANGE-ME</title>
+    <title>IIC2513 - WebCitos</title>
     <% if (env !== 'development') { %>
       <link rel="stylesheet" href="<%= assetPath('app.css') %>">
     <% } %>
+    <link rel="stylesheet" href="<%= assetPath('fardust.css') %>">
   </head>
 
   <body>
-    <header>
-      <div id="logo">
-        <img src="<%= assetPath('logo.png') %>" alt="Logo" />
-      </div>
-    </header>
+    <!--logo-->
+    <div class="container top" id="home">
+      <a href="../index.html" class="logo">
+        Web<span class="Music">Citos</span>
+      </a>
+    </div>
+    <!--topbar-->
+    <ul class="topbar">
+      <li>
+        <span id="side-open" onclick="openNav()">
+          <img class="side-menu center" src="<%= assetPath('logo.png') %>" >
+        </span>
+      </li>
+      <li><a href="">Home</a></li>
+    </ul>
+    <!--sidebar-->
+    <div id="right-arrow" class="circle" onclick="openNav()" style="top:50%">
+      <span class="center arrow">
+        <i class="arrowr"></i>
+      </span>
+    </div>
+    
+    <div class="sidenav" id="lateral-menu">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+        &times;
+      </a>
+      <a class="side" href="../index.html">Home</a>
+      <a class= "side" href="./tables.html">Tables</a>
+      <a class="side" href="./static.html">StaticSQL</a>
+      <a class="side" href="./search.html">DynamicSQL</a>
+    </div>
     <%- body %>
     <script src="<%= assetPath('app.js') %>"></script>
   </body>
