@@ -9,9 +9,9 @@
     "dev": "nodemon index.js",
     "lint": "eslint ./src index.js",
     "lint-fix": "eslint --fix ./src index.js",
-    "build-assets": "yarn run clean-assets && NODE_ENV=production webpack -p",
+    "build-assets": "npm run clean-assets && NODE_ENV=production webpack -p",
     "clean-assets": "rm -rf build/assets",
-    "heroku-postbuild": "yarn run build-assets && sequelize db:migrate"
+    "heroku-postbuild": "npm run build-assets && sequelize db:migrate"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -60,7 +60,6 @@
     "sequelize-cli": "^4.1.1"
   },
   "engines": {
-    "node": "^10.9.0",
-    "yarn": "^1.0.2"
+    "node": "^10.9.0"
   }
 }
