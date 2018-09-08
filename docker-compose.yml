@@ -1,11 +1,17 @@
 version: '2'
 services:
   web:
-    image: node:10
     build: .
-    command: yarn run dev
+    command: npm run dev
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
     ports:
       - "3000:3000"
+    environment:
+      DB_HOST: postgres
+      DB_USERNAME: postgres
+      DB_NAME: postgres
     depends_on:
       - postgres
   postgres:
@@ -13,4 +19,5 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=iic2513template_dev
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: postgres
