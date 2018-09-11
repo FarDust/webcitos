@@ -1,3 +1,4 @@
+# Author: @FarDust -> Gabriel Andres Faundez Soto
 version: '2'
 services:
   web:
