@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'publication_id', target: 'id'
     });
     request.belongsTo(models.user, {
-      foreignKey: 'user_id', target: 'id'
+      foreignKey: 'userID', target: 'id'
     });
   };
   return request;
