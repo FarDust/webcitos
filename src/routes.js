@@ -5,6 +5,7 @@ const publications = require('./routes/publications');
 const items = require('./routes/items');
 const requests = require('./routes/requests');
 const users = require('./routes/users');
+const hello = require('./routes/hello')
 
 const router = new KoaRouter();
 
