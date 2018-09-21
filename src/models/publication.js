@@ -8,6 +8,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   publication.associate = function(models) {
     // associations can be defined here
+    publication.hasOne(models.item);
+    publication.hasMany(models.request);
+    publication.belongsTo(models.user);
   };
   return publication;
 };

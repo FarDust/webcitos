@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   item.associate = function(models) {
     // associations can be defined here
+    item.belongsTo(models.publication);
   };
   return item;
 };

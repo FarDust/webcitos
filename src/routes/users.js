@@ -8,6 +8,7 @@ router.post('users-create', '/', async (ctx) => {
   await ctx.orm.user.create(ctx.request.body);
   ctx.redirect(ctx.router.url('users'));
 });
+
 router.get('users-show', '/:id', async (ctx) => {
   const user = await ctx.orm.user.findById(ctx.params.id);
   ctx.assert(user, 404);
