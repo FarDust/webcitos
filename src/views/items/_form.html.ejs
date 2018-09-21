@@ -1,0 +1,38 @@
+<div>
+  <form action="<%= submitPath %>" method="post">
+    <% if (!item.isNewRecord) { %>
+      <input type="hidden" name="_method" value="patch" />
+    <% } %>
+    <label for=model>
+      <span>Model</span>
+      <input type="text" name="model" id="model" value="<%= item.model %>" />
+    </label>
+    <label for="brand">
+      <span>Brand</span>
+      <input type="text" name="brand" id="brand" value="<%= item.brand %>"/>
+    </label>
+    <label for="aditional">
+      <span>Aditional Information</span>
+      <input type="text" name="aditional" id="aditional" value="<%= item.aditional %>"/>
+    </label>
+    <label for="state">
+      <span>State</span>
+      <input type="text" name="state" id="state" value="<%= item.state %>"/>
+    </label>
+    <label for="category">
+      <span>Category</span>
+      <input type="text" name="category" id="category" value="<%= item.category %>"/>
+    </label>
+    <label for="screenSize">
+      <span>Screen Size (inches)</span>
+      <input type="number" step="0.1" name="screenSize" id="screenSize" value="<%= item.screenSize %>"/>
+    </label>
+    <label for="publication_id">
+      <span>Publication ID</span>
+      <input type="text" name="publication_id" id="publication_id" value="<%= item.publication_id %>"/>
+    </label>
+    <div class="actions">
+      <input type="submit" value="<%= item.isNewRecord ? 'Create' : 'Edit' %>" />
+    </div>
+  </form>
+</div>

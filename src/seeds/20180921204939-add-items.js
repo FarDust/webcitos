@@ -1,7 +1,7 @@
 'use strict';
 
 function* idMaker() {
-	    var index = 0;
+	    var index = 1;
 	    while(true)
 	        yield index++;
 	}

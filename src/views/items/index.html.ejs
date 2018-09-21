@@ -1,0 +1,46 @@
+<h1>All items</h1>
+
+<p>There are <%= items.length %> items.</p>
+<p>
+  <a href="<%= newItemPath %>">Create new item</a>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Brand</th>
+      <th>Aditional</th>
+      <th>State</th>
+      <th>Category</th>
+      <th>Screen Size</th>
+      <th>Publication ID</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.forEach(item => { %>
+      <tr>
+        <td><%= item.model %></td>
+        <td><%= item.brand %></td>
+        <td><%= item.aditional %></td>
+        <td><%= item.state %></td>
+        <td><%= item.category %></td>
+        <td><%= item.screenSize %></td>
+        <td><%= item.publication_id %></td>
+        <td>
+          <ul>
+            <li><a href="<%= getShowPath(item) %>">Show</a></li>
+
+            <li><a href="<%= getEditPath(item) %>">Edit</a></li>
+            <li>
+              <form action="<%= getDestroyPath(item) %>" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <input type="submit" value="Delete" />
+              </form>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
