@@ -1,0 +1,38 @@
+<h1>All requests</h1>
+
+<p>There are <%= requests.length %> requests.</p>
+<p>
+  <a href="<%= newrequestPath %>">Create new request</a>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Message</th>
+      <th>User Emitter ID</th>
+      <th>Publication ID</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% requests.forEach(request => { %>
+      <tr>
+        <td><%= request.message %></td>
+        <td><%= request.userID %></td>
+        <td><%= request.publication_id %></td>
+        <td>
+          <ul>
+            <li><a href="<%= getShowPath(request) %>">Show</a></li>
+
+            <li><a href="<%= getEditPath(request) %>">Edit</a></li>
+            <li>
+              <form action="<%= getDestroyPath(request) %>" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <input type="submit" value="Delete" />
+              </form>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
