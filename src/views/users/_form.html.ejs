@@ -1,15 +1,29 @@
 <div>
   <form action="<%= submitPath %>" method="post">
+    <% if (locals.errors) { %>
+      <p class="errors">You must correct the following errors to continue:</p>
+      <ul>
+        <% Object.keys(errors).forEach(prop => { %>
+          <li><%= prop %>: <%= errors[prop].message %></li>
+        <% }) %>
+      </ul>
+    <% } %>        
     <% if (!user.isNewRecord) { %>
       <input type="hidden" name="_method" value="patch" />
     <% } %>
     <label for="name">
       <span>Name</span>
       <input type="text" name="name" id="name" value="<%= user.name %>" />
+      <% if (locals.errors && errors.name) { %>
+       <span class="error"><%= errors.name.message %></span>
+      <% } %>
     </label>
     <label for="email">
       <span>E-mail</span>
        <input type="email" name="email" id="email" value="<%= user.email %>" />
+       <% if (locals.errors && errors.email) { %>
+       <span class="error"><%= errors.email.message %></span>
+      <% } %>
     </label>
     <label for="phone">
       <span>Phone number</span>
@@ -18,6 +32,9 @@
     <label for="password">
       <span>Password</span>
       <input type="password" name="password" id="password" />
+      <% if (locals.errors && errors.password) { %>
+       <span class="error"><%= errors.password.message %></span>
+      <% } %>
     </label>
     <div class="actions">
       <input type="submit" value="<%= user.isNewRecord ? 'Create' : 'Edit' %>" />

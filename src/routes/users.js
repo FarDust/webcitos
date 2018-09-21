@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
 const router = new KoaRouter();
 
 router.param('id', async (id, ctx, next) => {
@@ -28,8 +29,18 @@ router.get('users-new', '/new', ctx => ctx.render(
 ));
 
 router.post('users-create', '/', async (ctx) => {
-  await ctx.orm.user.create(ctx.request.body);
-  ctx.redirect(ctx.router.url('users'));
+  const user = ctx.orm.user.build(ctx.request.body);
+  try {
+    await user.save(ctx.request.body);
+    ctx.redirect(ctx.router.url('users'));
+  } catch (error) {
+    if (!isValidationError(error)) throw error;
+    await ctx.render('users/new', {
+      user,
+      errors: getFirstErrors(error),
+      submitPath: ctx.router.url('users-create'),
+    });
+  }
 });
 
 router.get('users-show', '/:id', async (ctx) => {
@@ -48,10 +59,21 @@ router.get('users-edit', '/:id/edit', (ctx) => {
 });
 
 router.patch('users-update', '/:id', async (ctx) => {
-  ctx.body = await ctx.state.user.update(
-    ctx.request.body,
-    { fields: ['name', 'email', 'phone', 'password'] },
-  );
+  const { user } = ctx.state;
+  try {
+    await user.update(
+      ctx.request.body,
+      { fields: ['name', 'phone', 'email', 'password'] },
+    );
+    ctx.redirect('users-show', user.id);
+  } catch (error) {
+    if (!isValidationError(error)) throw error;
+    await ctx.render('users/edit', {
+      user,
+      errors: getFirstErrors(error),
+      submitPath: ctx.router.url('users-update', user.id),
+    });
+  }
 });
 
 router.delete('users-destroy', '/:id', async (ctx) => {
