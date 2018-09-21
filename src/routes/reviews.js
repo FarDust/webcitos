@@ -1,6 +1,5 @@
 const KoaRouter = require('koa-router');
 
-
 //Callbacks 
 
 async function reviewsIndexRendererCallback(ctx){
@@ -23,11 +22,11 @@ async function reviewsUpdateCallback(ctx){
   ctx.assert(review, 404);
   ctx.body = await review.update(
     ctx.request.body,
-    { fields: ['fullfillment_offer', 'puntuality', 'quality_offered'] },
+    { fields: ['fullfillment_offer', 'puntuality', 'quality_offered','content'] },
   );
 }
 
-async function reviewsNewRendererCallback(ctx){
+function reviewsNewRendererCallback(ctx){
   ctx.render(
     'reviews/new',
     {
@@ -42,10 +41,9 @@ async function reviewsNewRendererCallback(ctx){
 const router = new KoaRouter();
 
 router.get('reviews', '/', reviewsIndexRendererCallback);
-router.get('reviews-new','/new', reviewsNewRendererCallback);
+router.get('reviews-new', '/new', reviewsNewRendererCallback);
 router.post('reviews-create', '/', reviewsCreateCallback);
 router.get('reviews-show', '/:id', reviewsShowCallback);
 router.patch('reviews-update', '/:id', reviewsUpdateCallback);
-
 
 module.exports = router;
