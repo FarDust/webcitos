@@ -27,11 +27,22 @@ async function reviewsUpdateCallback(ctx){
   );
 }
 
+async function reviewsNewRendererCallback(ctx){
+  ctx.render(
+    'reviews/new',
+    {
+      user: ctx.orm.review.build(),
+      submitPath: ctx.router.url('reviews-create'),
+    },
+  )
+}
+
 //Routes 
 
 const router = new KoaRouter();
 
 router.get('reviews', '/', reviewsIndexRendererCallback);
+router.get('reviews-new','/new', reviewsNewRendererCallback);
 router.post('reviews-create', '/', reviewsCreateCallback);
 router.get('reviews-show', '/:id', reviewsShowCallback);
 router.patch('reviews-update', '/:id', reviewsUpdateCallback);
