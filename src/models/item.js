@@ -6,12 +6,14 @@ module.exports = (sequelize, DataTypes) => {
     aditional: DataTypes.STRING,
     state: DataTypes.STRING,
     category: DataTypes.STRING,
-    screen_size: DataTypes.FLOAT,
-    publicationID: DataTypes.INTEGER,
+    screenSize: DataTypes.FLOAT,
+    publication_id: DataTypes.INTEGER
   }, {});
   item.associate = function(models) {
     // associations can be defined here
-    item.belongsTo(models.publication);
+    item.belongsTo(models.publication, {
+      foreignKey: 'publication_id', target: 'id'
+    })
   };
   return item;
 };

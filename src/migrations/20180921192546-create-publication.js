@@ -12,14 +12,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       state: {
         type: Sequelize.STRING
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+      userID: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

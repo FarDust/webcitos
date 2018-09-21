@@ -23,10 +23,10 @@ module.exports = {
       category: {
         type: Sequelize.STRING
       },
-      screen_size: {
+      screenSize: {
         type: Sequelize.FLOAT
       },
-      publicationID: {
+      publication_id: {
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -5,8 +5,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   request.associate = function(models) {
     // associations can be defined here
-    request.belongsTo(models.publication);
-    request.belongsTo(models.user);
+    request.belongsTo(models.publication, {
+      foreignKey: 'publication_id', target: 'id'
+    });
+    request.belongsTo(models.user, {
+      foreignKey: 'user_id', target: 'id'
+    });
   };
   return request;
 };
