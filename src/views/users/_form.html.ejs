@@ -1,0 +1,26 @@
+<div>
+  <form action="<%= submitPath %>" method="post">
+    <% if (!user.isNewRecord) { %>
+      <input type="hidden" name="_method" value="patch" />
+    <% } %>
+    <label for="name">
+      <span>Name</span>
+      <input type="text" name="name" id="name" value="<%= user.name %>" />
+    </label>
+    <label for="email">
+      <span>E-mail</span>
+       <input type="email" name="email" id="email" value="<%= user.email %>" />
+    </label>
+    <label for="phone">
+      <span>Phone number</span>
+      <input type="text" name="phone" id="phone" value="<%= user.phone %>"/>
+    </label>
+    <label for="password">
+      <span>Password</span>
+      <input type="password" name="password" id="password" />
+    </label>
+    <div class="actions">
+      <input type="submit" value="<%= user.isNewRecord ? 'Create' : 'Edit' %>" />
+    </div>
+  </form>
+</div>
