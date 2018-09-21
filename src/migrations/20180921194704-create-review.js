@@ -11,6 +11,12 @@ module.exports = {
       fullfillment_offer: {
         type: Sequelize.INTEGER
       },
+      quality_offered: {
+        type: Sequelize.INTEGER
+      },
+      puntuality: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
