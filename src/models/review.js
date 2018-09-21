@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     fullfillment_offer: DataTypes.INTEGER,
     quality_offered: DataTypes.INTEGER,
     puntuality: DataTypes.INTEGER,
-
+    content: DataTypes.STRING,
   }, {});
   review.associate = function(models) {
     // associations can be defined here
