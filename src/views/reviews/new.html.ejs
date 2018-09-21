@@ -1,0 +1,26 @@
+<form action="<%= submitPath %>" method="post">
+  <label for="fullfilment_offer">
+    <span class="form">Cumplimiento de la oferta</span>
+    <input type="text" name="fullfilment_offer" id="fullfilment_offer" value="<%= review.fullfilment_offer %>" />
+      <% if (locals.errors && errors.fullfilment_offer) { %>
+       <span class="error"><%= errors.fullfilment_offer.message %></span>
+      <% } %>
+  </label>
+  <label for="quality_offered">
+    <span class="form">Calidad de lo ofertado</span>
+    <input type="text" name="quality_offered" id="quality_offered" value="<%= review.quality_offered %>" />
+      <% if (locals.errors && errors.quality_offered) { %>
+       <span class="error"><%= errors.quality_offered.message %></span>
+      <% } %>
+  </label>
+  <label for="puntuality">
+    <span class="form">Puntualidad</span>
+    <input type="text" name="puntuality" id="puntuality" value="<%= review.puntuality %>" />
+      <% if (locals.errors && errors.puntuality) { %>
+       <span class="error"><%= errors.puntuality.message %></span>
+      <% } %>
+  </label>
+  <div class="actions">
+    <input type="submit" value="<%= review.isNewRecord ? 'Crear' : 'Editar' %>" />
+  </div>
+</form>
