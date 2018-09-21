@@ -1,0 +1,36 @@
+<h1>All trades</h1>
+
+<p>There are <%= trades.length %> trades.</p>
+<p>
+  <a href="<%= newTradePath %>">Create new trade</a>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>ID Request</th>
+      <th>State</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% trades.forEach(trade => { %>
+      <tr>
+        <td><%= trade.id_request %></td>
+        <td><%= trade.state %></td>
+        <td>
+          <ul>
+            <li><a href="<%= getShowPath(trade) %>">Show</a></li>
+
+            <li><a href="<%= getEditPath(trade) %>">Edit</a></li>
+            <li>
+              <form action="<%= getDestroyPath(trade) %>" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <input type="submit" value="Delete" />
+              </form>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
