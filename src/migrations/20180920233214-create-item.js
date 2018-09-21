@@ -26,6 +26,9 @@ module.exports = {
       screen_size: {
         type: Sequelize.FLOAT
       },
+      publicationID: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

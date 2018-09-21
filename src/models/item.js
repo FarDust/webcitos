@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     aditional: DataTypes.STRING,
     state: DataTypes.STRING,
     category: DataTypes.STRING,
-    screen_size: DataTypes.FLOAT
+    screen_size: DataTypes.FLOAT,
+    publicationID: DataTypes.INTEGER,
   }, {});
   item.associate = function(models) {
     // associations can be defined here

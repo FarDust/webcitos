@@ -4,13 +4,17 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     description: DataTypes.STRING,
     state: DataTypes.STRING,
-    publication_date: DataTypes.DATE
+    userID: DataTypes.INTEGER,
   }, {});
   publication.associate = function(models) {
     // associations can be defined here
     publication.hasOne(models.item);
     publication.hasMany(models.request);
-    publication.belongsTo(models.user);
+    publication.belongsTo(models.user, {
+      foreingKey: {
+        allowNull:false
+      }
+    });
   };
   return publication;
 };
