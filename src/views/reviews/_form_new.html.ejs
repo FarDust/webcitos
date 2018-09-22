@@ -1,4 +1,7 @@
 <form action="<%= submitPath %>" method="post">
+  <% if (!review.isNewRecord) { %>
+    <input type="hidden" name="_method" value="patch" />
+  <% } %>
   <div class="center">
     <label for="fullfillment_offer">
       <span class="form">Fullfilment offer</span><br/>
@@ -35,15 +38,17 @@
           <% } %>
       </label>
     </div>
+    <% if (!review.isNewRecord) { %>
     <div class="center">
-        <label for="trade_id">
-          <span class="form">TradeID</span><br/>
-          <input class="form-centered" type="text" name="trade_id" id="trade_id" value="<%= review.trade_id %>" />
-            <% if (locals.errors && errors.trade_id) { %>
-              <span class="error"><%= errors.trade_id.message %></span>
-            <% } %>
-        </label>
-      </div>
+      <label for="trade_id">
+        <span class="form">TradeID</span><br/>
+        <input class="form-centered" type="text" name="trade_id" id="trade_id" value="<%= review.trade_id %>" />
+          <% if (locals.errors && errors.trade_id) { %>
+            <span class="error"><%= errors.trade_id.message %></span>
+          <% } %>
+      </label>
+    </div>
+    <% } %>
   <div class="actions center">
     <input class="form-centered" type="submit" value="<%= review.isNewRecord ? 'Crear' : 'Editar' %>" />
   </div>

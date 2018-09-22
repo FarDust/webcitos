@@ -57,7 +57,7 @@ router.get('reviews-show', '/:id', ctx => ctx.render(
    try {
      await review.update(
        ctx.request.body,
-       { fields: ['message'] },
+       { fields: ['fullfillment_offer','quality_offered','puntuality','content'] },
      );
      ctx.redirect(ctx.router.url('reviews-show', review.id));
    } catch (error) {
