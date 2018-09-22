@@ -35,6 +35,15 @@
           <% } %>
       </label>
     </div>
+    <div class="center">
+        <label for="trade_id">
+          <span class="form">TradeID</span><br/>
+          <textarea class="form-centered" type="number" name="content" id="content" value="<%= review.trade_id %>" /></textarea>
+            <% if (locals.errors && errors.content) { %>
+              <span class="error"><%= errors.content.message %></span>
+            <% } %>
+        </label>
+      </div>
   <div class="actions center">
     <input class="form-centered" type="submit" value="<%= review.isNewRecord ? 'Crear' : 'Editar' %>" />
   </div>

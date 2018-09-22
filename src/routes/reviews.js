@@ -28,7 +28,7 @@ const KoaRouter = require('koa-router');
  ));
 
  router.post('reviews-create', '/', async (ctx) => {
-  await ctx.orm.review.create(ctx.review.body);
+  await ctx.orm.review.create(ctx.request.body);
   ctx.redirect(ctx.router.url('reviews'));
  });
 
@@ -56,7 +56,7 @@ router.get('reviews-show', '/:id', ctx => ctx.render(
    const { review } = ctx.state;
    try {
      await review.update(
-       ctx.review.body,
+       ctx.request.body,
        { fields: ['message'] },
      );
      ctx.redirect(ctx.router.url('reviews-show', review.id));
