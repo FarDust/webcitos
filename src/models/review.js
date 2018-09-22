@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     fullfillment_offer: DataTypes.INTEGER,
     quality_offered: DataTypes.INTEGER,
     puntuality: DataTypes.INTEGER,
-    content: DataTypes.STRING,
+    content: DataTypes.TEXT,
   }, {});
   review.associate = function(models) {
     review.belongsTo(models.trade, {
