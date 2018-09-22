@@ -1,5 +1,4 @@
-<div class="center">
-    <form action="<%= submitPath %>" method="post">
+  <form action="<%= submitPath %>" method="post">
       <% if (locals.errors) { %>
         <p class="errors">You must correct the following errors to continue:</p>
         <ul>
@@ -11,32 +10,37 @@
       <% if (!request.isNewRecord) { %>
         <input type="hidden" name="_method" value="patch" />
       <% } %>
+    <div class="center">
       <label for="message">
-        <span>message</span>
-        <input type="text" name="message" id="message" value="<%= request.message %>" />
+        <span>Message</span>
+        <input class="form-centered" type="text" name="message" id="message" value="<%= request.message %>" />
         <% if (locals.errors && errors.name) { %>
          <span class="error"><%= errors.message.message %></span>
         <% } %>
       </label>
-      <% if (request.isNewRecord) { %>
-      <label for="publication_id">
-        <span>PublicationID</span>
-         <input type="publication_id" name="publication_id" id="publication_id" value="<%= request.publication_id %>" />
-         <% if (locals.errors && errors.publication_id) { %>
-         <span class="error"><%= errors.publication_id.message %></span>
-        <% } %>
-      </label>
-
-      <label for="userID">
-        <span>UserID</span>
-        <input type="userID" name="userID" id="userID" />
-        <% if (locals.errors && errors.userID) { %>
-         <span class="error"><%= errors.userID.message %></span>
-        <% } %>
-      </label>
+    </div>
+    <% if (request.isNewRecord) { %>
+      <div class="center">
+        <label for="publication_id">
+          <span>PublicationID</span>
+           <input class="form-centered" type="publication_id" name="publication_id" id="publication_id" value="<%= request.publication_id %>" />
+           <% if (locals.errors && errors.publication_id) { %>
+           <span class="error"><%= errors.publication_id.message %></span>
+          <% } %>
+        </label>
+      </div>
+      <div class="center">
+        <label for="userID">
+          <span>UserID</span>
+          <input class="form-centered" type="userID" name="userID" id="userID" />
+          <% if (locals.errors && errors.userID) { %>
+           <span class="error"><%= errors.userID.message %></span>
+          <% } %>
+        </label>
+      </div>
       <% } %>
-      <div class="actions">
-        <input type="submit" value="<%= request.isNewRecord ? 'Create' : 'Edit' %>" />
+      <div class="actions center">
+        <input class="form-centered" type="submit" value="<%= request.isNewRecord ? 'Create' : 'Edit' %>" />
       </div>
     </form>
 </div>
