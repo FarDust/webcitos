@@ -29,7 +29,7 @@
   <div class="center">
       <label for="content">
         <span class="form">Content</span><br/>
-        <textarea rows="5" class="form-centered" type="text" name="content" id="content" value="<%= review.content %>" /><br/>
+        <textarea rows="5" class="form-centered" type="text" name="content" id="content" value="<%= review.content %>" /></textarea>
           <% if (locals.errors && errors.content) { %>
             <span class="error"><%= errors.content.message %></span>
           <% } %>
