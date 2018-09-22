@@ -26,12 +26,6 @@
             <li><a href="<%= getShowPath(review) %>">Show</a></li>
 
             <li><a href="<%= getEditPath(review) %>">Edit</a></li>
-            <li>
-              <form action="<%= getDestroyPath(review) %>" method="post">
-                <input type="hidden" name="_method" value="delete" />
-                <input type="submit" value="Delete" />
-              </form>
-            </li>
           </ul>
         </td>
       </tr>

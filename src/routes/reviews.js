@@ -33,19 +33,25 @@ async function reviewsUpdateCallback(ctx) {
   );
 }
 
+function reviewsEditRendererCallback(ctx) {
+  const { review } = ctx.state;
+  return ctx.render(
+    'reviews/edit',
+    {
+      review,
+      submitPath: ctx.router.url('reviews-update', review.id),
+    },
+  );
+}
+
 // Routes 
 
 const router = new KoaRouter();
 
 router.get('reviews', '/', reviewsIndexRendererCallback);
-router.get('reviews-new', '/new', ctx => ctx.render(
-  'reviews/new',
-  {
-    review: ctx.orm.review.build(),
-    submitPath: ctx.router.url('reviews-create'),
-  },
-));
 router.post('reviews-create', '/', reviewsCreateCallback);
+router.patch('reviews-update', '/:id', reviewsUpdateCallback);
+router.get('reviews-edit', '/:id/edit', reviewsEditRendererCallback);
 router.get('reviews-show', '/:id', ctx => ctx.render(
   'reviews/show',
   {
@@ -54,6 +60,12 @@ router.get('reviews-show', '/:id', ctx => ctx.render(
     state: JSON.parse(JSON.stringify(ctx.state.review)),
   },
 ));
-router.patch('reviews-update', '/:id', reviewsUpdateCallback);
+router.get('reviews-new', '/new', ctx => ctx.render(
+  'reviews/new',
+  {
+    review: ctx.orm.review.build(),
+    submitPath: ctx.router.url('reviews-create'),
+  },
+));
 
 module.exports = router;
