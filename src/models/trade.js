@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     state: DataTypes.STRING
   }, {});
   trade.associate = function(models) {
-    // associations can be defined here
+    trade.belongsTo(models.request, {
+      foreignKey: 'id_request', target: 'id'
+    })
   };
   return trade;
 };
