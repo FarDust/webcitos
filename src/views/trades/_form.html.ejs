@@ -3,13 +3,14 @@
   <% if (!trade.isNewRecord) { %>
     <input type="hidden" name="_method" value="patch" />
   <% } %>
-
+  <% if (trade.isNewRecord) { %>
   <div class="center">
     <label for=id_request>
       <span class="form">ID Request</span>
       <input class="form-centered" type="text" name="id_request" id="id_request" value="<%= trade.id_request %>" />
     </label>
   </div>
+  <% } %>
   <div class="center">
     <label for="state">
       <span class="form">State</span>
