@@ -6,5 +6,5 @@ RUN npm install yarn --global
 RUN npm install sequelize-cli -g
 RUN yarn install
 COPY . .
-EXPOSE 3000 36063
+EXPOSE 3000 3001
 ENV NODE_ENV development
