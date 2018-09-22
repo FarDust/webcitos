@@ -28,18 +28,8 @@ const KoaRouter = require('koa-router');
  ));
 
  router.post('requests-create', '/', async (ctx) => {
-   const request = ctx.orm.request.build(ctx.request.body);
-   try {
-     await request.save(ctx.request.body);
-     ctx.redirect(ctx.router.url('requests'));
-   } catch (error) {
-     if (!isValidationError(error)) throw error;
-     await ctx.render('requests/new', {
-       request,
-       errors: getFirstErrors(error),
-       submitPath: ctx.router.url('requests-create'),
-     });
-   }
+  await ctx.orm.request.create(ctx.request.body);
+  ctx.redirect(ctx.router.url('items'));
  });
 
  router.get('requests-show', '/:id', async (ctx) => {
@@ -58,21 +48,10 @@ const KoaRouter = require('koa-router');
  });
 
  router.patch('requests-update', '/:id', async (ctx) => {
-   const { request } = ctx.state;
-   try {
-     await request.update(
-       ctx.request.body,
-       { fields: ['message'] },
-     );
-     ctx.redirect('requests-show', request.id);
-   } catch (error) {
-     if (!isValidationError(error)) throw error;
-     await ctx.render('requests/edit', {
-       request,
-       errors: getFirstErrors(error),
-       submitPath: ctx.router.url('requests-update', request.id),
-     });
-   }
+  ctx.body = await ctx.state.request.update(
+    ctx.request.body,
+    { fields: ['message'] },
+  );
  });
 
  router.delete('requests-destroy', '/:id', async (ctx) => {

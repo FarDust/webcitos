@@ -65,7 +65,8 @@ router.patch('users-update', '/:id', async (ctx) => {
       ctx.request.body,
       { fields: ['name', 'phone', 'email', 'password'] },
     );
-    ctx.redirect('users-show', user.id);
+
+    ctx.redirect(ctx.router.url('users-show', user.id));
   } catch (error) {
     if (!isValidationError(error)) throw error;
     await ctx.render('users/edit', {

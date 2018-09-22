@@ -28,18 +28,8 @@ const KoaRouter = require('koa-router');
  ));
 
  router.post('publications-create', '/', async (ctx) => {
-   const publication = ctx.orm.publication.build(ctx.request.body);
-   try {
-     await publication.save(ctx.request.body);
-     ctx.redirect(ctx.router.url('publications'));
-   } catch (error) {
-     if (!isValidationError(error)) throw error;
-     await ctx.render('publications/new', {
-       publication,
-       errors: getFirstErrors(error),
-       submitPath: ctx.router.url('publications-create'),
-     });
-   }
+  await ctx.orm.publication.create(ctx.request.body);
+  ctx.redirect(ctx.router.url('publications'));
  });
 
  router.get('publications-show', '/:id', async (ctx) => {
@@ -58,21 +48,10 @@ const KoaRouter = require('koa-router');
  });
 
  router.patch('publications-update', '/:id', async (ctx) => {
-   const { publication } = ctx.state;
-   try {
-     await publication.update(
-       ctx.request.body,
-       { fields: ['title', 'description', 'state'] },
-     );
-     ctx.redirect('publications-show', publication.id);
-   } catch (error) {
-     if (!isValidationError(error)) throw error;
-     await ctx.render('publications/edit', {
-       publication,
-       errors: getFirstErrors(error),
-       submitPath: ctx.router.url('publications-update', publication.id),
-     });
-   }
+  ctx.body = await ctx.state.publication.update(
+    ctx.request.body,
+    { fields: ['title', 'description', 'state', 'userID'] },
+  );
  });
 
  router.delete('publications-destroy', '/:id', async (ctx) => {
