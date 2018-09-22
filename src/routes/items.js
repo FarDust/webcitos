@@ -32,9 +32,14 @@ router.post('items-create', '/', async (ctx) => {
   ctx.redirect(ctx.router.url('items'));
 });
 
-router.get('items-show', '/:id', async (ctx) => {
-  ctx.body = ctx.state.item;
-});
+router.get('items-show', '/:id', ctx => ctx.render(
+  'items/show',
+  {
+    name: 'item',
+    ignore: ['createdAt', 'updatedAt', 'id'],
+    state: JSON.parse(JSON.stringify(ctx.state.item)),
+  },
+));
 
 router.get('items-edit', '/:id/edit', (ctx) => {
   const { item } = ctx.state;

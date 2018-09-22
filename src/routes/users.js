@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
 const router = new KoaRouter();
 
@@ -43,9 +44,14 @@ router.post('users-create', '/', async (ctx) => {
   }
 });
 
-router.get('users-show', '/:id', async (ctx) => {
-  ctx.body = ctx.state.user;
-});
+router.get('users-show', '/:id', ctx => ctx.render(
+  'users/show',
+  {
+    name: ctx.state.user.name,
+    ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
+    state: JSON.parse(JSON.stringify(ctx.state.user)),
+  },
+));
 
 router.get('users-edit', '/:id/edit', (ctx) => {
   const { user } = ctx.state;
