@@ -11,6 +11,7 @@
       <th>Puntuallity score</th>
       <th>Quality score</th>
       <th>Review</th>
+      <th>Trade ID</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -21,6 +22,7 @@
         <td><%= review.puntuality %></td>
         <td><%= review.quality_offered %></td>
         <td><%= review.content %></td>
+        <td><%= review.trade_id %></td>
         <td>
           <ul>
             <li><a href="<%= getShowPath(review) %>">Show</a></li>

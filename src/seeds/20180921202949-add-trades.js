@@ -14,7 +14,7 @@ module.exports = {
   up: queryInterface => queryInterface
     .bulkInsert(
       'trades',
-      Array(5).fill(undefined).map(() => ({
+      Array(10).fill(undefined).map(() => ({
         id_request: gen.next().value,
         state: 'not_concreted',
         createdAt: faker.date.past(0.5, new Date(2017, 0, 1)),
