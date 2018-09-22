@@ -48,10 +48,21 @@ const KoaRouter = require('koa-router');
  });
 
  router.patch('publications-update', '/:id', async (ctx) => {
-  ctx.body = await ctx.state.publication.update(
-    ctx.request.body,
-    { fields: ['title', 'description', 'state', 'userID'] },
-  );
+   const { publication } = ctx.state;
+   try {
+     await publication.update(
+       ctx.request.body,
+       { fields: ['title', 'description', 'state'] },
+     );
+     ctx.redirect(ctx.router.url('publications-show', publication.id));
+   } catch (error) {
+     if (!isValidationError(error)) throw error;
+     await ctx.render('publications/edit', {
+       publication,
+       errors: getFirstErrors(error),
+       submitPath: ctx.router.url('publications-update', publication.id),
+     });
+   }
  });
 
  router.delete('publications-destroy', '/:id', async (ctx) => {

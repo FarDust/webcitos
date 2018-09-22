@@ -29,7 +29,7 @@ const KoaRouter = require('koa-router');
 
  router.post('requests-create', '/', async (ctx) => {
   await ctx.orm.request.create(ctx.request.body);
-  ctx.redirect(ctx.router.url('items'));
+  ctx.redirect(ctx.router.url('requests'));
  });
 
  router.get('requests-show', '/:id', async (ctx) => {
@@ -48,10 +48,21 @@ const KoaRouter = require('koa-router');
  });
 
  router.patch('requests-update', '/:id', async (ctx) => {
-  ctx.body = await ctx.state.request.update(
-    ctx.request.body,
-    { fields: ['message'] },
-  );
+   const { request } = ctx.state;
+   try {
+     await request.update(
+       ctx.request.body,
+       { fields: ['message'] },
+     );
+     ctx.redirect(ctx.router.url('requests-show', request.id));
+   } catch (error) {
+     if (!isValidationError(error)) throw error;
+     await ctx.render('requests/edit', {
+       request,
+       errors: getFirstErrors(error),
+       submitPath: ctx.router.url('requests-update', request.id),
+     });
+   }
  });
 
  router.delete('requests-destroy', '/:id', async (ctx) => {
