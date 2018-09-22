@@ -1,3 +1,40 @@
-<div class="conatiner">
-  <h1> Reviews index </h1>
-</div>
+<h1>All reviews</h1>
+
+<p>There are <%= reviews.length %> reviews.</p>
+<p>
+  <a href="<%= newreviewPath %>">Create new review</a>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Fullfilment offer score</th>
+      <th>Puntuallity score</th>
+      <th>Quality score</th>
+      <th>Review</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% reviews.forEach(review => { %>
+      <tr>
+        <td><%= review.fullfillment_offer %></td>
+        <td><%= review.puntuality %></td>
+        <td><%= review.quality_offered %></td>
+        <td><%= review.content %></td>
+        <td>
+          <ul>
+            <li><a href="<%= getShowPath(review) %>">Show</a></li>
+
+            <li><a href="<%= getEditPath(review) %>">Edit</a></li>
+            <li>
+              <form action="<%= getDestroyPath(review) %>" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <input type="submit" value="Delete" />
+              </form>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

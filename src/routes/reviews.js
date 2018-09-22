@@ -3,7 +3,14 @@ const KoaRouter = require('koa-router');
 // Callbacks 
 
 async function reviewsIndexRendererCallback(ctx) {
-  ctx.body = await ctx.orm.review.findAll();
+  const reviews = await ctx.orm.review.findAll();
+  return ctx.render('reviews/index', {
+    reviews,
+    newreviewPath: ctx.router.url('reviews-new'),
+    getShowPath: review => ctx.router.url('reviews-show', review.id),
+    getEditPath: review => ctx.router.url('reviews-edit', review.id),
+    getDestroyPath: review => ctx.router.url('reviews-destroy', review.id),
+  });
 }
 
 async function reviewsCreateCallback(ctx) {
@@ -22,7 +29,7 @@ async function reviewsUpdateCallback(ctx) {
   ctx.assert(review, 404);
   ctx.body = await review.update(
     ctx.request.body,
-    { fields: ['fullfilment_offer', 'puntuality', 'quality_offered','content'] },
+    { fields: ['fullfillment_offer', 'puntuality', 'quality_offered','content'] },
   );
 }
 
@@ -39,12 +46,12 @@ router.get('reviews-new', '/new', ctx => ctx.render(
   },
 ));
 router.post('reviews-create', '/', reviewsCreateCallback);
-router.get('trades-show', '/:id', ctx => ctx.render(
-  'trades/show',
+router.get('reviews-show', '/:id', ctx => ctx.render(
+  'reviews/show',
   {
-    name: 'trade',
+    name: 'review',
     ignore: ['createdAt', 'updatedAt', 'id'],
-    state: JSON.parse(JSON.stringify(ctx.state.trade)),
+    state: JSON.parse(JSON.stringify(ctx.state.review)),
   },
 ));
 router.patch('reviews-update', '/:id', reviewsUpdateCallback);
