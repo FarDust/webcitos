@@ -2,6 +2,10 @@
 @import './hello';
 @import './fardust';
 
+li {
+  list-style-type: none;
+}
+
 .content {
   background-color: rgba($color: white, $alpha: 0.6);
   border-radius: 10px;
