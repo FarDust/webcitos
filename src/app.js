@@ -44,7 +44,8 @@ app.use(koaLogger());
 if (developmentMode) {
   // eslint-disable-next-line import/no-extraneous-dependencies, global-require
   const koaWebpack = require('koa-webpack');
-  koaWebpack()
+
+  koaWebpack({ hotClient: { port: 3001 } })
     .then(middleware => app.use(middleware))
     .catch(console.error); // eslint-disable-line no-console
 }
