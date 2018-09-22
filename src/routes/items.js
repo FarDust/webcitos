@@ -53,10 +53,21 @@ router.get('items-edit', '/:id/edit', (ctx) => {
 });
 
 router.patch('items-update', '/:id', async (ctx) => {
-  ctx.body = await ctx.state.item.update(
-    ctx.request.body,
-    { fields: ['model', 'brand', 'aditional', 'state', 'category', 'screenSize', 'publication_id'] },
-  );
+   const { item } = ctx.state;
+   try {
+     await item.update(
+       ctx.request.body,
+       { fields: ['model', 'brand', 'aditional', 'state', 'category', 'screenSize', 'publication_id'] },
+     );
+     ctx.redirect(ctx.router.url('items-show', item.id));
+   } catch (error) {
+     if (!isValidationError(error)) throw error;
+     await ctx.render('items/edit', {
+       item,
+       errors: getFirstErrors(error),
+       submitPath: ctx.router.url('items-update', item.id),
+     });
+   }
 });
 
 router.delete('items-destroy', '/:id', async (ctx) => {

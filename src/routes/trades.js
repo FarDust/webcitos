@@ -53,10 +53,21 @@ router.get('trades-edit', '/:id/edit', (ctx) => {
 });
 
 router.patch('trades-update', '/:id', async (ctx) => {
-  ctx.body = await ctx.state.trade.update(
-    ctx.request.body,
-    { fields: ['id_request', 'state'] },
-  );
+   const { trade } = ctx.state;
+   try {
+     await trade.update(
+       ctx.request.body,
+       { fields: ['id_request', 'state'] },
+     );
+     ctx.redirect(ctx.router.url('trades-show', trade.id));
+   } catch (error) {
+     if (!isValidationError(error)) throw error;
+     await ctx.render('trades/edit', {
+       trade,
+       errors: getFirstErrors(error),
+       submitPath: ctx.router.url('trades-update', trade.id),
+     });
+   }
 });
 
 router.delete('trades-destroy', '/:id', async (ctx) => {
