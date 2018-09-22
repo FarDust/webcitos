@@ -64,7 +64,7 @@ const KoaRouter = require('koa-router');
        ctx.request.body,
        { fields: ['title', 'description', 'state'] },
      );
-     ctx.redirect('publications-show', publication.id);
+     ctx.redirect(ctx.router.url('publications-show', publication.id));
    } catch (error) {
      if (!isValidationError(error)) throw error;
      await ctx.render('publications/edit', {

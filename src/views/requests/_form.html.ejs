@@ -19,7 +19,6 @@
         <% } %>
       </label>
       <% if (request.isNewRecord) { %>
-        <input type="hidden" name="_method" value="patch" />
       <label for="publication_id">
         <span>PublicationID</span>
          <input type="publication_id" name="publication_id" id="publication_id" value="<%= request.publication_id %>" />
@@ -36,7 +35,7 @@
         <% } %>
       </label>
       <% } %>
-      <div class="userID">
+      <div class="actions">
         <input type="submit" value="<%= request.isNewRecord ? 'Create' : 'Edit' %>" />
       </div>
     </form>

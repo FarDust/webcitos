@@ -64,7 +64,7 @@ const KoaRouter = require('koa-router');
        ctx.request.body,
        { fields: ['message'] },
      );
-     ctx.redirect('requests-show', request.id);
+     ctx.redirect(ctx.router.url('requests-show', request.id));
    } catch (error) {
      if (!isValidationError(error)) throw error;
      await ctx.render('requests/edit', {
