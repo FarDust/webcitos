@@ -1,6 +1,17 @@
-<h1>Hello world</h1>
-<p>
-  App web version
-  <%= appVersion %>
-</p>
-<div id="react-app">Here a React app will be rendered</div>
+<div class="main">
+  <div class="center">
+    <div>
+      <p class="slogan">
+        Get new stuff <br/>
+        With your old stuff!
+      </p>
+    </div>
+    <div id="logo" class="center">
+      <img src="<%= assetPath('logo.svg') %>">
+    </div>
+    <div id="main-buttons">
+        <button class="button" onclick="window.location.href='/users'">Sign Up</button>
+        <button class="button irrelevant" onclick="window.location.href='/users'">Sign In</button>
+    </div>
+  </div>
+</div>
