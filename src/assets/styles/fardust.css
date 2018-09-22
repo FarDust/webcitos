@@ -359,6 +359,15 @@ img.side-menu{
   margin-left:0;
 }
 
+table ul li form{
+  padding: 0px;
+
+}
+
+table ul li form input[type="submit"]{
+  margin: 0px;
+}
+
 @media screen and (max-width: 600px){
     div.container{text-align: center;}
     form{align-items: center;}
