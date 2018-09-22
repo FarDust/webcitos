@@ -32,9 +32,14 @@ const KoaRouter = require('koa-router');
   ctx.redirect(ctx.router.url('publications'));
  });
 
- router.get('publications-show', '/:id', async (ctx) => {
-   ctx.body = ctx.state.publication;
- });
+ router.get('publications-show', '/:id', ctx => ctx.render(
+  'publications/show',
+  {
+    name: 'publication',
+    ignore: ['createdAt', 'updatedAt', 'id'],
+    state: JSON.parse(JSON.stringify(ctx.state.publication)),
+  },
+));
 
  router.get('publications-edit', '/:id/edit', (ctx) => {
    const { publication } = ctx.state;

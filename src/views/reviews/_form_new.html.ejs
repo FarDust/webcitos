@@ -26,6 +26,15 @@
         <% } %>
     </label>
   </div>
+  <div class="center">
+      <label for="content">
+        <span class="form">Content</span><br/>
+        <textarea rows="5" class="form-centered" type="text" name="content" id="content" value="<%= review.content %>" /><br/>
+          <% if (locals.errors && errors.content) { %>
+            <span class="error"><%= errors.content.message %></span>
+          <% } %>
+      </label>
+    </div>
   <div class="actions center">
     <input class="form-centered" type="submit" value="<%= review.isNewRecord ? 'Crear' : 'Editar' %>" />
   </div>

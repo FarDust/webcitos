@@ -32,9 +32,14 @@ const KoaRouter = require('koa-router');
   ctx.redirect(ctx.router.url('requests'));
  });
 
- router.get('requests-show', '/:id', async (ctx) => {
-   ctx.body = ctx.state.request;
- });
+router.get('requests-show', '/:id', ctx => ctx.render(
+  'requests/show',
+  {
+    name: 'request',
+    ignore: ['createdAt', 'updatedAt', 'id'],
+    state: JSON.parse(JSON.stringify(ctx.state.request)),
+  },
+));
 
  router.get('requests-edit', '/:id/edit', (ctx) => {
    const { request } = ctx.state;
