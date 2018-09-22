@@ -32,9 +32,14 @@ router.post('trades-create', '/', async (ctx) => {
   ctx.redirect(ctx.router.url('trades'));
 });
 
-router.get('trades-show', '/:id', async (ctx) => {
-  ctx.body = ctx.state.trade;
-});
+router.get('trades-show', '/:id', ctx => ctx.render(
+  'trades/show',
+  {
+    name: 'trade',
+    ignore: ['createdAt', 'updatedAt', 'id'],
+    state: JSON.parse(JSON.stringify(ctx.state.trade)),
+  },
+));
 
 router.get('trades-edit', '/:id/edit', (ctx) => {
   const { trade } = ctx.state;
