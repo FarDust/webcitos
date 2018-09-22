@@ -136,6 +136,14 @@ input, select {
     box-sizing: border-box;
 }
 
+.center input.form-centered{
+  width: 100%;
+}
+
+input[type=hidden] {
+  display: none;
+}
+
 input[type=submit] {
     width: 77.8px;
     background-color: #37B9A2;
@@ -290,12 +298,18 @@ img.side-menu{
   display: block;
 }
 
+.center-arrow {
+  margin: auto;
+  margin-top: 25%;
+  width: 50%;
+  vertical-align: middle;
+  display: block;
+}
+
 .center {
-    margin: auto;
-    margin-top: 25%;
-    width: 50%;
-    vertical-align: middle;
-    display: block;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
 .sidenav {
