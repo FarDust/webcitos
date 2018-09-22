@@ -1,0 +1,51 @@
+  <form action="<%= submitPath %>" method="post">
+      <% if (locals.errors) { %>
+        <p class="errors">You must correct the following errors to continue:</p>
+        <ul>
+          <% Object.keys(errors).forEach(prop => { %>
+            <li><%= prop %>: <%= errors[prop].message %></li>
+          <% }) %>
+        </ul>
+      <% } %>
+      <% if (!publication.isNewRecord) { %>
+        <input type="hidden" name="_method" value="patch" />
+      <% } %>
+    <div class="center">
+      <label for="title">
+        <span>Title</span>
+        <input class="form-centered" type="text" name="title" id="title" value="<%= publication.title %>" />
+        <% if (locals.errors && errors.name) { %>
+         <span class="error"><%= errors.title.message %></span>
+        <% } %>
+      </label>
+    </div>
+    <div class="center">
+      <label for="description">
+        <span>Description</span>
+         <input class="form-centered" type="text" name="description" id="description" value="<%= publication.description %>" />
+         <% if (locals.errors && errors.description) { %>
+         <span class="error"><%= errors.description.message %></span>
+        <% } %>
+      </label>
+    </div>
+    <div class="center">
+      <label for="state">
+        <span>State</span>
+        <input class="form-centered" type="text" name="state" id="state" value="<%= publication.state %>"/>
+      </label>
+    </div>
+    <% if (publication.isNewRecord) { %>
+      <div class="center">
+        <label for="userID">
+          <span>UserID</span>
+          <input class="form-centered" type="number" name="userID" id="userID" />
+          <% if (locals.errors && errors.userID) { %>
+           <span class="error"><%= errors.userID.message %></span>
+          <% } %>
+        </label>
+      </div>
+    <% } %>
+      <div class="actions center">
+        <input class="form-centered" type="submit" value="<%= publication.isNewRecord ? 'Create' : 'Edit' %>" />
+      </div>
+  </form>

@@ -1,0 +1,55 @@
+<form action="<%= submitPath %>" method="post">
+  <% if (!review.isNewRecord) { %>
+    <input type="hidden" name="_method" value="patch" />
+  <% } %>
+  <div class="center">
+    <label for="fullfillment_offer">
+      <span class="form">Fullfilment offer</span><br/>
+      <input class="form-centered" type="text" name="fullfillment_offer" id="fullfillment_offer" value="<%= review.fullfillment_offer %>" /><br/>
+        <% if (locals.errors && errors.fullfillment_offer) { %>
+          <span class="error"><%= errors.fullfillment_offer.message %></span>
+        <% } %>
+    </label>
+  </div>
+  <div class="center">
+    <label for="quality_offered">
+      <span class="form">Quality offered</span><br/>
+      <input class="form-centered" type="text" name="quality_offered" id="quality_offered" value="<%= review.quality_offered %>" /><br/>
+        <% if (locals.errors && errors.quality_offered) { %>
+          <span class="error"><%= errors.quality_offered.message %></span>
+        <% } %>
+    </label>
+  </div>
+  <div class="center">
+    <label for="puntuality">
+      <span class="form">Puntuality</span><br/>
+      <input class="form-centered" type="text" name="puntuality" id="puntuality" value="<%= review.puntuality %>" /><br/>
+        <% if (locals.errors && errors.puntuality) { %>
+          <span class="error"><%= errors.puntuality.message %></span>
+        <% } %>
+    </label>
+  </div>
+  <div class="center">
+      <label for="content">
+        <span class="form">Content</span><br/>
+        <textarea rows="5" class="form-centered" type="text" name="content" id="content" value="<%= review.content %>" ></textarea>
+          <% if (locals.errors && errors.content) { %>
+            <span class="error"><%= errors.content.message %></span>
+          <% } %>
+      </label>
+    </div>
+    <% if (review.isNewRecord) { %>
+    <div class="center">
+      <label for="trade_id">
+        <span class="form">TradeID</span><br/>
+        <input class="form-centered" type="text" name="trade_id" id="trade_id" value="<%= review.trade_id %>" />
+          <% if (locals.errors && errors.trade_id) { %>
+            <span class="error"><%= errors.trade_id.message %></span>
+          <% } %>
+      </label>
+    </div>
+    <% } %>
+  <div class="actions center">
+    <input class="form-centered" type="submit" value="<%= review.isNewRecord ? 'Crear' : 'Editar' %>" />
+  </div>
+</form>

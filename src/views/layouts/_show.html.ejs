@@ -1,0 +1,12 @@
+<div class="center">
+    <h1> <%= name.replace(/\b[a-z]\B/g, function(letter) {return letter.toUpperCase(); } );%>  </h1>
+  <div class="content">
+    <% for(let key in state) { %>
+        <% if (!ignore.includes(key) ) {%>
+          <div class="tag">
+            <%= key.replace(/\b[a-z]\B/g, function(letter) {return letter.toUpperCase(); } ); %>: <%= state[key] %>
+          </div>
+        <% }%>
+    <% } %>
+  </div>
+</div>

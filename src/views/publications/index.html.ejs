@@ -1,0 +1,40 @@
+<h1>All publications</h1>
+
+<p>There are <%= publications.length %> publications.</p>
+<p>
+  <a href="<%= newpublicationPath %>">Create new publication</a>
+</p>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>State</th>
+      <th>ID User</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% publications.forEach(publication => { %>
+      <tr>
+        <td><%= publication.title %></td>
+        <td><%= publication.description %></td>
+        <td><%= publication.state %></td>
+        <td><%= publication.userID %></td>
+        <td>
+          <ul>
+            <li><a href="<%= getShowPath(publication) %>">Show</a></li>
+
+            <li><a href="<%= getEditPath(publication) %>">Edit</a></li>
+            <li>
+              <form action="<%= getDestroyPath(publication) %>" method="post">
+                <input type="hidden" name="_method" value="delete" />
+                <input type="submit" value="Delete" />
+              </form>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

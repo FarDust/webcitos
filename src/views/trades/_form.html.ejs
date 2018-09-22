@@ -1,0 +1,23 @@
+
+<form action="<%= submitPath %>" method="post">
+  <% if (!trade.isNewRecord) { %>
+    <input type="hidden" name="_method" value="patch" />
+  <% } %>
+  <% if (trade.isNewRecord) { %>
+  <div class="center">
+    <label for=id_request>
+      <span class="form">ID Request</span>
+      <input class="form-centered" type="text" name="id_request" id="id_request" value="<%= trade.id_request %>" />
+    </label>
+  </div>
+  <% } %>
+  <div class="center">
+    <label for="state">
+      <span class="form">State</span>
+      <input class="form-centered" type="text" name="state" id="state" value="<%= trade.state %>"/>
+    </label>
+  </div>
+  <div class="actions center">
+    <input class="form-centered" type="submit" value="<%= trade.isNewRecord ? 'Create' : 'Edit' %>" />
+  </div>
+</form>

@@ -123,17 +123,25 @@ ul.topbar li.right {
 
 @media screen and (max-width: 600px){
     ul.topbar {display: none;}
-    div.BasesPlayMusic-container{text-align: center;}
+    div.container{text-align: center;}
 }
 
 /* Form */
-input[type=text], select {
+input, select {
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+.center input.form-centered{
+  width: 100%;
+}
+
+input[type=hidden] {
+  display: none;
 }
 
 input[type=submit] {
@@ -165,7 +173,7 @@ form {
   width: 325px;
 }
 /*logo*/
-div.BasesPlayMusic-container{
+div.container{
   top: 0;
   width: 100%;
   padding: 15px;
@@ -179,12 +187,12 @@ div.BasesPlayMusic-container{
   transition: 1s;
 }
 
-a.BasesPlayMusic-logo{
+a.logo{
   text-decoration: none;
   color: black;
 }
 
-a.BasesPlayMusic-logo:hover{
+a.logo:hover{
   text-decoration: none;
   color: rgb(0, 150, 175);
 }
@@ -290,12 +298,18 @@ img.side-menu{
   display: block;
 }
 
+.center-arrow {
+  margin: auto;
+  margin-top: 25%;
+  width: 50%;
+  vertical-align: middle;
+  display: block;
+}
+
 .center {
-    margin: auto;
-    margin-top: 25%;
-    width: 50%;
-    vertical-align: middle;
-    display: block;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
 .sidenav {
@@ -340,8 +354,22 @@ img.side-menu{
   padding: 10px;
 }
 
+.center .arrow{
+  margin-top: 50%;
+  margin-left:0;
+}
+
+table ul li form{
+  padding: 0px;
+
+}
+
+table ul li form input[type="submit"]{
+  margin: 0px;
+}
+
 @media screen and (max-width: 600px){
-    div.BasesPlayMusic-container{text-align: center;}
+    div.container{text-align: center;}
     form{align-items: center;}
     #console{width: 100%; margin-right: 10px;}
     input[type=submit]{width: 100%;}

@@ -3,18 +3,48 @@
 
   <head>
     <meta charset="utf-8">
-    <title>IIC2513 - CHANGE-ME</title>
+    <title>IIC2513 - WebCitos</title>
     <% if (env !== 'development') { %>
       <link rel="stylesheet" href="<%= assetPath('app.css') %>">
     <% } %>
+    <link rel="stylesheet" href="<%= assetPath('fardust.css') %>">
   </head>
 
   <body>
-    <header>
-      <div id="logo">
-        <img src="<%= assetPath('logo.png') %>" alt="Logo" />
-      </div>
-    </header>
+    <!--logo-->
+    <div class="container top" id="home">
+      <a href="/" class="logo">
+        Web<span class="Music">Citos</span>
+      </a>
+    </div>
+    <!--topbar-->
+    <ul class="topbar">
+      <li>
+        <span id="side-open" onclick="openNav()">
+          <img class="side-menu center" src="<%= assetPath('side.png') %>" >
+        </span>
+      </li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/users">Users</a></li>
+      <li><a href="/publications">Publications</a></li>
+      <li><a href="/requests">Requests</a></li>
+      <li><a href="/items">Items</a></li>
+      <li><a href="/reviews">Reviews</a></li>
+      <li><a href="/trades">Trades</a></li>
+    </ul>
+    <!--sidebar-->
+    <div id="right-arrow" class="circle" onclick="openNav()" style="top:50%">
+      <span class="center arrow">
+        <i class="arrowr"></i>
+      </span>
+    </div>
+
+    <div class="sidenav" id="lateral-menu">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+        &times;
+      </a>
+      <a class="side" href="../index.html">Home</a>
+    </div>
     <%- body %>
     <script src="<%= assetPath('app.js') %>"></script>
   </body>
