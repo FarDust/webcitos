@@ -33,7 +33,7 @@ router.post('users-create', '/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
   try {
     await user.save(ctx.request.body);
-    ctx.redirect(ctx.router.url('users'));
+    ctx.redirect(ctx.router.url('/'));
   } catch (error) {
     if (!isValidationError(error)) throw error;
     await ctx.render('users/new', {

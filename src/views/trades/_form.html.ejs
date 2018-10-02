@@ -1,5 +1,5 @@
 
-<form action="<%= submitPath %>" method="post">
+<form class="crud" action="<%= submitPath %>" method="post">
   <% if (!trade.isNewRecord) { %>
     <input type="hidden" name="_method" value="patch" />
   <% } %>

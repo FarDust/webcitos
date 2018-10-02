@@ -25,12 +25,23 @@
         </span>
       </li>
       <li><a href="/">Home</a></li>
+      <% if (locals.currentUser) { %>
       <li><a href="/users">Users</a></li>
       <li><a href="/publications">Publications</a></li>
       <li><a href="/requests">Requests</a></li>
       <li><a href="/items">Items</a></li>
       <li><a href="/reviews">Reviews</a></li>
       <li><a href="/trades">Trades</a></li>
+      <li>
+      <form action="<%= destroySessionPath %>" method="post">
+      <input type="hidden" name="_method" value="delete" />
+      <input type="submit" value="Log out" />
+      </form>
+      </li>
+      <% } else { %>
+      <li><a href="<%= newSessionPath %>">Sign in</a></li>
+      <li><a href="/users/new">Sign up</a></li>
+      <% } %>
     </ul>
     <!--sidebar-->
     <div id="right-arrow" class="circle" onclick="openNav()" style="top:50%">
@@ -45,6 +56,9 @@
       </a>
       <a class="side" href="../index.html">Home</a>
     </div>
+    <% if (notice = flashMessage.notice) { %>
+      <div><%= notice %></div>
+    <% } %>
     <%- body %>
     <script src="<%= assetPath('app.js') %>"></script>
   </body>
