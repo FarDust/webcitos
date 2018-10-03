@@ -9,6 +9,7 @@ const KoaRouter = require('koa-router');
  });
 
  router.get('publications', '/', async (ctx) => {
+  if (ctx.state.currentUser) {
    const publications = await ctx.orm.publication.findAll();
    return ctx.render('publications/index', {
      publications,
@@ -17,32 +18,47 @@ const KoaRouter = require('koa-router');
      getEditPath: publication => ctx.router.url('publications-edit', publication.id),
      getDestroyPath: publication => ctx.router.url('publications-destroy', publication.id),
    });
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
  });
 
- router.get('publications-new', '/new', ctx => ctx.render(
-   'publications/new',
+ router.get('publications-new', '/new', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('publications/new',
    {
      publication: ctx.orm.publication.build(),
      submitPath: ctx.router.url('publications-create'),
-   },
- ));
+   },)
+   }else{
+   ctx.flashMessage.notice = 'Please, log in to access these features';
+   ctx.redirect('/'); 
+   }
+});
 
  router.post('publications-create', '/', async (ctx) => {
   await ctx.orm.publication.create(ctx.request.body);
   ctx.redirect(ctx.router.url('publications'));
  });
 
- router.get('publications-show', '/:id', ctx => ctx.render(
-  'publications/show',
+ router.get('publications-show', '/:id', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('publications/show',
   {
     name: 'publication',
     ignore: ['createdAt', 'updatedAt', 'id'],
     state: JSON.parse(JSON.stringify(ctx.state.publication)),
-  },
-));
+  },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/'); 
+  }
+});
 
  router.get('publications-edit', '/:id/edit', (ctx) => {
    const { publication } = ctx.state;
+   if (ctx.state.currentUser) {
    return ctx.render(
      'publications/edit',
      {
@@ -50,6 +66,10 @@ const KoaRouter = require('koa-router');
        submitPath: ctx.router.url('publications-update', publication.id),
      },
    );
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');  
+  }
  });
 
  router.patch('publications-update', '/:id', async (ctx) => {

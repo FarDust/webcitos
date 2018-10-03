@@ -26,7 +26,6 @@ router.use(async (ctx, next) => {
   return next();
 });
 
-
 router.use('/', index.routes());
 router.use('/hello', hello.routes());
 router.use('/publications', publications.routes());

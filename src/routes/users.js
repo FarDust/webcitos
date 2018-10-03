@@ -11,6 +11,7 @@ router.param('id', async (id, ctx, next) => {
 });
 
 router.get('users', '/', async (ctx) => {
+  if (ctx.state.currentUser) {
   const users = await ctx.orm.user.findAll();
   return ctx.render('users/index', {
     users,
@@ -19,6 +20,10 @@ router.get('users', '/', async (ctx) => {
     getEditPath: user => ctx.router.url('users-edit', user.id),
     getDestroyPath: user => ctx.router.url('users-destroy', user.id),
   });
+  } else {
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
 });
 
 router.get('users-new', '/new', ctx => ctx.render(
@@ -44,17 +49,23 @@ router.post('users-create', '/', async (ctx) => {
   }
 });
 
-router.get('users-show', '/:id', ctx => ctx.render(
-  'users/show',
+router.get('users-show', '/:id', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('users/show',
   {
     name: ctx.state.user.name,
     ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
     state: JSON.parse(JSON.stringify(ctx.state.user)),
-  },
-));
+  },)
+  } else {
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
+});
 
 router.get('users-edit', '/:id/edit', (ctx) => {
   const { user } = ctx.state;
+  if (ctx.session.currentUserId == user.id) {
   return ctx.render(
     'users/edit',
     {
@@ -62,6 +73,10 @@ router.get('users-edit', '/:id/edit', (ctx) => {
       submitPath: ctx.router.url('users-update', user.id),
     },
   );
+  } else {
+  ctx.flashMessage.notice = 'You can only edit your own profile';
+  ctx.redirect('/');
+  }
 });
 
 router.patch('users-update', '/:id', async (ctx) => {
