@@ -9,6 +9,7 @@ const KoaRouter = require('koa-router');
  });
 
  router.get('reviews', '/', async (ctx) => {
+  if (ctx.state.currentUser) {
    const reviews = await ctx.orm.review.findAll();
    return ctx.render('reviews/index', {
      reviews,
@@ -17,32 +18,47 @@ const KoaRouter = require('koa-router');
      getEditPath: review => ctx.router.url('reviews-edit', review.id),
      getDestroyPath: review => ctx.router.url('reviews-destroy', review.id),
    });
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
  });
 
- router.get('reviews-new', '/new', ctx => ctx.render(
-   'reviews/new',
+ router.get('reviews-new', '/new', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('reviews/new',
    {
      review: ctx.orm.review.build(),
      submitPath: ctx.router.url('reviews-create'),
-   },
- ));
+   },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/'); 
+  }
+});
 
  router.post('reviews-create', '/', async (ctx) => {
   await ctx.orm.review.create(ctx.request.body);
   ctx.redirect(ctx.router.url('reviews'));
  });
 
-router.get('reviews-show', '/:id', ctx => ctx.render(
-  'reviews/show',
+router.get('reviews-show', '/:id', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('reviews/show',
   {
     name: 'review',
     ignore: ['createdAt', 'updatedAt', 'id'],
     state: JSON.parse(JSON.stringify(ctx.state.review)),
-  },
-));
+  },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');  
+  }
+});
 
  router.get('reviews-edit', '/:id/edit', (ctx) => {
-   const { review } = ctx.state;
+  const { review } = ctx.state;
+  if (ctx.state.currentUser) {
    return ctx.render(
      'reviews/edit',
      {
@@ -50,6 +66,10 @@ router.get('reviews-show', '/:id', ctx => ctx.render(
        submitPath: ctx.router.url('reviews-update', review.id),
      },
    );
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');   
+  }
  });
 
  router.patch('reviews-update', '/:id', async (ctx) => {

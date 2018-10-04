@@ -9,6 +9,7 @@ router.param('id', async (id, ctx, next) => {
 });
 
 router.get('trades', '/', async (ctx) => {
+  if (ctx.state.currentUser) {
   const trades = await ctx.orm.trade.findAll();
   return ctx.render('trades/index', {
     trades,
@@ -17,32 +18,47 @@ router.get('trades', '/', async (ctx) => {
     getEditPath: trade => ctx.router.url('trades-edit', trade.id),
     getDestroyPath: trade => ctx.router.url('trades-destroy', trade.id),
   });
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
 });
 
-router.get('trades-new', '/new', ctx => ctx.render(
-  'trades/new',
+router.get('trades-new', '/new', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('trades/new',
   {
     trade: ctx.orm.trade.build(),
     submitPath: ctx.router.url('trades-create'),
-  },
-));
+  },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
+});
 
 router.post('trades-create', '/', async (ctx) => {
   await ctx.orm.trade.create(ctx.request.body);
   ctx.redirect(ctx.router.url('trades'));
 });
 
-router.get('trades-show', '/:id', ctx => ctx.render(
-  'trades/show',
+router.get('trades-show', '/:id', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('trades/show',
   {
     name: 'trade',
     ignore: ['createdAt', 'updatedAt', 'id'],
     state: JSON.parse(JSON.stringify(ctx.state.trade)),
-  },
-));
+  },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/'); 
+  }
+});
 
 router.get('trades-edit', '/:id/edit', (ctx) => {
   const { trade } = ctx.state;
+  if (ctx.state.currentUser) {
   return ctx.render(
     'trades/edit',
     {
@@ -50,6 +66,10 @@ router.get('trades-edit', '/:id/edit', (ctx) => {
       submitPath: ctx.router.url('trades-update', trade.id),
     },
   );
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');  
+  }
 });
 
 router.patch('trades-update', '/:id', async (ctx) => {
