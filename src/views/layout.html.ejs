@@ -33,9 +33,9 @@
       <li><a href="/reviews">Reviews</a></li>
       <li><a href="/trades">Trades</a></li>
       <li>
-      <form action="<%= destroySessionPath %>" method="post">
-      <input type="hidden" name="_method" value="delete" />
-      <input type="submit" value="Log out" />
+      <form class="form-button" action="<%= destroySessionPath %>" method="post">
+        <input type="hidden" name="_method" value="delete" />
+        <input type="submit" value="Log out" />
       </form>
       </li>
       <% } else { %>

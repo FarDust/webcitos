@@ -10,7 +10,7 @@ body {
 
 /*info*/
 div.info{
-  border-radius: 5px;
+  border-radius: 2px;
 
   background-color: rgba(255, 255, 255, 0.5);
 }
@@ -23,7 +23,7 @@ div.info p{
 /*ref menu*/
 #begin{
   background-color: #37B9A2;
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 5px;
 }
 
@@ -41,7 +41,7 @@ ul.ref-menu {
   list-style-type: none;
   padding: 0;
   overflow: hidden;
-  background-color:#333;
+  background-color: #db5449;
   border-radius: 5px;
 }
 
@@ -59,12 +59,12 @@ ul.ref-menu li a {
 }
 
 ul.ref-menu li a:hover:not(.active) {
-    background-color: #111;
+    background-color: #ff8575;
 }
 
 ul.ref-menu li a.active{
-  background-color: #00AB8C;
-  color: white;
+  background-color: #a32021;
+  color: black;
 }
 
 ul.ref-menu li.right {
@@ -90,7 +90,7 @@ ul.topbar {
     margin-top: 56px;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #db5449;
     position: fixed;
     top: 0;
     width: 100%;
@@ -102,19 +102,19 @@ ul.topbar li {
 
 ul.topbar li a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 ul.topbar li a:hover:not(.active) {
-    background-color: #111;
+    background-color: #ff8575;
 }
 
 ul.topbar li a.active{
-  background-color: #00AB8C;
-  color: white;
+  background-color: #db5449;
+  color: black;
 }
 
 ul.topbar li.right {
@@ -132,7 +132,7 @@ input, select {
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 2px;
     box-sizing: border-box;
 }
 
@@ -146,24 +146,25 @@ input[type=hidden] {
 
 input[type=submit] {
     width: 77.8px;
-    background-color: #37B9A2;
-    color: white;
+    background-color: #db5449;
+    color: black;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 4px;
+    border-radius: 2px;
     cursor: pointer;
     -webkit-transition: width 2s;
     transition: width 2s;
 }
 
 input[type=submit]:hover {
-    background-color: #0AC251;
+    background-color: #a32021;
+    color: white;
     /*width: 90px;*/
 }
 
-form.crud {
-  border-radius: 5px;
+form {
+  border-radius: 3px;
   background-color: #f2f2f2;
   padding: 20px;
   align-items: center;
@@ -194,11 +195,11 @@ a.logo{
 
 a.logo:hover{
   text-decoration: none;
-  color: rgb(0, 150, 175);
+  color: #db5449;
 }
 
 span.Music{
-  color: rgb(0, 150, 175);
+  color: #db5449;
 }
 
 /*
@@ -216,7 +217,7 @@ div.table {
 
 table {
     /*border-collapse: collapse;*/
-    border-radius: 10px;
+    border-radius: 2px;
     width: 75%;
     padding: 10px;
     background-color: white;

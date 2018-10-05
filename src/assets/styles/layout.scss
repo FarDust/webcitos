@@ -1,4 +1,22 @@
-html, body {
-  margin: 0;
-  padding: 0;
+.form-button{
+  /* CSS code for topbar form */
+  background-color: transparent;
+  padding: 0px;
+  align-items: unset;
+}
+
+.form-button input[type=submit]{
+  padding: 14px 16px;
+  width: unset;
+  margin: 0px;
+  text-transform: capitalize;
+}
+
+ul li .form-button input[type=submit]:hover{
+  padding: 14px 16px;
+  width: unset;
+  margin: 0px;
+  text-transform: capitalize;
+  background-color: #ff8575;
+  color: black;
 }
