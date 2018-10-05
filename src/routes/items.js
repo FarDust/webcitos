@@ -9,6 +9,7 @@ router.param('id', async (id, ctx, next) => {
 });
 
 router.get('items', '/', async (ctx) => {
+  if (ctx.state.currentUser) {
   const items = await ctx.orm.item.findAll();
   return ctx.render('items/index', {
     items,
@@ -17,32 +18,47 @@ router.get('items', '/', async (ctx) => {
     getEditPath: item => ctx.router.url('items-edit', item.id),
     getDestroyPath: item => ctx.router.url('items-destroy', item.id),
   });
+  } else {
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
 });
 
-router.get('items-new', '/new', ctx => ctx.render(
-  'items/new',
+router.get('items-new', '/new', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('items/new',
   {
     item: ctx.orm.item.build(),
     submitPath: ctx.router.url('items-create'),
-  },
-));
+  },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/'); 
+  }
+});
 
 router.post('items-create', '/', async (ctx) => {
   await ctx.orm.item.create(ctx.request.body);
   ctx.redirect(ctx.router.url('items'));
 });
 
-router.get('items-show', '/:id', ctx => ctx.render(
-  'items/show',
+router.get('items-show', '/:id', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('items/show',
   {
     name: 'item',
     ignore: ['createdAt', 'updatedAt', 'id'],
     state: JSON.parse(JSON.stringify(ctx.state.item)),
-  },
-));
+  },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');  
+  }
+});
 
 router.get('items-edit', '/:id/edit', (ctx) => {
   const { item } = ctx.state;
+  if (ctx.state.currentUser) {
   return ctx.render(
     'items/edit',
     {
@@ -50,6 +66,10 @@ router.get('items-edit', '/:id/edit', (ctx) => {
       submitPath: ctx.router.url('items-update', item.id),
     },
   );
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');  
+  }
 });
 
 router.patch('items-update', '/:id', async (ctx) => {

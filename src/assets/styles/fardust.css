@@ -64,7 +64,7 @@ ul.ref-menu li a:hover:not(.active) {
 
 ul.ref-menu li a.active{
   background-color: #a32021;
-  color: white;
+  color: black;
 }
 
 ul.ref-menu li.right {
@@ -102,7 +102,7 @@ ul.topbar li {
 
 ul.topbar li a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -114,7 +114,7 @@ ul.topbar li a:hover:not(.active) {
 
 ul.topbar li a.active{
   background-color: #db5449;
-  color: white;
+  color: black;
 }
 
 ul.topbar li.right {
@@ -146,8 +146,8 @@ input[type=hidden] {
 
 input[type=submit] {
     width: 77.8px;
-    background-color: #37B9A2;
-    color: white;
+    background-color: #db5449;
+    color: black;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -158,7 +158,8 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #0AC251;
+    background-color: #a32021;
+    color: white;
     /*width: 90px;*/
 }
 
@@ -194,11 +195,11 @@ a.logo{
 
 a.logo:hover{
   text-decoration: none;
-  color: rgb(0, 150, 175);
+  color: #db5449;
 }
 
 span.Music{
-  color: rgb(0, 150, 175);
+  color: #db5449;
 }
 
 /*

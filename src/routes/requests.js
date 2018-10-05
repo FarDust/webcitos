@@ -9,6 +9,7 @@ const KoaRouter = require('koa-router');
  });
 
  router.get('requests', '/', async (ctx) => {
+  if (ctx.state.currentUser) {
    const requests = await ctx.orm.request.findAll();
    return ctx.render('requests/index', {
      requests,
@@ -17,32 +18,47 @@ const KoaRouter = require('koa-router');
      getEditPath: request => ctx.router.url('requests-edit', request.id),
      getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
    });
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
  });
 
- router.get('requests-new', '/new', ctx => ctx.render(
-   'requests/new',
+ router.get('requests-new', '/new', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('requests/new',
    {
      request: ctx.orm.request.build(),
      submitPath: ctx.router.url('requests-create'),
-   },
- ));
+   },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/'); 
+  }
+});
 
  router.post('requests-create', '/', async (ctx) => {
   await ctx.orm.request.create(ctx.request.body);
   ctx.redirect(ctx.router.url('requests'));
  });
 
-router.get('requests-show', '/:id', ctx => ctx.render(
-  'requests/show',
+router.get('requests-show', '/:id', (ctx) => {
+  if (ctx.state.currentUser) {
+  return ctx.render('requests/show',
   {
     name: 'request',
     ignore: ['createdAt', 'updatedAt', 'id'],
     state: JSON.parse(JSON.stringify(ctx.state.request)),
-  },
-));
+  },)
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');  
+  }
+});
 
  router.get('requests-edit', '/:id/edit', (ctx) => {
-   const { request } = ctx.state;
+  const { request } = ctx.state;
+  if (ctx.state.currentUser) {
    return ctx.render(
      'requests/edit',
      {
@@ -50,6 +66,10 @@ router.get('requests-show', '/:id', ctx => ctx.render(
        submitPath: ctx.router.url('requests-update', request.id),
      },
    );
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');  
+  }
  });
 
  router.patch('requests-update', '/:id', async (ctx) => {
