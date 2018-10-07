@@ -12,10 +12,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'userID', target: 'id'
     });
     publication.hasOne(models.item, {
-      foreignKey: 'id'
+      foreignKey: 'publication_id',
+      sourceKey: 'id'
     })
     publication.hasMany(models.request, {
-      foreignKey: 'id'
+      foreignKey: 'publication_id',
+      sourceKey: 'id'
     })
   };
   return publication;
