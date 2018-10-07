@@ -33,7 +33,7 @@ const KoaRouter = require('koa-router');
    },)
    }else{
    ctx.flashMessage.notice = 'Please, log in to access these features';
-   ctx.redirect('/'); 
+   ctx.redirect('/');
    }
 });
 
@@ -42,17 +42,20 @@ const KoaRouter = require('koa-router');
   ctx.redirect(ctx.router.url('publications'));
  });
 
- router.get('publications-show', '/:id', (ctx) => {
+ router.get('publications-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
+    const users = await ctx.orm.user;
+    const proper_user = await users.findById(ctx.state.publication.userID);
   return ctx.render('publications/show',
   {
     name: 'publication',
     ignore: ['createdAt', 'updatedAt', 'id'],
+    propietary_user: proper_user,
     state: JSON.parse(JSON.stringify(ctx.state.publication)),
   },)
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/'); 
+  ctx.redirect('/');
   }
 });
 
@@ -68,7 +71,7 @@ const KoaRouter = require('koa-router');
    );
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');  
+  ctx.redirect('/');
   }
  });
 

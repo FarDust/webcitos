@@ -1,1 +1,30 @@
 <%- include('../layouts/_show') %>
+<div class="center">
+  <h1> Publicaciones </h1>
+  <div class="content">
+
+    <p>You've <%= publications.length %> publications.</p>
+    <% if (state.id === currentUser.id) { %>
+      <a href="../publications/new"> Create a new publication! </a>
+    <% } %>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% publications.forEach(publication => { %>
+          <tr>
+            <td><%= publication.title %></td>
+            <td><%= publication.description %></td>
+            <td><%= publication.state %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
