@@ -1,2 +1,14 @@
 <h2> Creator: <%= propietary_user.name %>
 <%- include('../layouts/_show') %>
+<div class="center">
+    <h1> Item </h1>
+  <div class="content">
+    <% for(let key in item) { %>
+        <% if (!ignore.includes(key) ) {%>
+          <div class="tag">
+            <%= key.replace(/\b[a-z]\B/g, function(letter) {return letter.toUpperCase(); } ); %>: <%= item[key] %>
+          </div>
+        <% }%>
+    <% } %>
+  </div>
+</div>
