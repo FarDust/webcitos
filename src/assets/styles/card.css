@@ -1,0 +1,35 @@
+div.card{
+    border: 1px;
+    border-color: grey;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #efefef
+}
+
+div.card .card-image{
+    display: inline-block;
+    max-height: 100px;
+    max-width: 100px;
+    padding-right: 4px;
+}
+
+div.card .card-contex{
+    display: inline-block;
+    overflow: auto;
+}
+
+div.card-contex .card-header{
+    text-overflow: clip;
+    position: relative;
+    top: 0px;
+}
+
+div.card-contex .card-content{
+    text-overflow: clip;
+}
+
+div.card-contex .card-footer{
+    text-overflow: clip;
+    position: relative;
+    bottom: 0px;
+}
