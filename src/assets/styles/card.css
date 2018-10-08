@@ -3,7 +3,8 @@ div.card{
     border-color: grey;
     border-radius: 4px;
     padding: 6px;
-    background-color: #efefef
+    background-color: #e0e0e0;
+    margin: 4px;
 }
 
 div.card .card-image{
@@ -32,4 +33,36 @@ div.card-contex .card-footer{
     text-overflow: clip;
     position: relative;
     bottom: 0px;
+}
+
+.card-footer p{
+    display: inline-block;
+}
+
+.card-footer span{
+    color: #db5449;
+    font-weight: bold;
+}
+
+.card-footer span:hover{
+    color: #a32021;
+}
+
+.card-footer ul{
+    display: inline-block;
+}
+
+.card-footer ul li{
+    display: inline-block;
+}
+
+.card-group .card{
+    display: inline-block;
+    padding: 10px;
+    width: 40%;
+    min-width: 300px;
+}
+
+.card-group .card:hover{
+    background-color: #e9d4d2;
 }
