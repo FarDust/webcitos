@@ -32,11 +32,17 @@
       <li><a href="/items">Items</a></li>
       <li><a href="/reviews">Reviews</a></li>
       <li><a href="/trades">Trades</a></li>
-      <li>
-      <form class="form-button" action="<%= destroySessionPath %>" method="post">
-        <input type="hidden" name="_method" value="delete" />
-        <input type="submit" value="Log out" />
-      </form>
+      <li class="functional">
+        <form class="form-button" action="<%= destroySessionPath %>" method="post">
+          <input type="hidden" name="_method" value="delete" />
+          <input type="submit" value="Log out" />
+        </form>
+      </li>
+      <li class="functional">
+        <form id="search" class="form-inline" action="<%=  %>" method="get">
+          <input type="text" id="query" name="query" placeholder="Search"/>
+          <input type="submit" value="" />
+        </form>
       </li>
       <% } else { %>
       <li><a href="<%= newSessionPath %>">Sign in</a></li>
