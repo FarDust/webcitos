@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: 'id'
     })
     publication.hasMany(models.request, {
-      foreignKey: 'publication_id',
+      foreignKey: 'request_id',
       sourceKey: 'id'
     })
   };

@@ -27,6 +27,7 @@
       </li>
       <li><a href="/">Home</a></li>
       <% if (locals.currentUser) { %>
+      <li><a href="/users/<%=currentUser.id%>">Profile</a></li>
       <li><a href="/users">Users</a></li>
       <li><a href="/publications">Publications</a></li>
       <li><a href="/requests">Requests</a></li>
