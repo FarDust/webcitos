@@ -12,11 +12,11 @@
     <% } %>
   </div>
   <% if (state.userID === currentUser.id) { %>
-    <form action="<%=showRequestsPath(state)%>">
+    <form class="form-button" action="<%=showRequestsPath(state)%>">
       <input type="submit" value="See all offers" />
     </form>
   <%} else {%>
-    <form action="<%=createRequestPath(state)%>">
+    <form class="form-button" action="<%=createRequestPath(state)%>">
       <input type="submit" value="Create a new offer!" />
     </form>
   <% } %>
