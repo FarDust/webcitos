@@ -94,6 +94,7 @@ ul.topbar {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1;
 }
 
 ul.topbar li {
@@ -174,10 +175,11 @@ form {
   width: 325px;
 }
 /*logo*/
-div.container{
+div.logo-container{
   top: 0;
   width: 100%;
   padding: 15px;
+  padding-bottom: 17px;
   text-align: left;
   color: white;
   border-radius: 0px;
@@ -186,6 +188,7 @@ div.container{
   /*font-family: 'Roboto'*/;
   position: fixed;
   transition: 1s;
+  z-index: 1;
 }
 
 a.logo{
