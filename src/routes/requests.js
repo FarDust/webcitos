@@ -24,22 +24,41 @@ const KoaRouter = require('koa-router');
   }
  });
 
- router.get('requests-new', '/new', (ctx) => {
+ router.get('requests-all', '/publications/:pid/', async (ctx) => {
+  if (ctx.state.currentUser) {
+    const publication = await ctx.orm.publication.findById(ctx.params.pid);
+   const requests = await publication.getRequests();
+   return ctx.render('requests/index', {
+     requests,
+     newrequestPath: ctx.router.url('requests-new', ctx.params.pid),
+     getShowPath: request => ctx.router.url('requests-show', request.id),
+     getEditPath: request => ctx.router.url('requests-edit', request.id),
+     getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
+   });
+  }else{
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
+  }
+ });
+
+ router.get('requests-new', '/publications/:pid/new', (ctx) => {
   if (ctx.state.currentUser) {
   return ctx.render('requests/new',
    {
      request: ctx.orm.request.build(),
+     publication_id: ctx.params.pid,
+     user_id: ctx.state.currentUser.id,
      submitPath: ctx.router.url('requests-create'),
    },)
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/'); 
+  ctx.redirect('/');
   }
 });
 
  router.post('requests-create', '/', async (ctx) => {
   await ctx.orm.request.create(ctx.request.body);
-  ctx.redirect(ctx.router.url('requests'));
+  ctx.redirect(ctx.router.url('publications-show', {id: ctx.request.body.publication_id}));
  });
 
 router.get('requests-show', '/:id', (ctx) => {
@@ -52,7 +71,7 @@ router.get('requests-show', '/:id', (ctx) => {
   },)
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');  
+  ctx.redirect('/');
   }
 });
 
@@ -68,7 +87,7 @@ router.get('requests-show', '/:id', (ctx) => {
    );
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');  
+  ctx.redirect('/');
   }
  });
 

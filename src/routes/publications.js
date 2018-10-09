@@ -52,6 +52,8 @@ const KoaRouter = require('koa-router');
     name: 'publication',
     ignore: ['createdAt', 'updatedAt', 'id'],
     propietary_user: proper_user,
+    createRequestPath: publi => ctx.router.url('requests-new', {pid: publi.id}),
+    showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
     item: JSON.parse(JSON.stringify(items)),
     state: JSON.parse(JSON.stringify(ctx.state.publication)),
   },)

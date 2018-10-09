@@ -38,7 +38,7 @@ router.post('users-create', '/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
   try {
     await user.save(ctx.request.body);
-    ctx.redirect(ctx.router.url('/'));
+    ctx.redirect('/');
   } catch (error) {
     if (!isValidationError(error)) throw error;
     await ctx.render('users/new', {
@@ -58,6 +58,8 @@ router.get('users-show', '/:id', async (ctx) => {
     name: user.name,
     ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
     publications: publication,
+    showPublicationPath: publi => ctx.router.url('publications-show', {id: publi.id}),
+    showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
     state: JSON.parse(JSON.stringify(user)),
   },)
   } else {

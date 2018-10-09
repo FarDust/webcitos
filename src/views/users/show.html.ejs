@@ -14,14 +14,20 @@
           <th>Title</th>
           <th>Description</th>
           <th>State</th>
+          <% if (state.id === currentUser.id) { %>
+            <th>Requests</th>
+          <% } %>
         </tr>
       </thead>
       <tbody>
         <% publications.forEach(publication => { %>
           <tr>
-            <td><%= publication.title %></td>
+            <td><a href="<%-showPublicationPath(publication)%>"><%= publication.title %></td>
             <td><%= publication.description %></td>
             <td><%= publication.state %></td>
+            <% if (state.id === currentUser.id) { %>
+              <td><a href="<%-showRequestsPath(publication)%>"> see requests </td>
+            <% } %>
           </tr>
         <% }) %>
       </tbody>

@@ -20,24 +20,8 @@
       </label>
     </div>
     <% if (request.isNewRecord) { %>
-      <div class="center">
-        <label for="publication_id">
-          <span>PublicationID</span>
-           <input class="form-centered" type="publication_id" name="publication_id" id="publication_id" value="<%= request.publication_id %>" />
-           <% if (locals.errors && errors.publication_id) { %>
-           <span class="error"><%= errors.publication_id.message %></span>
-          <% } %>
-        </label>
-      </div>
-      <div class="center">
-        <label for="userID">
-          <span>UserID</span>
-          <input class="form-centered" type="userID" name="userID" id="userID" />
-          <% if (locals.errors && errors.userID) { %>
-           <span class="error"><%= errors.userID.message %></span>
-          <% } %>
-        </label>
-      </div>
+      <input class="form-centered" type="hidden" name="publication_id" id="publication_id" value="<%=publication_id%>" />
+      <input class="form-centered" type="hidden" name="userID" id="userID" value="<%=user_id%>" />
       <% } %>
       <div class="actions center">
         <input class="form-centered" type="submit" value="<%= request.isNewRecord ? 'Create' : 'Edit' %>" />
