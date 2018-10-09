@@ -38,8 +38,8 @@
     "webpack-command": "^0.4.1"
   },
   "dependencies": {
-    "faker": "^4.1.0",
     "@babel/polyfill": "^7.0.0",
+    "faker": "^4.1.0",
     "koa": "^2.3.0",
     "koa-body": "^4.0.4",
     "koa-ejs": "^4.1.0",
