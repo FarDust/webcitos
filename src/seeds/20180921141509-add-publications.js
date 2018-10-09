@@ -4,7 +4,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('publications', [{
         title: 'Nintendo DS for trade!!',
-        description: "I'm quitting the gamer life, looking for something else that might entertain me.",
+        description: "Looking for something else that might entertain me.",
         state: 'exchange',
         userID: 1,
         createdAt: new Date(2018, 0, 1),

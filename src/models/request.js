@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     request.belongsTo(models.user, {
       foreignKey: 'userID', target: 'id'
     });
+    request.belongsTo(models.item, {
+      foreignKey: 'item_offered_id', target: 'id'
+    });
   };
   return request;
 };

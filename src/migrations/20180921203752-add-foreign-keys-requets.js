@@ -16,6 +16,13 @@ module.exports = {
         {
           type: Sequelize.INTEGER
         }
+      ),
+      queryInterface.addColumn(
+        'requests',
+        'item_offered_id',
+        {
+          type: Sequelize.INTEGER
+        }
       )
     ];
   },
