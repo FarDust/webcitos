@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
     request.belongsTo(models.item, {
       foreignKey: 'item_offered_id', target: 'id'
     });
+    request.hasOne(models.trade, {
+      foreignKey: 'id_request', sourceKey: 'id'
+    });
   };
   return request;
 };
