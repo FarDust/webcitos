@@ -52,7 +52,7 @@ const KoaRouter = require('koa-router');
     const publication = await ctx.orm.publication.findById(ctx.params.pid);
     var user_items = [];
     const user_publications = await ctx.state.currentUser.getPublications();
-    if (user_publications.length === 0) {
+    if (user_publications.length === 0 && publication.state !== "gift") {
       ctx.flashMessage.notice = "You don't have any item to exchange :c";
       return ctx.redirect(ctx.router.url('publications-new'));
     }
