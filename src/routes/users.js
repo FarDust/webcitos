@@ -58,6 +58,7 @@ router.get('users-show', '/:id', async (ctx) => {
     name: user.name,
     ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
     publications: publication,
+    newPublicationPath: ctx.router.url('publications-new'),
     showPublicationPath: publi => ctx.router.url('publications-show', {id: publi.id}),
     showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
     state: JSON.parse(JSON.stringify(user)),

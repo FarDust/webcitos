@@ -5,7 +5,9 @@
 
     <p>You've <%= publications.length %> publications.</p>
     <% if (state.id === currentUser.id) { %>
-      <a href="../publications/new"> Create a new publication! </a>
+      <form class="form-button" action="<%=newPublicationPath%>">
+        <input type="submit" value="Create a new publication!" />
+      </form>
     <% } %>
 
     <table>
