@@ -1,6 +1,12 @@
 const KoaRouter = require('koa-router');
  const router = new KoaRouter();
 
+ async function asyncForEach(array, callback) {
+   for (let index = 0; index < array.length; index++) {
+     await callback(array[index], index, array)
+   }
+ }
+
  router.param('id', async (id, ctx, next) => {
    const request = await ctx.orm.request.findById(ctx.params.id);
    ctx.assert(request, 404);
@@ -41,19 +47,35 @@ const KoaRouter = require('koa-router');
   }
  });
 
- router.get('requests-new', '/publications/:pid/new', (ctx) => {
+ router.get('requests-new', '/publications/:pid/new', async (ctx) => {
   if (ctx.state.currentUser) {
-  return ctx.render('requests/new',
-   {
-     request: ctx.orm.request.build(),
-     publication_id: ctx.params.pid,
-     user_id: ctx.state.currentUser.id,
-     submitPath: ctx.router.url('requests-create'),
-   },)
-  }else{
-  ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');
-  }
+    const publication = await ctx.orm.publication.findById(ctx.params.pid);
+    var user_items = [];
+    const user_publications = await ctx.state.currentUser.getPublications();
+    if (user_publications.length === 0) {
+      ctx.flashMessage.notice = "You don't have any item to exchange :c";
+      return ctx.redirect(ctx.router.url('publications-new'));
+    }
+    else {
+      await asyncForEach(user_publications, async (publi) => {
+        let n_item = await publi.getItem();
+        user_items.push(n_item);
+      });
+      return ctx.render('requests/new',
+       {
+         request: ctx.orm.request.build(),
+         publication_id: ctx.params.pid,
+         publication_state: publication.state,
+         user_items: user_items,
+         user_id: ctx.state.currentUser.id,
+         submitPath: ctx.router.url('requests-create'),
+       },)
+    };
+
+    }else{
+      ctx.flashMessage.notice = 'Please, log in to access these features';
+      ctx.redirect('/');
+    }
 });
 
  router.post('requests-create', '/', async (ctx) => {

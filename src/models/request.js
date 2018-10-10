@@ -2,7 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const request = sequelize.define('request', {
     message: DataTypes.STRING,
-    item_offered_id: DataTypes.INTEGER,
+    item_offered_id: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     publication_id: DataTypes.INTEGER,
     userID: DataTypes.INTEGER,
   }, {});
