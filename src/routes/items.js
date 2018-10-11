@@ -13,7 +13,7 @@ router.get('items', '/', async (ctx) => {
   const items = await ctx.orm.item.findAll();
   return ctx.render('items/index', {
     items,
-    newItemPath: ctx.router.url('items-new'),
+    //newItemPath: ctx.router.url('items-new'),
     getShowPath: item => ctx.router.url('items-show', item.id),
     getEditPath: item => ctx.router.url('items-edit', item.id),
     getDestroyPath: item => ctx.router.url('items-destroy', item.id),
@@ -24,22 +24,23 @@ router.get('items', '/', async (ctx) => {
   }
 });
 
-router.get('items-new', '/new', (ctx) => {
+router.get('items-new', '/new/:pid', (ctx) => {
   if (ctx.state.currentUser) {
   return ctx.render('items/new',
   {
     item: ctx.orm.item.build(),
+    publication_id: ctx.params.pid,
     submitPath: ctx.router.url('items-create'),
   },)
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/'); 
+  ctx.redirect('/');
   }
 });
 
 router.post('items-create', '/', async (ctx) => {
-  await ctx.orm.item.create(ctx.request.body);
-  ctx.redirect(ctx.router.url('items'));
+  const new_item = await ctx.orm.item.create(ctx.request.body);
+  ctx.redirect(ctx.router.url('publications-show', new_item.publication_id));
 });
 
 router.get('items-show', '/:id', (ctx) => {
@@ -52,7 +53,7 @@ router.get('items-show', '/:id', (ctx) => {
   },)
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');  
+  ctx.redirect('/');
   }
 });
 
@@ -68,7 +69,7 @@ router.get('items-edit', '/:id/edit', (ctx) => {
   );
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');  
+  ctx.redirect('/');
   }
 });
 

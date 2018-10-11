@@ -244,13 +244,13 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-  background-color: #66666b;
+  background-color: #7f7f81;
   color: white;
 }
 
 th {
-    border-top-left-radius: 10px;
-    background-color: #00AB8C;
+    border-radius: 4px;
+    background-color: #db5449;
     color: white;
 }
 
@@ -294,12 +294,16 @@ i.arrowr  {
 }
 
 #side-open:hover{
-  background-color: #525252;
+  background-color: #ff8575;
 }
 
 img.side-menu{
   opacity: 0.6;
   display: block;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 45px;
+  height: 45px;
 }
 
 .center-arrow {
@@ -370,6 +374,56 @@ table ul li form{
 
 table ul li form input[type="submit"]{
   margin: 0px;
+}
+
+a {
+  text-decoration-color: #db5449;
+  color: inherit;
+}
+
+a:hover{
+  text-decoration-color: #a32021;
+}
+
+a:focus{
+  color: #ff8575;
+  text-decoration-color: #ff8575;
+}
+
+span.badge{
+  padding: 4px;
+  border-radius: 4px;
+}
+
+span.badge.primary{
+  background-color: #db5449;
+}
+
+span.badge.primary:hover{
+  background-color: #ff8575;
+}
+
+a.badge-link{
+  padding: 4px;
+  border-radius: 8px;
+  background-color: #b6b6b6;
+}
+
+a.badge-link:hover{
+  background-color: #c2c2c2;
+}
+
+a.badge-link.primary{
+  background-color: #db5449;
+}
+
+a.badge-link.primary:hover{
+  background-color: #ff8575;
+}
+
+a.badge-link{
+  color: black;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 600px){

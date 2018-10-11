@@ -33,26 +33,33 @@ const KoaRouter = require('koa-router');
    },)
    }else{
    ctx.flashMessage.notice = 'Please, log in to access these features';
-   ctx.redirect('/'); 
+   ctx.redirect('/');
    }
 });
 
  router.post('publications-create', '/', async (ctx) => {
-  await ctx.orm.publication.create(ctx.request.body);
-  ctx.redirect(ctx.router.url('publications'));
+   const new_publication = await ctx.orm.publication.create(ctx.request.body);
+  ctx.redirect(ctx.router.url('items-new', {pid:new_publication.id}));
  });
 
- router.get('publications-show', '/:id', (ctx) => {
+ router.get('publications-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
+    const users = await ctx.orm.user;
+    const proper_user = await users.findById(ctx.state.publication.userID);
+    const items = await ctx.state.publication.getItem();
   return ctx.render('publications/show',
   {
     name: 'publication',
     ignore: ['createdAt', 'updatedAt', 'id'],
+    propietary_user: proper_user,
+    createRequestPath: publi => ctx.router.url('requests-new', {pid: publi.id}),
+    showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
+    item: JSON.parse(JSON.stringify(items)),
     state: JSON.parse(JSON.stringify(ctx.state.publication)),
   },)
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/'); 
+  ctx.redirect('/');
   }
 });
 
@@ -68,7 +75,7 @@ const KoaRouter = require('koa-router');
    );
   }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');  
+  ctx.redirect('/');
   }
  });
 

@@ -30,20 +30,16 @@
     </div>
     <div class="center">
       <label for="state">
-        <span>State</span>
-        <input class="form-centered" type="text" name="state" id="state" value="<%= publication.state %>"/>
+        <span>State</span> <br/>
+        <select class="form-centered" name="state" id="state" value="<%= publication.state %>">
+          <option value="exchange">Exchange</option>
+          <option value="gift">Gift</option>
+          <option value="inventary">Inventary</option>
+        </select>
       </label>
     </div>
     <% if (publication.isNewRecord) { %>
-      <div class="center">
-        <label for="userID">
-          <span>UserID</span>
-          <input class="form-centered" type="number" name="userID" id="userID" />
-          <% if (locals.errors && errors.userID) { %>
-           <span class="error"><%= errors.userID.message %></span>
-          <% } %>
-        </label>
-      </div>
+          <input class="form-centered" type="hidden" name="userID" id="userID" value="<%= currentUser.id %>"/>
     <% } %>
       <div class="actions center">
         <input class="form-centered" type="submit" value="<%= publication.isNewRecord ? 'Create' : 'Edit' %>" />

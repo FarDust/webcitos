@@ -50,13 +50,20 @@ router.post('users-create', '/', async (ctx) => {
   }
 });
 
-router.get('users-show', '/:id', (ctx) => {
+router.get('users-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
+  const publication = await ctx.state.user.getPublications();
+  const user = ctx.state.user;
   return ctx.render('users/show',
   {
-    name: ctx.state.user.name,
+    name: user.name,
     ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
-    state: JSON.parse(JSON.stringify(ctx.state.user)),
+    publications: publication,
+    newPublicationPath: ctx.router.url('publications-new'),
+    showPublicationPath: publi => ctx.router.url('publications-show', {id: publi.id}),
+    showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
+    showMineRequestsPath: ctx.router.url('requests-mine'),
+    state: JSON.parse(JSON.stringify(user)),
   },)
   } else {
   ctx.flashMessage.notice = 'Please, log in to access these features';
@@ -112,7 +119,7 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
         own_requests_id.push(trade.id_request);
       };
     });
-    console.log('REVIEWS', reviews);
+    //console.log('REVIEWS', reviews);
     return ctx.render(
     'users/trades',
     {

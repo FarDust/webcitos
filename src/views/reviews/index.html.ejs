@@ -4,33 +4,27 @@
 <p>
   <a href="<%= newreviewPath %>">Create new review</a>
 </p>
-<table>
-  <thead>
-    <tr>
-      <th>Fullfilment offer score</th>
-      <th>Puntuallity score</th>
-      <th>Quality score</th>
-      <th>Review</th>
-      <th>Trade ID</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% reviews.forEach(review => { %>
-      <tr>
-        <td><%= review.fullfillment_offer %></td>
-        <td><%= review.puntuality %></td>
-        <td><%= review.quality_offered %></td>
-        <td><%= review.content %></td>
-        <td><%= review.trade_id %></td>
-        <td>
-          <ul>
-            <li><a href="<%= getShowPath(review) %>">Show</a></li>
 
-            <li><a href="<%= getEditPath(review) %>">Edit</a></li>
-          </ul>
-        </td>
-      </tr>
-    <% }) %>
-  </tbody>
-</table>
+<div class="content">
+  <div class="row">
+    <% reviews.forEach(review => { %>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-content">
+            Fullfilment offer: <%= review.fullfillment_offer %> stars <br/>
+            Puntuallity: <%= review.puntuality %> stars<br/>
+            Quality offered: <%= review.quality_offered %> stars
+            <hr/>
+            <a href="<%= review.trade_id %>">See review</a>
+          </div>
+          <div class="card-footer">
+            <ul>
+              <li class="button"><a href="<%= getShowPath(review) %>">Show</a></li>
+              <li class="button"><a href="<%= getEditPath(review) %>">Edit</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
