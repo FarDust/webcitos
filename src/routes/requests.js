@@ -58,15 +58,29 @@ const KoaRouter = require('koa-router');
     const publication = await ctx.orm.publication.findById(ctx.params.pid);
     var user_items = [];
     const user_publications = await ctx.state.currentUser.getPublications();
+    const allRequests = await ctx.orm.request.findAll();
+    const used_items = [];
+    allRequests.forEach((req) => {
+      if (req.userID === ctx.state.currentUser.id) {
+        used_items.push(req.item_offered_id);
+      }
+    });
+    await asyncForEach(user_publications, async (publi) => {
+      let n_item = await publi.getItem();
+      if (!used_items.includes(n_item.id)) {
+        user_items.push(n_item);
+      }
+    });
+
     if (user_publications.length === 0 && publication.state !== "gift") {
       ctx.flashMessage.notice = "You don't have any item to exchange :c";
       return ctx.redirect(ctx.router.url('publications-new'));
     }
+    else if (user_items.length === 0) {
+      ctx.flashMessage.notice = "You've already offered all your items! :o";
+      return ctx.redirect(ctx.router.url('publications-show', {id: ctx.params.pid}));
+    }
     else {
-      await asyncForEach(user_publications, async (publi) => {
-        let n_item = await publi.getItem();
-        user_items.push(n_item);
-      });
       return ctx.render('requests/new',
        {
          request: ctx.orm.request.build(),
@@ -139,7 +153,7 @@ router.get('requests-show', '/:id', (ctx) => {
 
  router.delete('requests-destroy', '/:id', async (ctx) => {
    await ctx.state.request.destroy();
-   ctx.redirect(ctx.router.url('requests'));
+   ctx.redirect(ctx.router.url('publications'));
  });
 
  module.exports = router;
