@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const { forEach } = require('p-iteration');
 
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
 const router = new KoaRouter();
@@ -82,6 +83,39 @@ router.get('users-edit', '/:id/edit', (ctx) => {
   } else {
   ctx.flashMessage.notice = 'You can only edit your own profile';
   ctx.redirect('/');
+  }
+});
+
+router.get('users-trades', '/:id/trades', async (ctx) => {
+  const { user } = ctx.state;
+  if (ctx.session.currentUserId == user.id) {
+    const publications = await ctx.state.currentUser.getPublications();
+    var requests = [];
+    var trades = [];
+    //requests = requests.concat(req)
+    await forEach(publications, async (pub) => {
+      const requests = await pub.getRequests();
+      console.log('requests',requests)
+      await forEach(requests, async(req) => {
+        const trade = await req.getTrade();
+        console.log('trade!!!!', trade)
+        if (trade){
+          trades.push(trade);          
+        };
+      });
+    });
+    console.log(trades);
+    return ctx.render(
+    'users/trades',
+    {
+      user,
+      trades
+    },
+  );
+  }
+  else{
+    ctx.flashMessage.notice = 'Please, log in to access these features';
+    ctx.redirect('/');
   }
 });
 
