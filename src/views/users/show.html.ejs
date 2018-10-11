@@ -9,30 +9,33 @@
         <input type="submit" value="Create a new publication!" />
       </form>
     <% } %>
+    
+    <div class="row">
+      <% publications.forEach(publication => { %>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-contex">
+            <h4 class="card-header"><%= publication.title %></h4>
+            <div class="card-content">
 
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>State</th>
-          <% if (state.id === currentUser.id) { %>
-            <th>Requests</th>
-          <% } %>
-        </tr>
-      </thead>
-      <tbody>
-        <% publications.forEach(publication => { %>
-          <tr>
-            <td><a href="<%-showPublicationPath(publication)%>"><%= publication.title %></td>
-            <td><%= publication.description %></td>
-            <td><%= publication.state %></td>
-            <% if (state.id === currentUser.id) { %>
-              <td><a href="<%-showRequestsPath(publication)%>"> see requests </td>
-            <% } %>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
+            </div>
+            <div class="card-content">
+                <%= publication.description %>
+            </div>
+            <div class="card-footer">
+              <p>
+                <span>State:</span> <%= publication.state %>
+              </p>
+              <br>
+              <% if (state.id === currentUser.id) { %>
+                <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'">see requests</button>
+              <% } %>
+              <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">see publication</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
   </div>
 </div>

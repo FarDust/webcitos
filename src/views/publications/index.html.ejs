@@ -5,31 +5,33 @@
   <a href="<%= newpublicationPath %>">Create new publication</a>
 </p>
 <div class="container">
-  <div class="card-group">
+  <div class="row">
     <% publications.forEach(publication => { %>
-    <div class="card">
-      <img class="card-image" src="<%= assetPath('example.svg') %>" alt=""/>
-      <div class="card-contex">
-          <h4 class="card-header"><%= publication.title %></h4>
-          <div class="card-content">
-            <%= publication.description %>>
-          </div>
-          <div class="card-footer">
-            <p>
-              <span>State:</span> <%= publication.state %> <br>
-              <span>Added by:</span> <%= publication.userID %>
-            </p>
-            <ul>
-              <li><a class="button" href="<%= getShowPath(publication) %>">Show</a></li>
-              <li><a class="button" href="<%= getEditPath(publication) %>">Edit</a></li>
-              <li>
-                <form class="form-button" action="<%= getDestroyPath(publication) %>" method="post">
-                  <input type="hidden" name="_method" value="delete" />
-                  <input type="submit" value="Delete" />
-                </form>
-              </li>
-            </ul>
-          </div>
+    <div class="col-4">
+      <div class="card">
+        <img class="card-image" src="<%= assetPath('example.svg') %>" alt=""/>
+        <div class="card-contex">
+            <h4 class="card-header"><%= publication.title %></h4>
+            <div class="card-content">
+              <%= publication.description %>>
+            </div>
+            <div class="card-footer">
+              <p>
+                <span>State:</span> <%= publication.state %> <br>
+                <span>Added by:</span> <%= publication.userID %>
+              </p>
+              <ul>
+                <li><a class="button" href="<%= getShowPath(publication) %>">Show</a></li>
+                <li><a class="button" href="<%= getEditPath(publication) %>">Edit</a></li>
+                <li>
+                  <form class="form-button" action="<%= getDestroyPath(publication) %>" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <input type="submit" value="Delete" />
+                  </form>
+                </li>
+              </ul>
+            </div>
+        </div>
       </div>
     </div>
     <% }) %>
