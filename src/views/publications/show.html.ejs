@@ -1,24 +1,49 @@
-<h2> Creator: <%= propietary_user.name %> </h2>
-<%- include('../layouts/_show') %>
-<div class="center">
-    <h1> Item </h1>
-  <div class="content">
-    <% for(let key in item) { %>
-        <% if (!ignore.includes(key) ) { %>
-          <div class="tag">
-            <%= key.replace(/\b[a-z]\B/g, function(letter) {return letter.toUpperCase(); } ); %>: <%= item[key] %>
-          </div>
-        <% }%>
-    <% } %>
-    <% if (state.userID === currentUser.id) { %>
-      <form class="form-button" action="<%=showRequestsPath(state)%>">
-        <input type="submit" value="See all offers" />
-      </form>
-    <% } else { %>
-      <form class="form-button" action="<%=createRequestPath(state)%>">
-        <input type="submit" value="Create a new offer!" />
-      </form>
-    <% } %>
+<div class="content">
+  <div class="row">
+    <div class="col-6">
+      <div class="content">
+      <%- include('../layouts/_show') %>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="content">
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <h2 class="centered-header"><%= propietary_user.name %></h2>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-8">
+            <% if (state.userID === currentUser.id) { %>
+              <form class="form-button" action="<%=showRequestsPath(state)%>">
+                <input type="submit" value="See all offers" />
+              </form>
+            <% } else { %>
+              <form class="form-button" action="<%=createRequestPath(state)%>">
+                <input type="submit" value="Create a new offer!" />
+              </form>
+            <% } %>
+        </div>
+        <div class="col-2"></div>
+      </div>
+      </div>
+    </div>
+    <div class="col-12 content">
+      <h3>Description</h3>
+      <div class="row">
+        <div class="col-6">
+          <% for(let key in item) { %>
+            <% if (!ignore.includes(key) ) { %>
+              <div class="tag">
+                <%= key.replace(/\b[a-z]\B/g, function(letter) {return letter.toUpperCase(); } ); %>: <%= item[key] %>
+              </div>
+            <% }%>
+          <% } %>
+        </div>
+        <div class="col-6">
+
+        </div>
+      </div>
+    </div>
   </div>
-  
 </div>
