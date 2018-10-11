@@ -87,6 +87,8 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
     const own_requests = await ctx.state.currentUser.getRequests();
     var requests = [];
     var trades = [];
+    var reviews = [];
+    var own_requests_id = [];
     await forEach(publications, async (pub) => {
       const requests = await pub.getRequests();
       //console.log('requests',requests)
@@ -94,6 +96,8 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
         const trade = await req.getTrade();
         //console.log('trade!!!!', trade)
         if (trade){
+          const review = await trade.getReview();
+          reviews.push(review);
           trades.push(trade);
         };
       });
@@ -102,16 +106,23 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
     await forEach(own_requests, async(req) => {
       const trade = await req.getTrade();
       if (trade){
+        const review = await trade.getReview();
+        reviews.push(review);
         trades.push(trade);
+        own_requests_id.push(trade.id_request);
       };
     });
+    console.log('REVIEWS', reviews);
     return ctx.render(
     'users/trades',
     {
       user,
       trades,
+      reviews,
+      own_requests_id,
       tradesUrl: ctx.router.url('trades-show', {id: '0'}),
       requestsUrl: ctx.router.url('requests-show', {id: '0'}),
+      reviewsUrl: ctx.router.url('reviews-show', {id: '0'}),
       reviewNewUrl: ctx.router.url('reviews-new', {tid: '0'})
     },
   );
