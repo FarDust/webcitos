@@ -20,6 +20,16 @@
             <button class="button primary" onclick="window.location.href='<%= tradesUrl + trade.id.toString() %>'">
               See trade
             </button>
+            <% if (trade.state == 'not_concreted') { %>
+            <% let edit_string = '/edit' %>
+            <button class="button primary" onclick="window.location.href='<%= tradesUrl + trade.id.toString() + edit_string %>'">
+              Concrete trade
+            </button>
+            <% } else { %>
+            <button class="button primary" onclick="window.location.href='<%= reviewNewUrl + trade.id.toString() %>'">
+              Add review
+            </button>
+            <% } %>
           </div>
       </div>
     </div>

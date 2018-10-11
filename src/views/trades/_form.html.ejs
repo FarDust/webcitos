@@ -13,8 +13,11 @@
   <% } %>
   <div class="center">
     <label for="state">
-      <span class="form">State</span>
-      <input class="form-centered" type="text" name="state" id="state" value="<%= trade.state %>"/>
+      <span class="form">Select the state of the trade: </span>
+        <select name="state" id="state">
+          <option value="concreted">Concreted</option>
+          <option value="not_concreted">Not concreted</option>
+        </select>
     </label>
   </div>
   <div class="actions center">

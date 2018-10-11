@@ -13,7 +13,7 @@ const KoaRouter = require('koa-router');
    const reviews = await ctx.orm.review.findAll();
    return ctx.render('reviews/index', {
      reviews,
-     newreviewPath: ctx.router.url('reviews-new'),
+     newreviewPath: ctx.router.url('/'),
      getShowPath: review => ctx.router.url('reviews-show', review.id),
      getEditPath: review => ctx.router.url('reviews-edit', review.id),
      getDestroyPath: review => ctx.router.url('reviews-destroy', review.id),
@@ -24,16 +24,17 @@ const KoaRouter = require('koa-router');
   }
  });
 
- router.get('reviews-new', '/new', (ctx) => {
+ router.get('reviews-new', '/trades/new/:tid', (ctx) => {
   if (ctx.state.currentUser) {
-  return ctx.render('reviews/new',
-   {
-     review: ctx.orm.review.build(),
-     submitPath: ctx.router.url('reviews-create'),
-   },)
+    return ctx.render('reviews/new',
+     {
+       review: ctx.orm.review.build(),
+       trade_id: ctx.params.tid,
+       submitPath: ctx.router.url('reviews-create'),
+     },)
   }else{
-  ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/'); 
+    ctx.flashMessage.notice = 'Please, log in to access these features';
+    ctx.redirect('/'); 
   }
 });
 
