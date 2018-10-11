@@ -14,12 +14,18 @@ const KoaRouter = require('koa-router');
    return next();
  });
 
- router.get('requests', '/', async (ctx) => {
+ router.get('requests-mine', '/actualUser', async (ctx) => {
   if (ctx.state.currentUser) {
-   const requests = await ctx.orm.request.findAll();
+    const allRequests = await ctx.orm.request.findAll();
+    const requests = [];
+    allRequests.forEach(req => {
+     if (req.userID === ctx.state.currentUser.id) {
+       requests.push(req);
+     }
+   });
+
    return ctx.render('requests/index', {
      requests,
-     newrequestPath: ctx.router.url('requests-new'),
      getShowPath: request => ctx.router.url('requests-show', request.id),
      getEditPath: request => ctx.router.url('requests-edit', request.id),
      getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
