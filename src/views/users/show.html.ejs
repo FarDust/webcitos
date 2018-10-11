@@ -1,4 +1,13 @@
-<%- include('../layouts/_show') %>
+<div class="row">
+  <div class="col-2"></div>
+  <div class="card col-8">
+    <img class="card-image" src="<%= assetPath('avatar.svg') %>" alt="avavar">
+    <div class="card-content">
+        <%- include('../layouts/_show') %>
+    </div>
+  </div>
+</div>
+
 <div class="center">
   <h1> Publicaciones </h1>
   <div class="content">
@@ -28,6 +37,7 @@
               <br>
               <% if (state.id === currentUser.id) { %>
                 <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'">see requests</button>
+                &ensp;  
               <% } %>
               <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">see publication</button>
             </div>
