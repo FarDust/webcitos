@@ -294,12 +294,16 @@ i.arrowr  {
 }
 
 #side-open:hover{
-  background-color: #525252;
+  background-color: #ff8575;
 }
 
 img.side-menu{
   opacity: 0.6;
   display: block;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 45px;
+  height: 45px;
 }
 
 .center-arrow {

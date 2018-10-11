@@ -10,7 +10,7 @@ router.param('id', async (id, ctx, next) => {
 
 router.get('trades', '/', async (ctx) => {
   if (ctx.state.currentUser) {
-  const trades = await ctx.orm.trade.findAll();
+  const trades = await ctx.orm.trade.findAll(); /* Aqui tenemos que filtrar por usuario */
   return ctx.render('trades/index', {
     trades,
     newTradePath: ctx.router.url('trades-new'),

@@ -110,7 +110,9 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
     'users/trades',
     {
       user,
-      trades
+      trades,
+      tradesUrl: ctx.router.url('trades-show', {id: '/'}),
+      requestsUrl: ctx.router.url('requests-show', {id: '/'}),
     },
   );
   }
