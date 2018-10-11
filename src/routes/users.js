@@ -62,6 +62,7 @@ router.get('users-show', '/:id', async (ctx) => {
     newPublicationPath: ctx.router.url('publications-new'),
     showPublicationPath: publi => ctx.router.url('publications-show', {id: publi.id}),
     showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
+    showMineRequestsPath: ctx.router.url('requests-mine'),
     state: JSON.parse(JSON.stringify(user)),
   },)
   } else {
@@ -100,7 +101,7 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
         const trade = await req.getTrade();
         console.log('trade!!!!', trade)
         if (trade){
-          trades.push(trade);          
+          trades.push(trade);
         };
       });
     });

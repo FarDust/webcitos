@@ -5,11 +5,10 @@
 
     <p>You've <%= publications.length %> publications.</p>
     <% if (state.id === currentUser.id) { %>
-      <form class="form-button" action="<%=newPublicationPath%>">
-        <input type="submit" value="Create a new publication!" />
-      </form>
+      <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication!</button>
+      <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See my offers!</button>
     <% } %>
-    
+
     <div class="row">
       <% publications.forEach(publication => { %>
       <div class="col-6">
