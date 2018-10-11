@@ -1,5 +1,6 @@
 const KoaRouter = require('koa-router');
- const router = new KoaRouter();
+const router = new KoaRouter();
+const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
 
  router.param('id', async (id, ctx, next) => {
    const publication = await ctx.orm.publication.findById(ctx.params.id);
@@ -38,8 +39,18 @@ const KoaRouter = require('koa-router');
 });
 
  router.post('publications-create', '/', async (ctx) => {
-   const new_publication = await ctx.orm.publication.create(ctx.request.body);
-  ctx.redirect(ctx.router.url('items-new', {pid:new_publication.id}));
+   const publication = ctx.orm.publication.build(ctx.request.body);
+   try {
+     await publication.save(ctx.request.body);
+     ctx.redirect(ctx.router.url('items-new', {pid:publication.id}));
+   } catch (error) {
+     if (!isValidationError(error)) throw error;
+     await ctx.render('publications/new', {
+       publication,
+       errors: getFirstErrors(error),
+       submitPath: ctx.router.url('publications-create'),
+     });
+   }
  });
 
  router.get('publications-show', '/:id', async (ctx) => {

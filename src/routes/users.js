@@ -63,6 +63,7 @@ router.get('users-show', '/:id', async (ctx) => {
     showPublicationPath: publi => ctx.router.url('publications-show', {id: publi.id}),
     showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
     showMineRequestsPath: ctx.router.url('requests-mine'),
+    getDestroyPublicationPath: publi => ctx.router.url('publications-destroy', {id: publi.id}),
     state: JSON.parse(JSON.stringify(user)),
   },)
   } else {
