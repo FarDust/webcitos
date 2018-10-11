@@ -79,6 +79,11 @@ router.patch('trades-update', '/:id', async (ctx) => {
        ctx.request.body,
        { fields: ['id_request', 'state'] },
      );
+     if (ctx.request.body.state == 'concreted') {
+      const request = await ctx.orm.request.findById(trade.id_request);
+      const publication = await ctx.orm.publication.findById(request.publication_id);
+      await publication.update({state: 'inventory'}, { fields: ['state'] });
+     }
      ctx.redirect(ctx.router.url('trades-show', trade.id));
    } catch (error) {
      if (!isValidationError(error)) throw error;

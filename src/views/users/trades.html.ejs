@@ -1,5 +1,9 @@
 <h1>Your trades</h1>
 
+<p>You have <%= trades.length %> trades.</p>
+
+<% if (trades.length > 0) { %>
+
 <div class="row">
   <% trades.forEach(trade => { %>
   <div class="col-3">
@@ -36,3 +40,5 @@
   </div>
   <% }) %>
 </div>
+
+<% } %>

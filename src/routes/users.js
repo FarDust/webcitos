@@ -84,6 +84,7 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
   const { user } = ctx.state;
   if (ctx.session.currentUserId == user.id) {
     const publications = await ctx.state.currentUser.getPublications();
+    const own_requests = await ctx.state.currentUser.getRequests();
     var requests = [];
     var trades = [];
     await forEach(publications, async (pub) => {
@@ -98,6 +99,12 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
       });
     });
     //console.log(trades);
+    await forEach(own_requests, async(req) => {
+      const trade = await req.getTrade();
+      if (trade){
+        trades.push(trade);
+      };
+    });
     return ctx.render(
     'users/trades',
     {
