@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const { forEach } = require('p-iteration');
 
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
 const router = new KoaRouter();
@@ -49,13 +50,20 @@ router.post('users-create', '/', async (ctx) => {
   }
 });
 
-router.get('users-show', '/:id', (ctx) => {
+router.get('users-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
+  const publication = await ctx.state.user.getPublications();
+  const user = ctx.state.user;
   return ctx.render('users/show',
   {
-    name: ctx.state.user.name,
+    name: user.name,
     ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
-    state: JSON.parse(JSON.stringify(ctx.state.user)),
+    publications: publication,
+    newPublicationPath: ctx.router.url('publications-new'),
+    showPublicationPath: publi => ctx.router.url('publications-show', {id: publi.id}),
+    showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
+    showMineRequestsPath: ctx.router.url('requests-mine'),
+    state: JSON.parse(JSON.stringify(user)),
   },)
   } else {
   ctx.flashMessage.notice = 'Please, log in to access these features';
@@ -76,6 +84,39 @@ router.get('users-edit', '/:id/edit', (ctx) => {
   } else {
   ctx.flashMessage.notice = 'You can only edit your own profile';
   ctx.redirect('/');
+  }
+});
+
+router.get('users-trades', '/:id/trades', async (ctx) => {
+  const { user } = ctx.state;
+  if (ctx.session.currentUserId == user.id) {
+    const publications = await ctx.state.currentUser.getPublications();
+    var requests = [];
+    var trades = [];
+    //requests = requests.concat(req)
+    await forEach(publications, async (pub) => {
+      const requests = await pub.getRequests();
+      console.log('requests',requests)
+      await forEach(requests, async(req) => {
+        const trade = await req.getTrade();
+        console.log('trade!!!!', trade)
+        if (trade){
+          trades.push(trade);
+        };
+      });
+    });
+    console.log(trades);
+    return ctx.render(
+    'users/trades',
+    {
+      user,
+      trades
+    },
+  );
+  }
+  else{
+    ctx.flashMessage.notice = 'Please, log in to access these features';
+    ctx.redirect('/');
   }
 });
 

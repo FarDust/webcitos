@@ -1,0 +1,21 @@
+<h1>Your trades</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID Request</th>
+      <th>State</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% trades.forEach(trade => { %>
+      <tr>
+        <td><%= trade.id_request %></td>
+        <td><%= trade.state %></td>
+        <td>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

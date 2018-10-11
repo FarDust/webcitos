@@ -1,7 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const request = sequelize.define('request', {
-    message: DataTypes.STRING
+    message: DataTypes.STRING,
+    item_offered_id: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    publication_id: DataTypes.INTEGER,
+    userID: DataTypes.INTEGER,
   }, {});
   request.associate = function(models) {
     // associations can be defined here
@@ -13,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     });
     request.belongsTo(models.item, {
       foreignKey: 'item_offered_id', target: 'id'
+    });
+    request.hasOne(models.trade, {
+      foreignKey: 'id_request', sourceKey: 'id'
     });
   };
   return request;

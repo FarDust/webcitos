@@ -9,13 +9,16 @@ module.exports = (sequelize, DataTypes) => {
   publication.associate = function(models) {
     // associations can be defined here
     publication.belongsTo(models.user,{
-      foreignKey: 'userID', target: 'id'
+      foreignKey: 'userID',
+      target: 'id'
     });
     publication.hasOne(models.item, {
-      foreignKey: 'id'
+      foreignKey: 'publication_id',
+      sourceKey: 'id'
     })
     publication.hasMany(models.request, {
-      foreignKey: 'id'
+      foreignKey: 'publication_id',
+      sourceKey: 'id'
     })
   };
   return publication;
