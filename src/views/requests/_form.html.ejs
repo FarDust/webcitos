@@ -18,7 +18,7 @@
          <span class="error"><%= errors.message.message %></span>
         <% } %>
       </label>
-      <% if (publication_state !== "gift") { %>
+      <% if (request.isNewRecord && publication_state !== "gift") { %>
         <label for="item">
           <span>Select one of your publications: </span>
           <select name="item_offered_id" id="item_offered_id">
@@ -39,4 +39,3 @@
         <input class="form-centered" type="submit" value="<%= request.isNewRecord ? 'Create' : 'Edit' %>" />
       </div>
     </form>
-</div>

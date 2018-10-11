@@ -6,5 +6,21 @@
 <%# but we cannot use the same one here since it automatically escapes HTML (converting <div> to &lt;div&gt;, for example) %>
 <%# The one below, instead, will write its value directly to the end result, no escaping %>
 <div class="center">
-  <%- include('_form') %>
+  <form class="crud" action="<%= submitPath %>" method="post">
+      <% if (!request.isNewRecord) { %>
+        <input type="hidden" name="_method" value="patch" />
+      <% } %>
+    <div class="center">
+      <label for="message">
+        <span>Message</span>
+        <input class="form-centered" type="text" name="message" id="message" value="<%= request.message %>" />
+        <% if (locals.errors && errors.name) { %>
+         <span class="error"><%= errors.message.message %></span>
+        <% } %>
+      </label>
+    </div>
+      <div class="actions center">
+        <input class="form-centered" type="submit" value="Edit" />
+      </div>
+    </form>
 </div>
