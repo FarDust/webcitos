@@ -100,7 +100,7 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
         const trade = await req.getTrade();
         console.log('trade!!!!', trade)
         if (trade){
-          trades.push(trade);          
+          trades.push(trade);
         };
       });
     });
@@ -109,7 +109,9 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
     'users/trades',
     {
       user,
-      trades
+      trades,
+      tradesUrl: ctx.router.url('trades-show', {id: '/'}),
+      requestsUrl: ctx.router.url('requests-show', {id: '/'}),
     },
   );
   }
