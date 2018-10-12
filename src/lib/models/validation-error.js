@@ -1,7 +1,7 @@
 const sequelize = require('sequelize');
 
 module.exports = {
- /**
+  /**
    * Checks whether the given object is a Sequelize's ValidatinError instance
    * @param {Error} error
    */
