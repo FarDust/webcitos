@@ -41,14 +41,14 @@ router.post('trades-create', '/:id_request/:state', async (ctx) => {
   const trade = await request.getTrade();
   if (trade) {
     ctx.flashMessage.notice = "It already has a trade in process!";
-    ctx.redirect('requests-mine');
+    ctx.redirect(ctx.router.url('requests-mine'));
   }
   else {
     const publication = await ctx.orm.publication.findById(request.publication_id);
 
     if (publication.state==='pendent') {
       ctx.flashMessage.notice = "Another request already has a trade in process!";
-      ctx.redirect('requests-mine');
+      ctx.redirect(ctx.router.url('requests-mine'));
     }
     else {
       await ctx.orm.trade.create(ctx.request.body);
@@ -58,7 +58,7 @@ router.post('trades-create', '/:id_request/:state', async (ctx) => {
       const other_item = await ctx.orm.item.findById(request.item_offered_id);
       const other_publication = await other_item.getPublication();
       await other_publication.update({state: 'pendent'}, { fields: ['state'] });
-      ctx.redirect(ctx.router.url('trades'));
+      ctx.redirect(ctx.router.url('trades-show', {id: ctx.currentUser.id}));
     }
   }
 });

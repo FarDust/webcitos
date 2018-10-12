@@ -30,7 +30,6 @@
               <form action="<%= postNewTradePath(request) %>" method="get">
                 <input type="hidden" name="id_request" value="<%=request.id%>" />
                 <input type="hidden" name="state" value="pendent" />
-                <li><%=publication_state==='pendent'?true:false%></li>
                 <li><button <%=publication_state==='pendent'?disabled=true:enabled=true%> class="button primary" type="submit" formmethod="post">Accept offer</button></li>
               </form>
             <%}%>
