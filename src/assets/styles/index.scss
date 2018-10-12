@@ -90,3 +90,15 @@ p.slogan{
   padding: 10px;
   background: #ececec
 }
+
+@media screen and (max-width: 800px){
+  .center {
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .center {
+    width: 100%;
+  }
+}

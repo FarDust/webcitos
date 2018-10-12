@@ -1,12 +1,13 @@
 <div class="row">
   <div class="col-2"></div>
   <div id="user-profile" class="col-4">
-    <div class="row">
-      <div class="col-1"></div>
-      <div class="col-10">
-        <%- include('../layouts/_show') %>
+    <div class="card">
+      <img class="card-image header" src="<%= assetPath('avatar.svg') %>" alt="avatar">
+      <div class="card-context">
+        <div class="card-content">
+            <%- include('../layouts/_show') %>
+        </div>
       </div>
-      <div class="col-1"></div>
     </div>
   </div>
   <div id="user-summary" class="col-4">
@@ -40,11 +41,6 @@
   </div>
   <div class="col-2"></div>
 </div>
-
-
-
-
-
 <div class="center">
   <h1> Publicaciones </h1>
   <div class="content">
@@ -74,6 +70,7 @@
               <br>
               <% if (state.id === currentUser.id) { %>
                 <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'">see requests</button>
+                &ensp;  
               <% } %>
               <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">see publication</button>
             </div>
