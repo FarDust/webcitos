@@ -1,7 +1,12 @@
 <h1>Your trades</h1>
 
+<p>You have <%= trades.length %> trades.</p>
+
+<% if (trades.length > 0) { %>
+<% let i = -1 %>
 <div class="row">
   <% trades.forEach(trade => { %>
+  <% i += 1 %>
   <div class="col-3">
     <div class="card">
       <div class="card-context">
@@ -20,9 +25,24 @@
             <button class="button primary" onclick="window.location.href='<%= tradesUrl + trade.id.toString() %>'">
               See trade
             </button>
+            <% let edit_string = '/edit' %>
+            <% if (trade.state == 'not_concreted') { %>
+              <button class="button primary" onclick="window.location.href='<%= tradesUrl + trade.id.toString() + edit_string %>'">
+                Concrete trade
+              </button>
+            <% } else if (reviews[i]) {%>
+              <button class="button primary" onclick="window.location.href='<%= reviewsUrl + reviews[i].id.toString() %>'">
+                See review
+              </button>
+            <% } else if (own_requests_id.includes(trade.id_request)) {%>
+                <button class="button primary" onclick="window.location.href='<%= reviewNewUrl + trade.id.toString() %>'">
+                  Add review
+                </button>
+            <% } %>
           </div>
       </div>
     </div>
   </div>
   <% }) %>
 </div>
+<% } %>

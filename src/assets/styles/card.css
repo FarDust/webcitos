@@ -15,6 +15,13 @@ div.card .card-image{
     padding-right: 4px;
 }
 
+div.card .card-image.header{
+    width: 100%;
+    overflow: hidden;
+    max-height: 150px;
+    text-align: center;
+}
+
 div.card .card-contex{
     display: inline-block;
     overflow: auto;

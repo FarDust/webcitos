@@ -1,4 +1,46 @@
-<%- include('../layouts/_show') %>
+<div class="row">
+  <div class="col-2"></div>
+  <div id="user-profile" class="col-4">
+    <div class="card">
+      <img class="card-image header" src="<%= assetPath('avatar.svg') %>" alt="avatar">
+      <div class="card-context">
+        <div class="card-content">
+            <%- include('../layouts/_show') %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="user-summary" class="col-4">
+    <h2>Summary</h2>
+    <div class="row content">
+      <div class="col-12">
+        <h3>Comments</h3>
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Unanswered questions
+      </div>
+      <div class="col-12">
+        <h3>Trades</h3>
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Active
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Ended
+      </div>
+      <div class="col-12">
+          <h3>Gifts</h3>
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Active
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Ended
+      </div>
+    </div>
+  </div>
+  <div class="col-2"></div>
+</div>
 <div class="center">
   <h1> Publicaciones </h1>
   <div class="content">
@@ -27,7 +69,12 @@
               </p>
               <br>
               <% if (state.id === currentUser.id) { %>
+<<<<<<< HEAD
                 <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
+=======
+                <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'">see requests</button>
+                &ensp;  
+>>>>>>> development
               <% } %>
               <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">See publication</button>
               <form class="form-button" action="<%= getDestroyPublicationPath(publication) %>" method="post">

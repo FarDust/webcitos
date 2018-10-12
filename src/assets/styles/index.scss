@@ -18,6 +18,14 @@ li {
   padding-top: 8px;
 }
 
+p.center {
+  text-align: center;
+}
+
+[class*=h].centered-header{
+  text-align: center;
+}
+
 p.slogan{
   text-align: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -81,4 +89,16 @@ p.slogan{
 .container {
   padding: 10px;
   background: #ececec
+}
+
+@media screen and (max-width: 800px){
+  .center {
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .center {
+    width: 100%;
+  }
 }
