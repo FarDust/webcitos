@@ -69,18 +69,13 @@
               </p>
               <br>
               <% if (state.id === currentUser.id) { %>
-<<<<<<< HEAD
                 <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
-=======
-                <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'">see requests</button>
-                &ensp;  
->>>>>>> development
+                <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">See publication</button>
+                <form class="form-button" action="<%= getDestroyPublicationPath(publication) %>" method="post">
+                  <input type="hidden" name="_method" value="delete" />
+                  <input class="button" type="submit" value="Delete" />
+                </form>
               <% } %>
-              <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">See publication</button>
-              <form class="form-button" action="<%= getDestroyPublicationPath(publication) %>" method="post">
-                <input type="hidden" name="_method" value="delete" />
-                <input class="button" type="submit" value="Delete" />
-              </form>
             </div>
           </div>
         </div>

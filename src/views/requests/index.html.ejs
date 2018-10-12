@@ -1,4 +1,8 @@
-<h1>All requests</h1>
+<% if (publication_title) { %>
+  <h1>Requests of <%=publication_title%></h1>
+<%}else {%>
+  <h1>All your requests </h1>
+<%}%>
 
 <p>There are <%= requests.length %> requests.</p>
 
@@ -22,12 +26,17 @@
         <td>
           <ul>
             <li><a href="<%= getShowPath(request) %>">Show</a></li>
-
-            <li><a href="<%= getEditPath(request) %>">Edit</a></li>
+            <% if (request.userID !== currentUser.id) {%>
+              <form action="<%= postNewTradePath(request) %>" method="get">
+                <input type="hidden" name="id_request" value="<%=request.id%>" />
+                <input type="hidden" name="state" value="pendent" />
+                <li><button disabled="<%=publication_state==='pendent'?true:false%>" class="button primary" type="submit" formmethod="post">Accept offer</button></li>
+              </form>
+            <%}%>
             <li>
               <form action="<%= getDestroyPath(request) %>" method="post">
                 <input type="hidden" name="_method" value="delete" />
-                <input type="submit" value="Delete" />
+                <button class="button primary" type="submit">Delete</button>
               </form>
             </li>
           </ul>

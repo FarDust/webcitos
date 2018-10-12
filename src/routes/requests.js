@@ -18,7 +18,7 @@ const KoaRouter = require('koa-router');
   if (ctx.state.currentUser) {
     const allRequests = await ctx.orm.request.findAll();
     const requests = [];
-    allRequests.forEach(req => {
+    allRequests.forEach((req) => {
      if (req.userID === ctx.state.currentUser.id) {
        requests.push(req);
      }
@@ -26,6 +26,9 @@ const KoaRouter = require('koa-router');
 
    return ctx.render('requests/index', {
      requests,
+     publication_title: null,
+     publication_state: null,
+     getNewTradePath: request => ctx.router.url('trades-new', request.id),
      getShowPath: request => ctx.router.url('requests-show', request.id),
      getEditPath: request => ctx.router.url('requests-edit', request.id),
      getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
@@ -39,12 +42,14 @@ const KoaRouter = require('koa-router');
  router.get('requests-all', '/publications/:pid/', async (ctx) => {
   if (ctx.state.currentUser) {
     const publication = await ctx.orm.publication.findById(ctx.params.pid);
-   const requests = await publication.getRequests();
+    const requests = await publication.getRequests();
+
    return ctx.render('requests/index', {
      requests,
-     newrequestPath: ctx.router.url('requests-new', ctx.params.pid),
+     publication_title: publication.title,
+     publication_state: publication.state,
+     postNewTradePath: request => ctx.router.url('trades-create', {id_request: request.id, state: 'not_concreted'}),
      getShowPath: request => ctx.router.url('requests-show', request.id),
-     getEditPath: request => ctx.router.url('requests-edit', request.id),
      getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
    });
   }else{
@@ -67,7 +72,7 @@ const KoaRouter = require('koa-router');
     });
     await asyncForEach(user_publications, async (publi) => {
       let n_item = await publi.getItem();
-      if (!used_items.includes(n_item.id)) {
+      if (!used_items.includes(n_item.id) && publi.state !== 'pendent') {
         user_items.push(n_item);
       }
     });

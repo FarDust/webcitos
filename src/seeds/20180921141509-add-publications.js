@@ -45,7 +45,7 @@ module.exports = {
       {
         title: 'Classic Tamagotchi for gift',
         description: "Found this in my old bedroom, figured I'm too old to play with it so I'm giving it away! Hope it makes some kid out there happy.",
-        state: 'gift',
+        state: 'pendent',
         userID: 6,
         createdAt: new Date(2018, 5, 1),
         updatedAt: new Date(2018, 5, 2)
