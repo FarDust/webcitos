@@ -1,9 +1,6 @@
 <h1>All reviews</h1>
 
 <p>There are <%= reviews.length %> reviews.</p>
-<p>
-  <a href="<%= newreviewPath %>">Create new review</a>
-</p>
 
 <div class="content">
   <div class="row">
@@ -15,13 +12,10 @@
             Puntuallity: <%= review.puntuality %> stars<br/>
             Quality offered: <%= review.quality_offered %> stars
             <hr/>
-            <a href="<%= review.trade_id %>">See review</a>
-          </div>
-          <div class="card-footer">
-            <ul>
-              <li class="button"><a href="<%= getShowPath(review) %>">Show</a></li>
-              <li class="button"><a href="<%= getEditPath(review) %>">Edit</a></li>
-            </ul>
+            <a href="<%= getShowPath(review) %>">See review</a>
+            <% if (review.trade_id !== null) { %>
+              <a href="<%= getTradePath(review) %>">See trade</a>
+            <% } %>
           </div>
         </div>
       </div>

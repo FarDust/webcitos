@@ -10,15 +10,39 @@ const KoaRouter = require('koa-router');
 
  router.get('reviews', '/', async (ctx) => {
   if (ctx.state.currentUser) {
-   const reviews = await ctx.orm.review.findAll();
+   const reviews = await ctx.orm.review.findAll(
+     {
+       include:[ 
+         {
+          model: ctx.orm.trade,
+          include: [
+            {
+              model: ctx.orm.request,
+              include: [
+                {
+                  model: ctx.orm.publication,
+                  include: [
+                    { 
+                      model: ctx.orm.user,
+                      where: {id: ctx.state.currentUser.id }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+      }]
+      }
+    )
    return ctx.render('reviews/index', {
      reviews,
      newreviewPath: ctx.router.url('/'),
      getShowPath: review => ctx.router.url('reviews-show', review.id),
      getEditPath: review => ctx.router.url('reviews-edit', review.id),
      getDestroyPath: review => ctx.router.url('reviews-destroy', review.id),
+     getTradePath: review => ctx.router.url('trades-show', review.trade_id),
    });
-  }else{
+  } else {
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
   }
