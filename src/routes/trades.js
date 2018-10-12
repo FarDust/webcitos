@@ -58,7 +58,7 @@ router.post('trades-create', '/:id_request/:state', async (ctx) => {
       const other_item = await ctx.orm.item.findById(request.item_offered_id);
       const other_publication = await other_item.getPublication();
       await other_publication.update({state: 'pendent'}, { fields: ['state'] });
-      ctx.redirect(ctx.router.url('trades-show', {id: ctx.currentUser.id}));
+      ctx.redirect(ctx.router.url('users-trades', {id: ctx.state.currentUser.id}));
     }
   }
 });
