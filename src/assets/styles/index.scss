@@ -18,6 +18,14 @@ li {
   padding-top: 8px;
 }
 
+p.center {
+  text-align: center;
+}
+
+[class*=h].centered-header{
+  text-align: center;
+}
+
 p.slogan{
   text-align: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

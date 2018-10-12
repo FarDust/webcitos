@@ -1,13 +1,46 @@
 <div class="row">
   <div class="col-2"></div>
-  <div class="card col-8">
-    <img class="card-image" src="<%= assetPath('avatar.svg') %>" alt="avavar">
-    <div class="card-content">
-        <%- include('../layouts/_show') %>
+  <div id="user-profile" class="col-4">
+    <div class="card">
+      <img class="card-image header" src="<%= assetPath('avatar.svg') %>" alt="avatar">
+      <div class="card-context">
+        <div class="card-content">
+            <%- include('../layouts/_show') %>
+        </div>
+      </div>
     </div>
   </div>
+  <div id="user-summary" class="col-4">
+    <h2>Summary</h2>
+    <div class="row content">
+      <div class="col-12">
+        <h3>Comments</h3>
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Unanswered questions
+      </div>
+      <div class="col-12">
+        <h3>Trades</h3>
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Active
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Ended
+      </div>
+      <div class="col-12">
+          <h3>Gifts</h3>
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Active
+      </div>
+      <div class="col-12">
+        <span class="badge primary">#N</span> Ended
+      </div>
+    </div>
+  </div>
+  <div class="col-2"></div>
 </div>
-
 <div class="center">
   <h1> Publicaciones </h1>
   <div class="content">
