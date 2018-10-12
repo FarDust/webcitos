@@ -2,6 +2,7 @@ const KoaRouter = require('koa-router');
 const { forEach } = require('p-iteration');
 
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
+
 const router = new KoaRouter();
 
 router.param('id', async (id, ctx, next) => {
@@ -13,18 +14,17 @@ router.param('id', async (id, ctx, next) => {
 
 router.get('users', '/', async (ctx) => {
   if (ctx.state.currentUser) {
-  const users = await ctx.orm.user.findAll();
-  return ctx.render('users/index', {
-    users,
-    newUserPath: ctx.router.url('users-new'),
-    getShowPath: user => ctx.router.url('users-show', user.id),
-    getEditPath: user => ctx.router.url('users-edit', user.id),
-    getDestroyPath: user => ctx.router.url('users-destroy', user.id),
-  });
-  } else {
+    const users = await ctx.orm.user.findAll();
+    return ctx.render('users/index', {
+      users,
+      newUserPath: ctx.router.url('users-new'),
+      getShowPath: user => ctx.router.url('users-show', user.id),
+      getEditPath: user => ctx.router.url('users-edit', user.id),
+      getDestroyPath: user => ctx.router.url('users-destroy', user.id),
+    });
+  }
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
-  }
 });
 
 router.get('users-new', '/new', ctx => ctx.render(
@@ -69,23 +69,21 @@ router.get('users-show', '/:id', async (ctx) => {
   } else {
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
-  }
-});
+}});
 
 router.get('users-edit', '/:id/edit', (ctx) => {
   const { user } = ctx.state;
   if (ctx.session.currentUserId == user.id) {
-  return ctx.render(
-    'users/edit',
-    {
-      user,
-      submitPath: ctx.router.url('users-update', user.id),
-    },
-  );
-  } else {
+    return ctx.render(
+      'users/edit',
+      {
+        user,
+        submitPath: ctx.router.url('users-update', user.id),
+      },
+    );
+  }
   ctx.flashMessage.notice = 'You can only edit your own profile';
   ctx.redirect('/');
-  }
 });
 
 router.get('users-trades', '/:id/trades', async (ctx) => {
@@ -93,52 +91,51 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
   if (ctx.session.currentUserId == user.id) {
     const publications = await ctx.state.currentUser.getPublications();
     const own_requests = await ctx.state.currentUser.getRequests();
-    var requests = [];
-    var trades = [];
-    var reviews = [];
-    var own_requests_id = [];
+    const requests = [];
+    const trades = [];
+    const reviews = [];
+    const own_requests_id = [];
     await forEach(publications, async (pub) => {
       const requests = await pub.getRequests();
-      //console.log('requests',requests)
-      await forEach(requests, async(req) => {
+      // console.log('requests',requests)
+      await forEach(requests, async (req) => {
         const trade = await req.getTrade();
-        //console.log('trade!!!!', trade)
-        if (trade){
+        // console.log('trade!!!!', trade)
+        if (trade) {
           const review = await trade.getReview();
           reviews.push(review);
           trades.push(trade);
-        };
+        }
       });
     });
-    //console.log(trades);
-    await forEach(own_requests, async(req) => {
+    // console.log(trades);
+    await forEach(own_requests, async (req) => {
       const trade = await req.getTrade();
-      if (trade){
+      if (trade) {
         const review = await trade.getReview();
         reviews.push(review);
         trades.push(trade);
         own_requests_id.push(trade.id_request);
-      };
+      }
     });
-    //console.log('REVIEWS', reviews);
+    // console.log('REVIEWS', reviews);
     return ctx.render(
-    'users/trades',
-    {
-      user,
-      trades,
-      reviews,
-      own_requests_id,
-      tradesUrl: ctx.router.url('trades-show', {id: '0'}),
-      requestsUrl: ctx.router.url('requests-show', {id: '0'}),
-      reviewsUrl: ctx.router.url('reviews-show', {id: '0'}),
-      reviewNewUrl: ctx.router.url('reviews-new', {tid: '0'})
-    },
-  );
+      'users/trades',
+      {
+        user,
+        trades,
+        reviews,
+        own_requests_id,
+        tradesUrl: ctx.router.url('trades-show', { id: '0' }),
+        requestsUrl: ctx.router.url('requests-show', { id: '0' }),
+        reviewsUrl: ctx.router.url('reviews-show', { id: '0' }),
+        reviewNewUrl: ctx.router.url('reviews-new', { tid: '0' }),
+      },
+    );
   }
-  else{
-    ctx.flashMessage.notice = 'Please, log in to access these features';
-    ctx.redirect('/');
-  }
+
+  ctx.flashMessage.notice = 'Please, log in to access these features';
+  ctx.redirect('/');
 });
 
 router.patch('users-update', '/:id', async (ctx) => {

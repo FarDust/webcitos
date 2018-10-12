@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   const publication = sequelize.define('publication', {
     title: {
@@ -24,20 +24,20 @@ module.exports = (sequelize, DataTypes) => {
     },
     userID: DataTypes.INTEGER
   }, {});
-  publication.associate = function(models) {
+  publication.associate = function (models) {
     // associations can be defined here
-    publication.belongsTo(models.user,{
+    publication.belongsTo(models.user, {
       foreignKey: 'userID',
-      target: 'id'
+      target: 'id',
     });
     publication.hasOne(models.item, {
       foreignKey: 'publication_id',
-      sourceKey: 'id'
-    })
+      sourceKey: 'id',
+    });
     publication.hasMany(models.request, {
       foreignKey: 'publication_id',
-      sourceKey: 'id'
-    })
+      sourceKey: 'id',
+    });
   };
   return publication;
 };

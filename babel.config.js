@@ -18,4 +18,4 @@ module.exports = function babelConfig(api) {
     'react-hot-loader/babel',
   ];
   return { presets, plugins };
-}
+};
