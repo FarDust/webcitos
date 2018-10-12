@@ -9,7 +9,7 @@ module.exports = {
   },
   {
     id_request: 3,
-    state: 'not_concreted',
+    state: 'pendent',
     createdAt: new Date(2018, 6, 5),
     updatedAt: new Date(2018, 6, 5),
   }], {}),

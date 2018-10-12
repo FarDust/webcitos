@@ -20,37 +20,42 @@ router.get('requests-mine', '/actualUser', async (ctx) => {
     const allRequests = await ctx.orm.request.findAll();
     const requests = [];
     allRequests.forEach((req) => {
-      if (req.userID === ctx.state.currentUser.id) {
-        requests.push(req);
-      }
-    });
+     if (req.userID === ctx.state.currentUser.id) {
+       requests.push(req);
+     }
+   });
 
-    return ctx.render('requests/index', {
-      requests,
-      getShowPath: request => ctx.router.url('requests-show', request.id),
-      getEditPath: request => ctx.router.url('requests-edit', request.id),
-      getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
-    });
-  }
+   return ctx.render('requests/index', {
+     requests,
+     publication_title: null,
+     publication_state: null,
+     getNewTradePath: request => ctx.router.url('trades-new', request.id),
+     getShowPath: request => ctx.router.url('requests-show', request.id),
+     getEditPath: request => ctx.router.url('requests-edit', request.id),
+     getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
+   });
+  }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');
+  ctx.redirect('/');}
 });
 
 router.get('requests-all', '/publications/:pid/', async (ctx) => {
   if (ctx.state.currentUser) {
     const publication = await ctx.orm.publication.findById(ctx.params.pid);
     const requests = await publication.getRequests();
-    return ctx.render('requests/index', {
-      requests,
-      newrequestPath: ctx.router.url('requests-new', ctx.params.pid),
-      getShowPath: request => ctx.router.url('requests-show', request.id),
-      getEditPath: request => ctx.router.url('requests-edit', request.id),
-      getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
-    });
-  }
+
+   return ctx.render('requests/index', {
+     requests,
+     publication_title: publication.title,
+     publication_state: publication.state,
+     postNewTradePath: request => ctx.router.url('trades-create', {id_request: request.id, state: 'not_concreted'}),
+     getShowPath: request => ctx.router.url('requests-show', request.id),
+     getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
+   });
+  }else{
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
-});
+}});
 
 router.get('requests-new', '/publications/:pid/new', async (ctx) => {
   if (ctx.state.currentUser) {
@@ -65,8 +70,8 @@ router.get('requests-new', '/publications/:pid/new', async (ctx) => {
       }
     });
     await asyncForEach(user_publications, async (publi) => {
-      const n_item = await publi.getItem();
-      if (!used_items.includes(n_item.id)) {
+      let n_item = await publi.getItem();
+      if (!used_items.includes(n_item.id) && publi.state !== 'pendent') {
         user_items.push(n_item);
       }
     });
