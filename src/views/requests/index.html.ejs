@@ -38,7 +38,7 @@
             <%}%>
             <% if (!trades[i]) { %>
             <li>
-              <form action="<%= getDestroyPath(request) %>" method="post">
+              <form class="form-inline" action="<%= getDestroyPath(request) %>" method="post">
                 <input type="hidden" name="_method" value="delete" />
                 <button class="button primary" type="submit">Delete</button>
               </form>
