@@ -42,27 +42,25 @@ router.post('trades-create', '/:id_request/:state', async (ctx) => {
   const request = await ctx.orm.request.findById(ctx.params.id_request);
   const trade = await request.getTrade();
   if (trade) {
-    ctx.flashMessage.notice = "It already has a trade in process!";
+    ctx.flashMessage.notice = 'It already has a trade in process!';
     ctx.redirect(ctx.router.url('requests-mine'));
-  }
-  else {
+  } else {
     const publication = await ctx.orm.publication.findById(request.publication_id);
 
-    if (publication.state==='pendent') {
-      ctx.flashMessage.notice = "Another request already has a trade in process!";
+    if (publication.state === 'pendent') {
+      ctx.flashMessage.notice = 'Another request already has a trade in process!';
       ctx.redirect(ctx.router.url('requests-mine'));
-    }
-    else {
+    } else {
       await ctx.orm.trade.create(ctx.request.body);
       // Pongo mi publicacion en pendiente
-      await publication.update({state: 'pendent'}, { fields: ['state'] });
+      await publication.update({ state: 'pendent' }, { fields: ['state'] });
       // Pongo la publicacion del otro en pendiente
       const other_item = await ctx.orm.item.findById(request.item_offered_id);
       if (other_item) {
         const other_publication = await other_item.getPublication();
-        await other_publication.update({state: 'pendent'}, { fields: ['state'] });
+        await other_publication.update({ state: 'pendent' }, { fields: ['state'] });
       }
-      ctx.redirect(ctx.router.url('users-trades', {id: ctx.state.currentUser.id}));
+      ctx.redirect(ctx.router.url('users-trades', { id: ctx.state.currentUser.id }));
     }
   }
 });
@@ -83,17 +81,17 @@ router.get('trades-show', '/:id', (ctx) => {
 router.get('trades-edit', '/:id/edit', (ctx) => {
   const { trade } = ctx.state;
   if (ctx.state.currentUser) {
-  return ctx.render(
-    'trades/edit',
-    {
-      trade,
-      submitPath: ctx.router.url('trades-update', trade.id),
-    },
-  );
-  }else{
+    return ctx.render(
+      'trades/edit',
+      {
+        trade,
+        submitPath: ctx.router.url('trades-update', trade.id),
+      },
+    );
+  }
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
-  }
+
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
 });
@@ -108,7 +106,7 @@ router.patch('trades-update', '/:id', async (ctx) => {
     const request = await ctx.orm.request.findById(trade.id_request);
     const publication = await ctx.orm.publication.findById(request.publication_id);
     if (ctx.request.body.state == 'concreted') {
-      // dejar en inventory la publicacion 
+      // dejar en inventory la publicacion
       await publication.update({ state: 'inventory' }, { fields: ['state'] });
       // dejar en inventory la otra publicacion
       if (request.item_offered_id) {
@@ -123,9 +121,8 @@ router.patch('trades-update', '/:id', async (ctx) => {
         // dejar en el estado anterior la otra publicacion
         const item = await ctx.orm.item.findById(request.item_offered_id);
         const item_publication = await item.getPublication();
-        await item_publication.update({ state: 'exchange' }, { fields: ['state'] }); 
-      }
-      else {
+        await item_publication.update({ state: 'exchange' }, { fields: ['state'] });
+      } else {
         // dejar en el estado anterior la publicacion
         await publication.update({ state: 'gift' }, { fields: ['state'] });
       }

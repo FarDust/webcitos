@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [[ "gift", "exchange", "inventory", "pendent" ]],
+        isIn: [['gift', 'exchange', 'inventory', 'pendent']],
       },
     },
-    userID: DataTypes.INTEGER
+    userID: DataTypes.INTEGER,
   }, {});
   publication.associate = function (models) {
     // associations can be defined here

@@ -22,9 +22,9 @@ router.get('requests-mine', '/actualUser', async (ctx) => {
     const allRequests = await ctx.orm.request.findAll();
     const requests = [];
     allRequests.forEach((req) => {
-     if (req.userID === ctx.state.currentUser.id) {
-       requests.push(req);
-     }
+      if (req.userID === ctx.state.currentUser.id) {
+        requests.push(req);
+      }
     });
     const trades = [];
     await forEach(requests, async (req) => {
@@ -32,19 +32,19 @@ router.get('requests-mine', '/actualUser', async (ctx) => {
       trades.push(trade);
     });
 
-   return ctx.render('requests/index', {
-     requests,
-     trades,
-     publication_title: null,
-     publication_state: null,
-     getNewTradePath: request => ctx.router.url('trades-new', request.id),
-     getShowPath: request => ctx.router.url('requests-show', request.id),
-     getEditPath: request => ctx.router.url('requests-edit', request.id),
-     getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
-   });
-  }else{
+    return ctx.render('requests/index', {
+      requests,
+      trades,
+      publication_title: null,
+      publication_state: null,
+      getNewTradePath: request => ctx.router.url('trades-new', request.id),
+      getShowPath: request => ctx.router.url('requests-show', request.id),
+      getEditPath: request => ctx.router.url('requests-edit', request.id),
+      getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
+    });
+  }
   ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');}
+  ctx.redirect('/');
 });
 
 router.get('requests-all', '/publications/:pid/', async (ctx) => {
@@ -57,19 +57,19 @@ router.get('requests-all', '/publications/:pid/', async (ctx) => {
       trades.push(trade);
     });
 
-   return ctx.render('requests/index', {
-     requests,
-     trades,
-     publication_title: publication.title,
-     publication_state: publication.state,
-     postNewTradePath: request => ctx.router.url('trades-create', {id_request: request.id, state: 'not_concreted'}),
-     getShowPath: request => ctx.router.url('requests-show', request.id),
-     getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
-   });
-  }else{
+    return ctx.render('requests/index', {
+      requests,
+      trades,
+      publication_title: publication.title,
+      publication_state: publication.state,
+      postNewTradePath: request => ctx.router.url('trades-create', { id_request: request.id, state: 'not_concreted' }),
+      getShowPath: request => ctx.router.url('requests-show', request.id),
+      getDestroyPath: request => ctx.router.url('requests-destroy', request.id),
+    });
+  }
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
-}});
+});
 
 router.get('requests-new', '/publications/:pid/new', async (ctx) => {
   if (ctx.state.currentUser) {
@@ -78,7 +78,7 @@ router.get('requests-new', '/publications/:pid/new', async (ctx) => {
     const user_publications = await ctx.state.currentUser.getPublications();
     const allRequests = await ctx.orm.request.findAll();
     const used_items = [];
-    await forEach(allRequests, async(req) => {
+    await forEach(allRequests, async (req) => {
       if (req.userID === ctx.state.currentUser.id) {
         const req_trade = await req.getTrade();
         if (!req_trade) {
@@ -89,7 +89,7 @@ router.get('requests-new', '/publications/:pid/new', async (ctx) => {
       }
     });
     await asyncForEach(user_publications, async (publi) => {
-      let n_item = await publi.getItem();
+      const n_item = await publi.getItem();
       if (!used_items.includes(n_item.id) && publi.state == 'exchange') {
         user_items.push(n_item);
       }
@@ -125,7 +125,7 @@ router.post('requests-create', '/', async (ctx) => {
 
 router.get('requests-show', '/:id', (ctx) => {
   if (ctx.state.currentUser) {
-    const name = 'Request ' + ctx.state.request.id.toString();
+    const name = `Request ${ctx.state.request.id.toString()}`;
     return ctx.render('requests/show',
       {
         name,

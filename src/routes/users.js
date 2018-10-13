@@ -52,27 +52,27 @@ router.post('users-create', '/', async (ctx) => {
 
 router.get('users-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
-  const publication = await ctx.state.user.getPublications();
-  const user = ctx.state.user;
-  return ctx.render('users/show',
-  {
-    name: user.name,
-    user_id: user.id,
-    userEditPath: user_id => ctx.router.url('users-edit', user_id),
-    ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
-    publications: publication,
-    newPublicationPath: ctx.router.url('publications-new'),
-    showPublicationPath: publi => ctx.router.url('publications-show', {id: publi.id}),
-    showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
-    showMineRequestsPath: ctx.router.url('requests-mine'),
-    showMineTradesPath: ctx.router.url('users-trades', user.id),
-    getDestroyPublicationPath: publi => ctx.router.url('publications-destroy', {id: publi.id}),
-    state: JSON.parse(JSON.stringify(user)),
-  },)
-  } else {
+    const publication = await ctx.state.user.getPublications();
+    const user = ctx.state.user;
+    return ctx.render('users/show',
+      {
+        name: user.name,
+        user_id: user.id,
+        userEditPath: user_id => ctx.router.url('users-edit', user_id),
+        ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
+        publications: publication,
+        newPublicationPath: ctx.router.url('publications-new'),
+        showPublicationPath: publi => ctx.router.url('publications-show', { id: publi.id }),
+        showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
+        showMineRequestsPath: ctx.router.url('requests-mine'),
+        showMineTradesPath: ctx.router.url('users-trades', user.id),
+        getDestroyPublicationPath: publi => ctx.router.url('publications-destroy', { id: publi.id }),
+        state: JSON.parse(JSON.stringify(user)),
+      });
+  }
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
-}});
+});
 
 router.get('users-edit', '/:id/edit', (ctx) => {
   const { user } = ctx.state;
