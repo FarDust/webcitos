@@ -66,6 +66,7 @@ router.get('publications-show', '/:id', async (ctx) => {
         editPublicationPath: publi => ctx.router.url('publications-edit', { id: publi.id }),
         editItemPath: item => ctx.router.url('items-edit', { id: item.id }),
         destroyPublicationPath: publi => ctx.router.url('publications-destroy', { id: publi.id }),
+        userPath: user => ctx.router.url('users-show', user.id),
         item: JSON.parse(JSON.stringify(items)),
         state: JSON.parse(JSON.stringify(ctx.state.publication)),
       });

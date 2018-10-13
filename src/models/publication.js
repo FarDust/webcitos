@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [[ "gift", "exchange", "inventary", "pendent" ]],
+        isIn: [[ "gift", "exchange", "inventory", "pendent" ]],
       },
     },
     userID: DataTypes.INTEGER

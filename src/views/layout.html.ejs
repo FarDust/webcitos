@@ -27,11 +27,13 @@
       </li>
       <% if (locals.currentUser) { %>
       <li><a href="/users/<%=currentUser.id%>">Profile</a></li>
+      <li><a href="/users/<%= currentUser.id %>/trades">Your trades</a></li>
+      <li><a href="/requests/actualUser %>">Your offers</a></li>
       <li><a href="/users">Users</a></li>
       <li><a href="/publications">Publications</a></li>
       <li><a href="/items">Items</a></li>
-      <li><a href="/reviews">Reviews</a></li>
       <li><a href="/trades">Trades</a></li>
+      <li><a href="/reviews">Reviews</a></li>
       <li class="functional">
         <form class="form-button" action="<%= destroySessionPath %>" method="post">
           <input type="hidden" name="_method" value="delete" />

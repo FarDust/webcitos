@@ -52,7 +52,7 @@ module.exports = {
   {
     title: 'Who wants my old MP4?',
     description: 'I do not use it anymore, I am giving it away while it still works.',
-    state: 'inventary',
+    state: 'inventory',
     userID: 7,
     createdAt: new Date(2018, 6, 1),
     updatedAt: new Date(2018, 6, 2),

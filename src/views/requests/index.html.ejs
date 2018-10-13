@@ -6,6 +6,8 @@
 
 <p>There are <%= requests.length %> requests.</p>
 
+<% if (requests.length > 0) { %>
+<% let i = -1 %>
 <table>
   <thead>
     <tr>
@@ -18,6 +20,7 @@
   </thead>
   <tbody>
     <% requests.forEach(request => { %>
+    <% i += 1 %>
       <tr>
         <td><%= request.message %></td>
         <td><%= request.userID %></td>
@@ -33,15 +36,18 @@
                 <li><button <%=publication_state==='pendent'?disabled=true:enabled=true%> class="button primary" type="submit" formmethod="post">Accept offer</button></li>
               </form>
             <%}%>
+            <% if (!trades[i]) { %>
             <li>
               <form action="<%= getDestroyPath(request) %>" method="post">
                 <input type="hidden" name="_method" value="delete" />
                 <button class="button primary" type="submit">Delete</button>
               </form>
             </li>
+            <% } %>
           </ul>
         </td>
       </tr>
     <% }) %>
   </tbody>
 </table>
+<% } %>

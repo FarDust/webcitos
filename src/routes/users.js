@@ -65,6 +65,7 @@ router.get('users-show', '/:id', async (ctx) => {
     showPublicationPath: publi => ctx.router.url('publications-show', {id: publi.id}),
     showRequestsPath: publi => ctx.router.url('requests-all', {pid: publi.id}),
     showMineRequestsPath: ctx.router.url('requests-mine'),
+    showMineTradesPath: ctx.router.url('users-trades', user.id),
     getDestroyPublicationPath: publi => ctx.router.url('publications-destroy', {id: publi.id}),
     state: JSON.parse(JSON.stringify(user)),
   },)

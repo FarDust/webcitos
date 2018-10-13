@@ -1,5 +1,7 @@
 const KoaRouter = require('koa-router');
 
+const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
+
 const router = new KoaRouter();
 
 router.param('id', async (id, ctx, next) => {
@@ -56,8 +58,10 @@ router.post('trades-create', '/:id_request/:state', async (ctx) => {
       await publication.update({state: 'pendent'}, { fields: ['state'] });
       // Pongo la publicacion del otro en pendiente
       const other_item = await ctx.orm.item.findById(request.item_offered_id);
-      const other_publication = await other_item.getPublication();
-      await other_publication.update({state: 'pendent'}, { fields: ['state'] });
+      if (other_item) {
+        const other_publication = await other_item.getPublication();
+        await other_publication.update({state: 'pendent'}, { fields: ['state'] });
+      }
       ctx.redirect(ctx.router.url('users-trades', {id: ctx.state.currentUser.id}));
     }
   }
@@ -101,14 +105,38 @@ router.patch('trades-update', '/:id', async (ctx) => {
       ctx.request.body,
       { fields: ['id_request', 'state'] },
     );
+    const request = await ctx.orm.request.findById(trade.id_request);
+    const publication = await ctx.orm.publication.findById(request.publication_id);
     if (ctx.request.body.state == 'concreted') {
-      const request = await ctx.orm.request.findById(trade.id_request);
-      const publication = await ctx.orm.publication.findById(request.publication_id);
+      // dejar en inventory la publicacion 
       await publication.update({ state: 'inventory' }, { fields: ['state'] });
+      // dejar en inventory la otra publicacion
+      if (request.item_offered_id) {
+        const item = await ctx.orm.item.findById(request.item_offered_id);
+        const item_publication = await item.getPublication();
+        await item_publication.update({ state: 'inventory' }, { fields: ['state'] });
+      }
+    } else if (ctx.request.body.state == 'not_concreted') {
+      if (request.item_offered_id) {
+        // dejar en el estado anterior la publicacion
+        await publication.update({ state: 'exchange' }, { fields: ['state'] });
+        // dejar en el estado anterior la otra publicacion
+        const item = await ctx.orm.item.findById(request.item_offered_id);
+        const item_publication = await item.getPublication();
+        await item_publication.update({ state: 'exchange' }, { fields: ['state'] }); 
+      }
+      else {
+        // dejar en el estado anterior la publicacion
+        await publication.update({ state: 'gift' }, { fields: ['state'] });
+      }
     }
     ctx.redirect(ctx.router.url('trades-show', trade.id));
   } catch (error) {
-    if (!isValidationError(error)) throw error;
+    console.log('ERROR', error);
+    if (!isValidationError(error)) {
+      console.log('ERROR', error);
+      throw error;
+    }
     await ctx.render('trades/edit', {
       trade,
       errors: getFirstErrors(error),

@@ -1,5 +1,7 @@
 const KoaRouter = require('koa-router');
 
+const { forEach } = require('p-iteration');
+
 const router = new KoaRouter();
 
 async function asyncForEach(array, callback) {
@@ -23,10 +25,16 @@ router.get('requests-mine', '/actualUser', async (ctx) => {
      if (req.userID === ctx.state.currentUser.id) {
        requests.push(req);
      }
-   });
+    });
+    const trades = [];
+    await forEach(requests, async (req) => {
+      const trade = await req.getTrade();
+      trades.push(trade);
+    });
 
    return ctx.render('requests/index', {
      requests,
+     trades,
      publication_title: null,
      publication_state: null,
      getNewTradePath: request => ctx.router.url('trades-new', request.id),
@@ -43,9 +51,15 @@ router.get('requests-all', '/publications/:pid/', async (ctx) => {
   if (ctx.state.currentUser) {
     const publication = await ctx.orm.publication.findById(ctx.params.pid);
     const requests = await publication.getRequests();
+    const trades = [];
+    await forEach(requests, async (req) => {
+      const trade = await req.getTrade();
+      trades.push(trade);
+    });
 
    return ctx.render('requests/index', {
      requests,
+     trades,
      publication_title: publication.title,
      publication_state: publication.state,
      postNewTradePath: request => ctx.router.url('trades-create', {id_request: request.id, state: 'not_concreted'}),
@@ -64,24 +78,29 @@ router.get('requests-new', '/publications/:pid/new', async (ctx) => {
     const user_publications = await ctx.state.currentUser.getPublications();
     const allRequests = await ctx.orm.request.findAll();
     const used_items = [];
-    allRequests.forEach((req) => {
+    await forEach(allRequests, async(req) => {
       if (req.userID === ctx.state.currentUser.id) {
-        used_items.push(req.item_offered_id);
+        const req_trade = await req.getTrade();
+        if (!req_trade) {
+          used_items.push(req.item_offered_id);
+        } else if (req_trade.state != 'not_concreted') {
+          used_items.push(req.item_offered_id);
+        }
       }
     });
     await asyncForEach(user_publications, async (publi) => {
       let n_item = await publi.getItem();
-      if (!used_items.includes(n_item.id) && publi.state !== 'pendent') {
+      if (!used_items.includes(n_item.id) && publi.state == 'exchange') {
         user_items.push(n_item);
       }
     });
 
     if (user_publications.length === 0 && publication.state !== 'gift') {
-      ctx.flashMessage.notice = "You don't have any item to exchange :c";
+      ctx.flashMessage.notice = "You don't have any items to exchange";
       return ctx.redirect(ctx.router.url('publications-new'));
     }
-    if (user_items.length === 0) {
-      ctx.flashMessage.notice = "You've already offered all your items! :o";
+    if (user_items.length === 0 && publication.state !== 'gift') {
+      ctx.flashMessage.notice = "You've already offered all your exchangeable items!";
       return ctx.redirect(ctx.router.url('publications-show', { id: ctx.params.pid }));
     }
 
@@ -106,9 +125,10 @@ router.post('requests-create', '/', async (ctx) => {
 
 router.get('requests-show', '/:id', (ctx) => {
   if (ctx.state.currentUser) {
+    const name = 'Request ' + ctx.state.request.id.toString();
     return ctx.render('requests/show',
       {
-        name: 'request',
+        name,
         ignore: ['createdAt', 'updatedAt', 'id'],
         state: JSON.parse(JSON.stringify(ctx.state.request)),
       });

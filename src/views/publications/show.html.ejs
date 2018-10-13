@@ -22,6 +22,7 @@
         <div class="col-1"></div>
         <div class="col-10">
           <h2 class="centered-header"><%= propietary_user.name %></h2>
+          <li class="button"><a href="<%= userPath(propietary_user) %>">See profile</a></li>
         </div>
         <div class="col-2"></div>
         <div class="col-8">
@@ -29,7 +30,7 @@
               <form class="form-button" action="<%=showRequestsPath(state)%>">
                 <input type="submit" value="See all offers" />
               </form>
-            <% } else { %>
+            <% } else if (state.state == 'gift' || state.state == 'exchange'){ %>
               <form class="form-button" action="<%=createRequestPath(state)%>">
                 <input type="submit" value="Create a new offer" />
               </form>
