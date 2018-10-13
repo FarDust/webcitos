@@ -1,4 +1,6 @@
 const KoaRouter = require('koa-router');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const { forEach } = require('p-iteration');
 
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
@@ -50,6 +52,87 @@ router.post('users-create', '/', async (ctx) => {
   }
 });
 
+
+async function getActiveTrades(target, orm, user, type) {
+  const trades = await orm.trade.count(
+    {
+      where: {
+        state: { [Sequelize.Op.ne]: 'concreted' },
+      },
+      include: [
+        {
+          model: orm.request,
+          include: [
+            {
+              model: orm.publication,
+              where: { state: type },
+              include: [
+                {
+                  model: orm.user,
+                  where: { id: user.id },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  );
+  return trades;
+}
+
+async function getEndedTrades(target, orm, user) {
+  const trades = await orm.trade.count(
+    {
+      where: {
+        state: 'concreted',
+      },
+      include: [
+        {
+          model: orm.request,
+          include: [
+            {
+              model: orm.publication,
+              include: [
+                {
+                  model: orm.user,
+                  where: { id: user.id },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  );
+  return trades;
+}
+
+async function getActiveTradeNumber(orm, user, type) {
+  const tradeNumber = await getActiveTrades(orm.trade.count, orm, user, type);
+  return tradeNumber;
+}
+
+async function getEndedTradeNumber(orm, user) {
+  const tradeNumber = await getEndedTrades(orm.trade.count, orm, user);
+  return tradeNumber;
+}
+
+/* Solucionar problema de identificar que tipo eran las publications */
+async function getStatics(orm, user) {
+  const statics = {
+    exchange: {
+      active: await getActiveTradeNumber(orm, user, 'exchange'),
+      ended: await getEndedTradeNumber(orm, user),
+    },
+    gift: {
+      active: await getActiveTradeNumber(orm, user, 'gift'),
+      ended: await getEndedTradeNumber(orm, user),
+    },
+  };
+  return statics;
+}
+
 router.get('users-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
     const publication = await ctx.state.user.getPublications();
@@ -68,6 +151,7 @@ router.get('users-show', '/:id', async (ctx) => {
         showMineTradesPath: ctx.router.url('users-trades', user.id),
         getDestroyPublicationPath: publi => ctx.router.url('publications-destroy', { id: publi.id }),
         state: JSON.parse(JSON.stringify(user)),
+        statics: await getStatics(ctx.orm, ctx.state.currentUser),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';

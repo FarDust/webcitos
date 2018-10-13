@@ -6,6 +6,8 @@ div.card{
     background-color: #e0e0e0;
     margin: 4px;
     z-index: -1;
+    box-sizing: unset;
+    width: 100%;
 }
 
 div.card .card-image{
@@ -23,7 +25,6 @@ div.card .card-image.header{
 }
 
 div.card .card-contex{
-    display: inline-block;
     overflow: auto;
 }
 
@@ -64,13 +65,42 @@ div.card-contex .card-footer{
     display: inline-block;
 }
 
+.card-group {
+}
+
 .card-group .card{
     display: inline-block;
-    padding: 10px;
-    width: 40%;
-    min-width: 300px;
+    height: 250px;
 }
 
 .card-group .card:hover{
     background-color: #e9d4d2;
+}
+
+.card-group .card .card-image{
+    position: relative;
+    float: left;
+
+}
+
+.card-group .card .card-contex .card-header{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75%;
+}
+
+.card-group .card .card-contex .card-content{
+    height: 100px;
+    text-overflow: ellipsis;
+}
+
+.card-group .card-footer ul{
+    position: relative;
+    float: right; 
+    padding: 0px; 
+}
+
+.card-footer ul li form.form-inline {
+    padding: 0px;
 }

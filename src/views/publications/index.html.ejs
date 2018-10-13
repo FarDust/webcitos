@@ -5,12 +5,12 @@
   <a href="<%= newpublicationPath %>">Create new publication</a>
 </p>
 <div class="container">
-  <div class="row">
+  <div class="row card-group">
     <% publications.forEach(publication => { %>
     <div class="col-4">
       <div class="card">
-        <img class="card-image" src="<%= assetPath('example.svg') %>" alt=""/>
         <div class="card-contex">
+            <img class="card-image" src="<%= assetPath('example.svg') %>" alt=""/>
             <h4 class="card-header"><%= publication.title %></h4>
             <div class="card-content">
               <%= publication.description %>>
