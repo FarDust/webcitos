@@ -21,7 +21,8 @@
                 <span>Added by:</span> <%= publication.userID %>
               </p>
               <ul>
-                <li><a class="button" href="<%= getShowPath(publication) %>">Show</a></li>
+                <li><a class="button" href="<%= getShowPath(publication) %>">See publication</a></li>
+                <% if(publication.userID == currentUser.id) { %>
                 <li><a class="button" href="<%= getEditPath(publication) %>">Edit</a></li>
                 <li>
                   <form class="form-button" action="<%= getDestroyPath(publication) %>" method="post">
@@ -29,6 +30,7 @@
                     <input type="submit" value="Delete" />
                   </form>
                 </li>
+                <% } %>
               </ul>
             </div>
         </div>

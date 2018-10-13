@@ -57,6 +57,8 @@ router.get('users-show', '/:id', async (ctx) => {
   return ctx.render('users/show',
   {
     name: user.name,
+    user_id: user.id,
+    userEditPath: user_id => ctx.router.url('users-edit', user_id),
     ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
     publications: publication,
     newPublicationPath: ctx.router.url('publications-new'),

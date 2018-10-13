@@ -6,6 +6,9 @@
       <div class="card-context">
         <div class="card-content">
             <%- include('../layouts/_show') %>
+            <% if (currentUser.id == user_id){ %>
+            <button class="button primary" onclick="window.location.href='<%= userEditPath(currentUser.id) %>'">Edit my profile</button>
+            <% } %>
         </div>
       </div>
     </div>
@@ -42,13 +45,13 @@
   <div class="col-2"></div>
 </div>
 <div class="center">
-  <h1> Publicaciones </h1>
+  <h1> Publications </h1>
   <div class="content">
 
-    <p>You've <%= publications.length %> publications.</p>
+    <p>You have <%= publications.length %> publications.</p>
     <% if (state.id === currentUser.id) { %>
-      <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication!</button>
-      <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See my offers!</button>
+      <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication</button>
+      <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See my offers</button>
     <% } %>
 
     <div class="row">

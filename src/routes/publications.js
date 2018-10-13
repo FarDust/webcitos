@@ -63,6 +63,9 @@ router.get('publications-show', '/:id', async (ctx) => {
         propietary_user: proper_user,
         createRequestPath: publi => ctx.router.url('requests-new', { pid: publi.id }),
         showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
+        editPublicationPath: publi => ctx.router.url('publications-edit', { id: publi.id }),
+        editItemPath: item => ctx.router.url('items-edit', { id: item.id }),
+        destroyPublicationPath: publi => ctx.router.url('publications-destroy', { id: publi.id }),
         item: JSON.parse(JSON.stringify(items)),
         state: JSON.parse(JSON.stringify(ctx.state.publication)),
       });

@@ -18,6 +18,7 @@ router.get('items', '/', async (ctx) => {
       getShowPath: item => ctx.router.url('items-show', item.id),
       getEditPath: item => ctx.router.url('items-edit', item.id),
       getDestroyPath: item => ctx.router.url('items-destroy', item.id),
+      getPublicationPath: publication_id => ctx.router.url('publications-show', publication_id),
     });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';

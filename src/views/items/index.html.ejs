@@ -27,8 +27,9 @@
             </div>
             <div class="card-footer">
                 <ul>
-                  <li class="button"><a href="<%= item.publication_id %>">Publication</a></li>
-                  <li class="button"><a href="<%= getShowPath(item) %>">Show</a></li>
+                  <li class="button"><a href="<%= getPublicationPath(item.publication_id) %>">See publication</a></li>
+                  <li class="button"><a href="<%= getShowPath(item) %>">See item</a></li>
+                  <!--
                   <li class="button"><a href="<%= getEditPath(item) %>">Edit</a></li>
                   <li class="button">
                     <form class="form-button" action="<%= getDestroyPath(item) %>" method="post">
@@ -36,6 +37,7 @@
                       <input type="submit" value="Delete" />
                     </form>
                   </li>
+                  -->
                 </ul>
             </div>
           </div>
