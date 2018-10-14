@@ -1,10 +1,99 @@
 <div class="row">
-  <div class="col-12">
-    <h1>Trade for <%= trade.item.name %></h1>
+  <div class="col-12 row">
+    <div class="col-2"></div>
+    <div class="col-6">
+      <h1>Trade for <%= trade.publication.title %></h1> 
+    </div>
+    <div class="col-2"></div>
+    <div class="col-2">
+        Type: <span class="badge primary"><%= trade.publication.state %></span> <br/>
+        <br/>
+        State: <span class="badge primary"><%= trade.state %></span>
+    </div>
+  </div> 
+  <div class="col-1"></div>
+  <div class="col-10">
+    <div class="content">
+      <div class="row">
+        <div class="col-5">
+            <div id="emmiter-user" class="card">
+              <div class="card-contex">
+                <h3 class="card-header"><%= trade.emmiter.name %></h3>
+                <div class="card-content">
+                  Email: <%= trade.emmiter.email %> <br/>
+                  Phone: <%= trade.emmiter.phone %>
+                </div>
+              </div>
+            </div>
+            <div id="emmiter-item" class="card">
+              <div class="card-contex">
+                <h4 class="card-header">Offer</h4>
+                <div class="card-content">
+                  Brand: <%= trade.emmiter.item.brand %> <br/>
+                  Model: <%= trade.emmiter.item.model %> <br/>
+                  Category: <%= trade.emmiter.item.category %> <br/>
+                  Screen size: <%= trade.emmiter.item.screenSize %>'' <br/>
+                  Description<br/>
+                  <%= trade.emmiter.item.aditional %>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div id="arrows" class="col-2">
+          <div>=></div>
+          <div class="row">
+            <div class="col-8"></div>
+            <div class="col-2"><=</div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div id="receptor-user" class="card">
+            <div class="card-contex">
+              <h3 class="card-header"><%= trade.receptor.name %></h3>
+              <div class="card-content">
+                Email: <%= trade.receptor.email %> <br/>
+                Phone: <%= trade.receptor.phone %>
+              </div>
+            </div>
+          </div>
+          <% if (trade.receptor.item !== null) { %>
+          <div id="receptor-item" class="card">
+            <div class="card-contex">
+              <h4 class="card-header">Offer</h4>
+              <div class="card-content">
+                Brand: <%= trade.receptor.item.brand %> <br/>
+                Model: <%= trade.receptor.item.model %> <br/>
+                Category: <%= trade.receptor.item.category %> <br/>
+                Screen size: <%= trade.receptor.item.screenSize %>'' <br/>
+                Description<br/>
+                <%= trade.receptor.item.aditional %>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-2"></div>
-  <div class="col-8">
-
+  <div class="col-1"></div>
+  <% if (trade.review !== null) { %>
+  <div class="col-4"></div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-contex">
+        <h5 class="card-header">Review</h5>
+        <div class="card-content">
+          Fullfillment offer: <%= trade.review.fullfillment_offer %> stars <br/>
+          Quallity offered: <%= trade.review.quality_offered %> stars <br/>
+          puntuality: <%= trade.review.puntuality %> stars <br/>
+          <% if (trade.review.content !== '') { %>
+          <hr/>
+          Extra commentaries: <br/>
+          <%= trade.review.content %>
+          <% } %>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="col-2"></div>
+  <% } %>
 </div>

@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const Sequelize = require('sequelize');
 
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
 
@@ -21,7 +22,6 @@ router.param('id', async (id, ctx, next) => {
       ],
     },
   );
-  trade.item = await trade.publication.getItem();
   trade.emmiter = await ctx.orm.user.findOne(
     {
       include: [
@@ -42,6 +42,7 @@ router.param('id', async (id, ctx, next) => {
       ],
     },
   );
+  trade.emmiter.item = await trade.publication.getItem();
   trade.receptor = await ctx.orm.user.findOne(
     {
       include: [
@@ -57,6 +58,12 @@ router.param('id', async (id, ctx, next) => {
       ],
     },
   );
+  try {
+    const request = await trade.getRequest();
+    trade.receptor.item = await request.getItem();
+  } catch (error) {
+    trade.receptor.item = null;
+  }
   trade.review = await trade.getReview();
   ctx.assert(trade, 404);
   ctx.state.trade = trade;
