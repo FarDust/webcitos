@@ -7,38 +7,35 @@
 <p>There are <%= requests.length %> requests.</p>
 
 <% if (requests.length > 0) { %>
-<% let i = -1 %>
 <table>
   <thead>
     <tr>
       <th>Message</th>
-      <th>User Emitter ID</th>
-      <th>Publication ID</th>
-      <th>Item Offered ID </th>
+      <th>User</th>
+      <th>Publication</th>
+      <th>Item Offered</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% requests.forEach(request => { %>
-    <% i += 1 %>
       <tr>
-        <td><%= request.message %></td>
-        <td><%= request.userID %></td>
-        <td><%= request.publication_id %></td>
-        <td><%= request.item_offered_id %></td>
+        <td><%= request["request"].message %></td>
+        <td><a href="<%= getShowUserPath(request['user']) %>" > <%= request["user"].name %></a></td>
+        <td><a href="<%= getShowPublicationPath(request['publication']) %>"> <%= request["publication"].title %> </a></td>
+        <td><%= request["item"].model %></td>
         <td>
           <ul>
-            <li><a href="<%= getShowPath(request) %>">Show</a></li>
-            <% if (request.userID !== currentUser.id) {%>
-              <form action="<%= postNewTradePath(request) %>" method="get">
-                <input type="hidden" name="id_request" value="<%=request.id%>" />
+            <% if (request['user'].id !== currentUser.id) {%>
+              <form class= "form-inline" action="<%= postNewTradePath(request['request']) %>" method="get">
+                <input type="hidden" name="id_request" value="<%=request['request'].id%>" />
                 <input type="hidden" name="state" value="pendent" />
                 <li><button <%=publication_state==='pendent'?disabled=true:enabled=true%> class="button primary" type="submit" formmethod="post">Accept offer</button></li>
               </form>
             <%}%>
-            <% if (!trades[i]) { %>
+            <% if (!request['trade']) { %>
             <li>
-              <form class="form-inline" action="<%= getDestroyPath(request) %>" method="post">
+              <form class="form-inline" action="<%= getDestroyPath(request['request']) %>" method="post">
                 <input type="hidden" name="_method" value="delete" />
                 <button class="button primary" type="submit">Delete</button>
               </form>
