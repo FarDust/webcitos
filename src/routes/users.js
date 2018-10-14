@@ -1,6 +1,5 @@
 const KoaRouter = require('koa-router');
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
 const { forEach } = require('p-iteration');
 
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
@@ -62,13 +61,16 @@ async function getActiveTrades(target, orm, user, type) {
       include: [
         {
           model: orm.request,
+          required: true,
           include: [
             {
               model: orm.publication,
+              required: true,
               where: { state: type },
               include: [
                 {
                   model: orm.user,
+                  required: true,
                   where: { id: user.id },
                 },
               ],
@@ -90,12 +92,15 @@ async function getEndedTrades(target, orm, user) {
       include: [
         {
           model: orm.request,
+          required: true,
           include: [
             {
               model: orm.publication,
+              required: true,
               include: [
                 {
                   model: orm.user,
+                  required: true,
                   where: { id: user.id },
                 },
               ],
