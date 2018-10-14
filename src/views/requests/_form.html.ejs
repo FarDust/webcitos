@@ -1,4 +1,4 @@
-  <form action="<%= submitPath %>" method="post">
+  <form class="crud" action="<%= submitPath %>" method="post">
       <% if (locals.errors) { %>
         <p class="errors">You must correct the following errors to continue:</p>
         <ul>
@@ -18,29 +18,24 @@
          <span class="error"><%= errors.message.message %></span>
         <% } %>
       </label>
+      <% if (request.isNewRecord && publication_state !== "gift") { %>
+        <label for="item">
+          <span>Select one of your publications: </span>
+          <select name="item_offered_id" id="item_offered_id">
+            <% user_items.forEach(item => { %>
+              <option value="<%=item.id%>"><%=item.model%></option>
+            <% }); %>
+          </select>
+        </label>
+      <%}%>
+      <% console.log(user_items) %>
+
     </div>
     <% if (request.isNewRecord) { %>
-      <div class="center">
-        <label for="publication_id">
-          <span>PublicationID</span>
-           <input class="form-centered" type="publication_id" name="publication_id" id="publication_id" value="<%= request.publication_id %>" />
-           <% if (locals.errors && errors.publication_id) { %>
-           <span class="error"><%= errors.publication_id.message %></span>
-          <% } %>
-        </label>
-      </div>
-      <div class="center">
-        <label for="userID">
-          <span>UserID</span>
-          <input class="form-centered" type="userID" name="userID" id="userID" />
-          <% if (locals.errors && errors.userID) { %>
-           <span class="error"><%= errors.userID.message %></span>
-          <% } %>
-        </label>
-      </div>
+      <input class="form-centered" type="hidden" name="publication_id" id="publication_id" value="<%=publication_id%>" />
+      <input class="form-centered" type="hidden" name="userID" id="userID" value="<%=user_id%>" />
       <% } %>
       <div class="actions center">
         <input class="form-centered" type="submit" value="<%= request.isNewRecord ? 'Create' : 'Edit' %>" />
       </div>
     </form>
-</div>

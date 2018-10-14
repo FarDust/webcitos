@@ -1,0 +1,106 @@
+div.card{
+    border: 1px;
+    border-color: grey;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #e0e0e0;
+    margin: 4px;
+    z-index: -1;
+    box-sizing: unset;
+    width: 100%;
+}
+
+div.card .card-image{
+    display: inline-block;
+    max-height: 100px;
+    max-width: 100px;
+    padding-right: 4px;
+}
+
+div.card .card-image.header{
+    width: 100%;
+    overflow: hidden;
+    max-height: 150px;
+    text-align: center;
+}
+
+div.card .card-contex{
+    overflow: auto;
+}
+
+div.card-contex .card-header{
+    text-overflow: clip;
+    position: relative;
+    top: 0px;
+}
+
+div.card-contex .card-content{
+    text-overflow: clip;
+}
+
+div.card-contex .card-footer{
+    text-overflow: clip;
+    position: relative;
+    bottom: 0px;
+}
+
+.card-footer p{
+    display: inline-block;
+}
+
+.card-footer span{
+    color: #db5449;
+    font-weight: bold;
+}
+
+.card-footer span:hover{
+    color: #a32021;
+}
+
+.card-footer ul{
+    display: inline-block;
+}
+
+.card-footer ul li{
+    display: inline-block;
+}
+
+.card-group {
+}
+
+.card-group .card{
+    display: inline-block;
+    height: 250px;
+}
+
+.card-group .card:hover{
+    background-color: #e9d4d2;
+}
+
+.card-group .card .card-image{
+    position: relative;
+    float: left;
+
+}
+
+.card-group .card .card-contex .card-header{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75%;
+}
+
+.card-group .card .card-contex .card-content{
+    height: 100px;
+    text-overflow: ellipsis;
+}
+
+.card-group .card-footer ul{
+    position: relative;
+    float: right; 
+    padding: 0px; 
+}
+
+.card-footer ul li form.form-inline {
+    padding: 0px;
+}

@@ -1,25 +1,18 @@
-'use strict';
 
-function* idMaker() {
-      var index = 1;
-      while(true)
-          yield index++;
-  }
-
-var gen = idMaker();
-
-const faker = require('faker');
 
 module.exports = {
-  up: queryInterface => queryInterface
-    .bulkInsert(
-      'trades',
-      Array(10).fill(undefined).map(() => ({
-        id_request: gen.next().value,
-        state: 'not_concreted',
-        createdAt: faker.date.past(0.5, new Date(2017, 0, 1)),
-        updatedAt: faker.date.past(0.5, new Date(2018, 0, 1)),
-      })),
-    ),
-  down: queryInterface => queryInterface.bulkDelete('users', null, {}),
+  up: (queryInterface, Sequelize) => queryInterface.bulkInsert('trades', [{
+    id_request: 6,
+    state: 'concreted',
+    createdAt: new Date(2018, 6, 5),
+    updatedAt: new Date(2018, 6, 5),
+  },
+  {
+    id_request: 3,
+    state: 'pendent',
+    createdAt: new Date(2018, 6, 5),
+    updatedAt: new Date(2018, 6, 5),
+  }], {}),
+
+  down: (queryInterface, Sequelize) => queryInterface.bulkDelete('trades', null, {}),
 };

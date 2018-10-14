@@ -1,4 +1,62 @@
-html, body {
-  margin: 0;
-  padding: 0;
+.form-button{
+  /* CSS code for topbar form */
+  background-color: transparent;
+  padding: 0px;
+  align-items: unset;
+}
+
+.form-button input[type=submit]{
+  padding: 14px 16px;
+  width: 100%;
+  margin: 0px;
+  text-transform: capitalize;
+}
+
+ul li .form-button input[type=submit]:hover{
+  padding: 14px 16px;
+  width: unset;
+  margin: 0px;
+  text-transform: capitalize;
+  background-color: #ff8575;
+  color: black;
+}
+
+ul li.functional{
+  float: right;
+}
+
+
+.form-inline{
+  background-color: transparent;
+  padding: 0px;
+  align-items: unset;
+}
+
+.form-inline input{
+  border-radius: 15px;
+  border: 1px;
+  border-color: #ff8575;
+  padding: 5px;
+  width: unset;
+  margin: 0px;
+  display: inline-block;
+  max-width: 190px;
+  min-width: 100px;
+}
+
+.form-inline input::placeholder {
+  color: #8f8f8f;
+}
+
+.form-inline :focus {
+  outline: 0;
+  border-color: #a32021;
+}
+
+ul li .form-inline{
+  padding: 10px 4px 6px 4px;
+}
+
+.form-inline input[type=submit]{
+  display: none;
 }

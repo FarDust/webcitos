@@ -1,38 +1,40 @@
 <h1>All users</h1>
 
 <p>There are <%= users.length %> users.</p>
+<!--
 <p>
   <a href="<%= newUserPath %>">Create new user</a>
 </p>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>E-mail</th>
-      <th>Phone number</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% users.forEach(user => { %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.phone %></td>
-        <td>
-          <ul>
-            <li><a href="<%= getShowPath(user) %>">Show</a></li>
+-->
 
-            <li><a href="<%= getEditPath(user) %>">Edit</a></li>
+<div class="row">
+  <% users.forEach(user => { %>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-context">
+        <h4 class="card-header"><%= user.name %></h4>
+        <div class="card-content">
+          <p>
+            E-mail: <%= user.email %> <br/>
+            Phone number: <%= user.phone %>
+          </p>
+        </div>
+        <div class="card-footer">
+          <ul>
+            <li class="button"><a href="<%= getShowPath(user) %>">See profile</a></li>
+            <% if(user.id == currentUser.id){ %>
+            <li class="button"><a href="<%= getEditPath(user) %>">Edit</a></li>
             <li>
-              <form action="<%= getDestroyPath(user) %>" method="post">
+              <form class="form-button" action="<%= getDestroyPath(user) %>" method="post">
                 <input type="hidden" name="_method" value="delete" />
-                <input type="submit" value="Delete" />
+                <input class="button" type="submit" value="Delete" />
               </form>
             </li>
+            <% } %>
           </ul>
-        </td>
-      </tr>
-    <% }) %>
-  </tbody>
-</table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% }); %>
+</div>

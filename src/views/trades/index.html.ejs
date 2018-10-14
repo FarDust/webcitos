@@ -4,33 +4,39 @@
 <p>
   <a href="<%= newTradePath %>">Create new trade</a>
 </p>
-<table>
-  <thead>
-    <tr>
-      <th>ID Request</th>
-      <th>State</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% trades.forEach(trade => { %>
-      <tr>
-        <td><%= trade.id_request %></td>
-        <td><%= trade.state %></td>
-        <td>
-          <ul>
-            <li><a href="<%= getShowPath(trade) %>">Show</a></li>
 
-            <li><a href="<%= getEditPath(trade) %>">Edit</a></li>
-            <li>
-              <form action="<%= getDestroyPath(trade) %>" method="post">
-                <input type="hidden" name="_method" value="delete" />
-                <input type="submit" value="Delete" />
-              </form>
-            </li>
-          </ul>
-        </td>
-      </tr>
-    <% }) %>
-  </tbody>
-</table>
+<div class="row">
+  <% trades.forEach(trade => { %>
+  <div class="col-3">
+    <div class="card">
+      <div class="card-context">
+          <h4 class="card-header"> Trade <%= trade.id %></h4>
+          <div class="card-content">
+            Current state: <%= trade.state %> <br>
+            <% if (trade.id_request !== null ) { %>
+              Assigned request: 
+              <a href="/requests/<%= trade.id_request.toString() %>">
+                Request <%= trade.id_request %>
+              </a>
+            <% } %>
+          </div>
+          <div class="card-footer">
+            <!-- Buttons here! -->
+            <ul>
+              <li class="button"><a href="<%= getShowPath(trade) %>">See trade</a></li>
+              <!--
+              <li class="button"><a href="<%= getEditPath(trade) %>">Edit</a></li>
+              <li>
+                <form class="form-button" action="<%= getDestroyPath(trade) %>" method="post">
+                  <input type="hidden" name="_method" value="delete" />
+                  <input class="button primary" type="submit" value="Delete" />
+                </form>
+              </li>
+              -->
+            </ul>
+          </div>
+      </div>
+    </div>
+  </div>
+  <% }) %>
+</div>

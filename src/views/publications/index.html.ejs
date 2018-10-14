@@ -4,37 +4,38 @@
 <p>
   <a href="<%= newpublicationPath %>">Create new publication</a>
 </p>
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>State</th>
-      <th>ID User</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
+<div class="container">
+  <div class="row card-group">
     <% publications.forEach(publication => { %>
-      <tr>
-        <td><%= publication.title %></td>
-        <td><%= publication.description %></td>
-        <td><%= publication.state %></td>
-        <td><%= publication.userID %></td>
-        <td>
-          <ul>
-            <li><a href="<%= getShowPath(publication) %>">Show</a></li>
-
-            <li><a href="<%= getEditPath(publication) %>">Edit</a></li>
-            <li>
-              <form action="<%= getDestroyPath(publication) %>" method="post">
-                <input type="hidden" name="_method" value="delete" />
-                <input type="submit" value="Delete" />
-              </form>
-            </li>
-          </ul>
-        </td>
-      </tr>
+    <div class="col-4">
+      <div class="card">
+        <div class="card-contex">
+            <img class="card-image" src="<%= assetPath('example.svg') %>" alt=""/>
+            <h4 class="card-header"><%= publication.title %></h4>
+            <div class="card-content">
+              <%= publication.description %>>
+            </div>
+            <div class="card-footer">
+              <p>
+                <span>State:</span> <%= publication.state %> <br>
+                <span>Added by:</span> <%= publication.userID %>
+              </p>
+              <ul>
+                <li><a class="button" href="<%= getShowPath(publication) %>">See publication</a></li>
+                <% if(publication.userID == currentUser.id) { %>
+                <li><a class="button" href="<%= getEditPath(publication) %>">Edit</a></li>
+                <li>
+                  <form class="form-button" action="<%= getDestroyPath(publication) %>" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <input type="submit" value="Delete" />
+                  </form>
+                </li>
+                <% } %>
+              </ul>
+            </div>
+        </div>
+      </div>
+    </div>
     <% }) %>
-  </tbody>
-</table>
+  </div>
+</div>

@@ -3,18 +3,19 @@
 
   <head>
     <meta charset="utf-8">
-    <title>IIC2513 - WebCitos</title>
+    <title>IIC2513 - TradeAway</title>
     <% if (env !== 'development') { %>
       <link rel="stylesheet" href="<%= assetPath('app.css') %>">
     <% } %>
     <link rel="stylesheet" href="<%= assetPath('fardust.css') %>">
+    <link rel="icon" href="<%= assetPath('favicon.png') %>">
   </head>
 
   <body>
     <!--logo-->
-    <div class="container top" id="home">
+    <div class="logo-container top" id="home">
       <a href="/" class="logo">
-        Web<span class="Music">Citos</span>
+        Trade<span class="Music">Away</span>
       </a>
     </div>
     <!--topbar-->
@@ -24,13 +25,31 @@
           <img class="side-menu center" src="<%= assetPath('side.png') %>" >
         </span>
       </li>
-      <li><a href="/">Home</a></li>
+      <% if (locals.currentUser) { %>
+      <li><a href="/users/<%=currentUser.id%>">Profile</a></li>
+      <li><a href="/users/<%= currentUser.id %>/trades">Your trades</a></li>
+      <li><a href="/requests/actualUser %>">Your offers</a></li>
       <li><a href="/users">Users</a></li>
       <li><a href="/publications">Publications</a></li>
-      <li><a href="/requests">Requests</a></li>
       <li><a href="/items">Items</a></li>
-      <li><a href="/reviews">Reviews</a></li>
       <li><a href="/trades">Trades</a></li>
+      <li><a href="/reviews">Reviews</a></li>
+      <li class="functional">
+        <form class="form-button" action="<%= destroySessionPath %>" method="post">
+          <input type="hidden" name="_method" value="delete" />
+          <input type="submit" value="Log out" />
+        </form>
+      </li>
+      <li class="functional">
+        <form id="search" class="form-inline" action="<%=  %>" method="get">
+          <input type="text" id="query" name="query" placeholder="Search"/>
+          <input type="submit" value="" />
+        </form>
+      </li>
+      <% } else { %>
+      <li class="functional"><a href="<%= newSessionPath %>">Sign in</a></li>
+      <li class="functional"><a href="/users/new">Sign up</a></li>
+      <% } %>
     </ul>
     <!--sidebar-->
     <div id="right-arrow" class="circle" onclick="openNav()" style="top:50%">
@@ -45,6 +64,9 @@
       </a>
       <a class="side" href="../index.html">Home</a>
     </div>
+    <% if (notice = flashMessage.notice) { %>
+      <div><%= notice %></div>
+    <% } %>
     <%- body %>
     <script src="<%= assetPath('app.js') %>"></script>
   </body>

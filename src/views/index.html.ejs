@@ -10,8 +10,19 @@
       <img src="<%= assetPath('logo.svg') %>">
     </div>
     <div id="main-buttons">
-        <button class="button" onclick="window.location.href='/users'">Sign Up</button>
-        <button class="button irrelevant" onclick="window.location.href='/users'">Sign In</button>
+    <% if (locals.currentUser) { %>
+    <p class="slogan">
+        Welcome back, <br/>
+        <%= currentUser.name %>
+    </p>
+      <form class="form-button" action="<%= destroySessionPath %>" method="post">
+        <input type="hidden" name="_method" value="delete" />
+        <input type="submit" value="Log out" />
+      </form>
+    <% } else { %>
+        <button class="button primary" onclick="window.location.href='/users/new'">Sign Up</button>
+        <button class="button" onclick="window.location.href='<%= newSessionPath %>'">Sign In</button>
+    <% } %>
     </div>
   </div>
 </div>

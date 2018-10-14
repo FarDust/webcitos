@@ -1,10 +1,36 @@
 <div class="center">
-  <h1>Create user</h1>
+  
 </div>
 <%# This special tag is an EJS comment %>
 <%# And the one below is similar to the one we've been using to output values to the template's result %>
 <%# but we cannot use the same one here since it automatically escapes HTML (converting <div> to &lt;div&gt;, for example) %>
 <%# The one below, instead, will write its value directly to the end result, no escaping %>
-<div class="center">
-  <%- include('_form') %>
+<div class="row">
+  <div class="col-2"></div>
+  <div class="col-8">
+    <div class="card">
+      <div class="card-context">
+        <div class="card-header">
+          <h2><p class="center">Welcome to TradeAway App!</p></h2>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+              <p class="center">
+                The App that helps you trade the stuff that you
+                dont need for stuff that you want
+              </p>
+            </div>
+            <div class="col-2"></div>
+          </div>
+        </div>
+        <div class="card-content">
+          <%- include('_form') %>
+        </div>
+        <div class="card-footer">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-2"></div>
 </div>

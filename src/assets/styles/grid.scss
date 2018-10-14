@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box; /* Aplica el calculo general de todo el margen y el borde */
+}
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.row [class*="col-"]{
+  float: left;
+  padding: 15px;
+  /* border: 1px solid red;  Only for debug */
+}
+
+.col-{
+  display: inline-block;
+}
+
+.col-1{
+  @extend .col-;
+  width: 8.33%;
+}
+
+.col-2{
+  @extend .col-;
+  width: 16.66%;
+}
+
+.col-3{
+  @extend .col-;
+  width: 25%;
+}
+
+.col-4{
+  @extend .col-;
+  width: 33.33%;
+}
+
+.col-5{
+  @extend .col-;
+  width: 41.66%;
+}
+
+.col-6{
+  @extend .col-;
+  width: 50%;
+}
+
+.col-7{
+  @extend .col-;
+  width: 58,33%;
+}
+
+.col-8{
+  @extend .col-;
+  width: 66.66%;
+}
+
+.col-9{
+  @extend .col-;
+  width: 75%;
+}
+
+.col-10{
+  @extend .col-;
+  width: 83.33%;
+}
+.col-11{
+  @extend .col-;
+  width: 91.63%;
+}
+
+.col-12{
+  @extend .col-;
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  [class*="col-"] {
+    width: 100%;
+  }
+}

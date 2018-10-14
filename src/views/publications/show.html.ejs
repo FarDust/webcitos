@@ -1,1 +1,64 @@
-<%- include('../layouts/_show') %>
+<div class="content">
+  <div class="row">
+    <div class="col-6">
+      <div class="content">
+      <%- include('../layouts/_show') %>
+      <% if (state.userID === currentUser.id) { %>
+      <button class="button primary" onclick="window.location.href='<%= editPublicationPath(state) %>'">Edit publication</button>
+      <!--
+      <li>
+        <form class="form-button" action="<%= destroyPublicationPath(state) %>" method="post">
+          <input type="hidden" name="_method" value="delete" />
+          <input type="submit" value="Delete" />
+        </form>
+      </li>
+      -->
+      <% } %>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="content">
+      <div class="row">
+        <div class="col-1"></div>
+        <div class="col-10">
+          <h2 class="centered-header"><%= propietary_user.name %></h2>
+          <li class="button"><a href="<%= userPath(propietary_user) %>">See profile</a></li>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-8">
+            <% if (state.userID === currentUser.id) { %>
+              <form class="form-button" action="<%=showRequestsPath(state)%>">
+                <input type="submit" value="See all offers" />
+              </form>
+            <% } else if (state.state == 'gift' || state.state == 'exchange'){ %>
+              <form class="form-button" action="<%=createRequestPath(state)%>">
+                <input type="submit" value="Create a new offer" />
+              </form>
+            <% } %>
+        </div>
+        <div class="col-2"></div>
+      </div>
+      </div>
+    </div>
+    <div class="col-12 content">
+      <h3>Description of the item</h3>
+      <div class="row">
+        <div class="col-6">
+          <% for(let key in item) { %>
+            <% if (!ignore.includes(key) ) { %>
+              <div class="tag">
+                <%= key.replace(/\b[a-z]\B/g, function(letter) {return letter.toUpperCase(); } ); %>: <%= item[key] %>
+              </div>
+            <% }%>
+          <% } %>
+          <% if (state.userID === currentUser.id) { %>
+          <button class="button primary" onclick="window.location.href='<%= editItemPath(item) %>'">Edit item</button>
+          <% } %>
+        </div>
+        <div class="col-6">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

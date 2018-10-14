@@ -10,7 +10,7 @@ body {
 
 /*info*/
 div.info{
-  border-radius: 5px;
+  border-radius: 2px;
 
   background-color: rgba(255, 255, 255, 0.5);
 }
@@ -23,7 +23,7 @@ div.info p{
 /*ref menu*/
 #begin{
   background-color: #37B9A2;
-  border-radius: 5px;
+  border-radius: 2px;
   padding: 5px;
 }
 
@@ -41,7 +41,7 @@ ul.ref-menu {
   list-style-type: none;
   padding: 0;
   overflow: hidden;
-  background-color:#333;
+  background-color: #db5449;
   border-radius: 5px;
 }
 
@@ -59,12 +59,12 @@ ul.ref-menu li a {
 }
 
 ul.ref-menu li a:hover:not(.active) {
-    background-color: #111;
+    background-color: #ff8575;
 }
 
 ul.ref-menu li a.active{
-  background-color: #00AB8C;
-  color: white;
+  background-color: #a32021;
+  color: black;
 }
 
 ul.ref-menu li.right {
@@ -90,10 +90,11 @@ ul.topbar {
     margin-top: 56px;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: #db5449;
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1;
 }
 
 ul.topbar li {
@@ -102,19 +103,19 @@ ul.topbar li {
 
 ul.topbar li a {
     display: block;
-    color: white;
+    color: black;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 ul.topbar li a:hover:not(.active) {
-    background-color: #111;
+    background-color: #ff8575;
 }
 
 ul.topbar li a.active{
-  background-color: #00AB8C;
-  color: white;
+  background-color: #db5449;
+  color: black;
 }
 
 ul.topbar li.right {
@@ -132,7 +133,7 @@ input, select {
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 2px;
     box-sizing: border-box;
 }
 
@@ -146,24 +147,25 @@ input[type=hidden] {
 
 input[type=submit] {
     width: 77.8px;
-    background-color: #37B9A2;
-    color: white;
+    background-color: #db5449;
+    color: black;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 4px;
+    border-radius: 2px;
     cursor: pointer;
     -webkit-transition: width 2s;
     transition: width 2s;
 }
 
 input[type=submit]:hover {
-    background-color: #0AC251;
+    background-color: #a32021;
+    color: white;
     /*width: 90px;*/
 }
 
 form {
-  border-radius: 5px;
+  border-radius: 3px;
   background-color: #f2f2f2;
   padding: 20px;
   align-items: center;
@@ -173,10 +175,11 @@ form {
   width: 325px;
 }
 /*logo*/
-div.container{
+div.logo-container{
   top: 0;
   width: 100%;
   padding: 15px;
+  padding-bottom: 17px;
   text-align: left;
   color: white;
   border-radius: 0px;
@@ -185,6 +188,7 @@ div.container{
   /*font-family: 'Roboto'*/;
   position: fixed;
   transition: 1s;
+  z-index: 1;
 }
 
 a.logo{
@@ -194,11 +198,11 @@ a.logo{
 
 a.logo:hover{
   text-decoration: none;
-  color: rgb(0, 150, 175);
+  color: #db5449;
 }
 
 span.Music{
-  color: rgb(0, 150, 175);
+  color: #db5449;
 }
 
 /*
@@ -216,7 +220,7 @@ div.table {
 
 table {
     /*border-collapse: collapse;*/
-    border-radius: 10px;
+    border-radius: 2px;
     width: 75%;
     padding: 10px;
     background-color: white;
@@ -240,13 +244,13 @@ tr:nth-child(even) {
 }
 
 tr:hover {
-  background-color: #66666b;
+  background-color: #7f7f81;
   color: white;
 }
 
 th {
-    border-top-left-radius: 10px;
-    background-color: #00AB8C;
+    border-radius: 4px;
+    background-color: #db5449;
     color: white;
 }
 
@@ -290,12 +294,16 @@ i.arrowr  {
 }
 
 #side-open:hover{
-  background-color: #525252;
+  background-color: #ff8575;
 }
 
 img.side-menu{
   opacity: 0.6;
   display: block;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 45px;
+  height: 45px;
 }
 
 .center-arrow {
@@ -366,6 +374,56 @@ table ul li form{
 
 table ul li form input[type="submit"]{
   margin: 0px;
+}
+
+a {
+  text-decoration-color: #db5449;
+  color: inherit;
+}
+
+a:hover{
+  text-decoration-color: #a32021;
+}
+
+a:focus{
+  color: #ff8575;
+  text-decoration-color: #ff8575;
+}
+
+span.badge{
+  padding: 4px;
+  border-radius: 4px;
+}
+
+span.badge.primary{
+  background-color: #db5449;
+}
+
+span.badge.primary:hover{
+  background-color: #ff8575;
+}
+
+a.badge-link{
+  padding: 4px;
+  border-radius: 8px;
+  background-color: #b6b6b6;
+}
+
+a.badge-link:hover{
+  background-color: #c2c2c2;
+}
+
+a.badge-link.primary{
+  background-color: #db5449;
+}
+
+a.badge-link.primary:hover{
+  background-color: #ff8575;
+}
+
+a.badge-link{
+  color: black;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 600px){
