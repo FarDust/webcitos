@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const Sequelize = require('sequelize');
 
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
 
@@ -6,6 +7,64 @@ const router = new KoaRouter();
 
 router.param('id', async (id, ctx, next) => {
   const trade = await ctx.orm.trade.findById(ctx.params.id);
+  trade.publication = await ctx.orm.publication.findOne(
+    {
+      include: [
+        {
+          model: ctx.orm.request,
+          include: [
+            {
+              model: ctx.orm.trade,
+              where: { id: trade.id },
+            },
+          ],
+        },
+      ],
+    },
+  );
+  trade.emmiter = await ctx.orm.user.findOne(
+    {
+      include: [
+        {
+          model: ctx.orm.publication,
+          include: [
+            {
+              model: ctx.orm.request,
+              include: [
+                {
+                  model: ctx.orm.trade,
+                  where: { id: trade.id },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  );
+  trade.emmiter.item = await trade.publication.getItem();
+  trade.receptor = await ctx.orm.user.findOne(
+    {
+      include: [
+        {
+          model: ctx.orm.request,
+          include: [
+            {
+              model: ctx.orm.trade,
+              where: { id: trade.id },
+            },
+          ],
+        },
+      ],
+    },
+  );
+  try {
+    const request = await trade.getRequest();
+    trade.receptor.item = await request.getItem();
+  } catch (error) {
+    trade.receptor.item = null;
+  }
+  trade.review = await trade.getReview();
   ctx.assert(trade, 404);
   ctx.state.trade = trade;
   return next();
@@ -69,9 +128,8 @@ router.get('trades-show', '/:id', (ctx) => {
   if (ctx.state.currentUser) {
     return ctx.render('trades/show',
       {
-        name: 'trade',
-        ignore: ['createdAt', 'updatedAt', 'id'],
-        state: JSON.parse(JSON.stringify(ctx.state.trade)),
+        trade: ctx.state.trade,
+
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';
