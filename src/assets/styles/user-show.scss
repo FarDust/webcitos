@@ -1,9 +1,17 @@
 #user-profile {
-  height: 100%;
+  display: flex;
+  height: auto;
   position: fixed;
   text-align: center;
+  justify-content: center;
 }
 
 #right {
   float: right;
+}
+
+.infotag {
+  text-align: left;
+  padding: 5px;
+  font-weight: bold;
 }

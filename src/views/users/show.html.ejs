@@ -1,47 +1,36 @@
 <div class="row">
-  <div id="user-profile" class="col-5">
+    <div id="user-profile" class="col-5">
     <div class="card">
+      <% if (currentUser.id == user_id){ %>
+        <h1>Hi <%=currentUser.name%>!</h1>
+      <% } else { %>
+        <h1>Hi! I'm <%=state.name%></h1>
+      <% } %>
       <img class="card-image header" src="<%= assetPath('avatar.svg') %>" alt="avatar">
       <div class="card-context">
         <div class="card-content">
-            <%- include('../layouts/_show') %>
+          <div class="infotag">
+            <h2>Information</h2>
+          </div>
+          <div class="content">
+            <div class="infotag">
+              Rating:
+            </div>
+            <div class="infotag">
+              Phone: <%=state.phone%>
+            </div>
+            <div class="infotag">
+              E-Mail: <%=state.email%>
+            </div>
             <% if (currentUser.id == user_id){ %>
             <button class="button primary" onclick="window.location.href='<%= userEditPath(currentUser.id) %>'">Edit my profile</button>
             <% } %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div id="right" class="col-6">
-    <div class="summary">
-      <h2>Summary</h2>
-      <div class="row content">
-        <div class="col-12">
-          <h3>Comments</h3>
-        </div>
-        <div class="col-12">
-          <span class="badge primary">#N</span> Unanswered questions
-        </div>
-        <div class="col-12">
-          <h3>Trades</h3>
-        </div>
-        <div class="col-12">
-          <span class="badge primary"><%= statics.exchange.active %></span> Active
-        </div>
-        <div class="col-12">
-          <span class="badge primary"><%= statics.exchange.ended %></span> Ended
-        </div>
-        <div class="col-12">
-            <h3>Gifts</h3>
-        </div>
-        <div class="col-12">
-          <span class="badge primary"><%= statics.gift.active %></span> Active
-        </div>
-        <div class="col-12">
-          <span class="badge primary"><%= statics.gift.ended %></span> Ended
-        </div>
-      </div>
-    </div>
+  <div id="right" class="col-7">
 
     <div class="Publications">
       <h1> Publications </h1>
