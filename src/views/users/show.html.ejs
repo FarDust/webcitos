@@ -1,6 +1,5 @@
 <div class="row">
-  <div class="col-2"></div>
-  <div id="user-profile" class="col-4">
+  <div id="user-profile" class="col-5">
     <div class="card">
       <img class="card-image header" src="<%= assetPath('avatar.svg') %>" alt="avatar">
       <div class="card-context">
@@ -13,91 +12,94 @@
       </div>
     </div>
   </div>
-  <div id="user-summary" class="col-4">
-    <h2>Summary</h2>
-    <div class="row content">
-      <div class="col-12">
-        <h3>Comments</h3>
-      </div>
-      <div class="col-12">
-        <span class="badge primary">#N</span> Unanswered questions
-      </div>
-      <div class="col-12">
-        <h3>Trades</h3>
-      </div>
-      <div class="col-12">
-        <span class="badge primary"><%= statics.exchange.active %></span> Active
-      </div>
-      <div class="col-12">
-        <span class="badge primary"><%= statics.exchange.ended %></span> Ended
-      </div>
-      <div class="col-12">
-          <h3>Gifts</h3>
-      </div>
-      <div class="col-12">
-        <span class="badge primary"><%= statics.gift.active %></span> Active
-      </div>
-      <div class="col-12">
-        <span class="badge primary"><%= statics.gift.ended %></span> Ended
+  <div id="right" class="col-6">
+    <div class="summary">
+      <h2>Summary</h2>
+      <div class="row content">
+        <div class="col-12">
+          <h3>Comments</h3>
+        </div>
+        <div class="col-12">
+          <span class="badge primary">#N</span> Unanswered questions
+        </div>
+        <div class="col-12">
+          <h3>Trades</h3>
+        </div>
+        <div class="col-12">
+          <span class="badge primary"><%= statics.exchange.active %></span> Active
+        </div>
+        <div class="col-12">
+          <span class="badge primary"><%= statics.exchange.ended %></span> Ended
+        </div>
+        <div class="col-12">
+            <h3>Gifts</h3>
+        </div>
+        <div class="col-12">
+          <span class="badge primary"><%= statics.gift.active %></span> Active
+        </div>
+        <div class="col-12">
+          <span class="badge primary"><%= statics.gift.ended %></span> Ended
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-2"></div>
-</div>
-<div class="row">
-  <div class="col-1"></div>
-  <div class="col-10">
-    <h1> Publications </h1>
-    <div class="content">
 
-      <p>You have <%= publications.length %> publications.</p>
-      <% if (state.id === currentUser.id) { %>
-        <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication</button>
-        <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See my offers</button>
-        <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See my trades</button>
-      <% } %>
+    <div class="Publications">
+      <h1> Publications </h1>
+      <div class="content">
 
-      <div class="row card-group">
-        <% publications.forEach(publication => { %>
-        <div class="col-6">
-          <div class="card">
-            <div class="card-contex">
-              <h4 class="card-header"><%= publication.title %></h4>
-              <div class="card-content">
-                  <%= publication.description %>
-              </div>
-              <div class="card-footer">
-                <div class="row">
-                  <div class="col-4">
-                      <p>
-                        <span>State:</span> <%= publication.state %>
-                      </p>
-                  </div>
-                  <div class="col-8">
-                      <% if (state.id === currentUser.id) { %>
-                        <ul>
-                          <li>
-                            <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
-                          </li>
-                          <li>
-                            <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">See publication</button>
-                          </li>
-                          <li>
-                            <form class="form-inline" action="<%= getDestroyPublicationPath(publication) %>" method="post">
-                              <input type="hidden" name="_method" value="delete" />
-                              <button  class="button primary" type="submit">Delete</button>
-                            </form>
-                          </li>
-                        </ul>
-                      <% } %>
+        <p>You have <%= publications.length %> publications.</p>
+        <% if (state.id === currentUser.id) { %>
+          <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication</button>
+          <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See my offers</button>
+          <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See my trades</button>
+        <% } %>
+
+        <div class="row card-group">
+          <% publications.forEach(publication => { %>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-contex">
+                <h4 class="card-header"><%= publication.title %></h4>
+                <div class="card-content">
+                    <%= publication.description %>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-4">
+                        <p>
+                          <span>State:</span> <%= publication.state %>
+                        </p>
+                    </div>
+                    <div class="col-8">
+                        <% if (state.id === currentUser.id) { %>
+                          <ul>
+                            <li>
+                              <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
+                            </li>
+                            <li>
+                              <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">See publication</button>
+                            </li>
+                            <li>
+                              <form class="form-inline" action="<%= getDestroyPublicationPath(publication) %>" method="post">
+                                <input type="hidden" name="_method" value="delete" />
+                                <button  class="button primary" type="submit">Delete</button>
+                              </form>
+                            </li>
+                          </ul>
+                        <% } %>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <% }) %>
         </div>
-        <% }) %>
       </div>
     </div>
+
   </div>
+
+
+
 </div>
