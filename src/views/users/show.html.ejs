@@ -43,9 +43,13 @@
           <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See my trades</button>
         <% } %>
 
+        <%= <slider.Slider> %>
+
+        <%</slider.Slider> %>
         <div class="row card-group">
           <% publications.forEach(publication => { %>
           <div class="col-6">
+            <a href="<%-showPublicationPath(publication)%>">
             <div class="card">
               <div class="card-contex">
                 <h4 class="card-header"><%= publication.title %></h4>
@@ -66,9 +70,6 @@
                               <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
                             </li>
                             <li>
-                              <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">See publication</button>
-                            </li>
-                            <li>
                               <form class="form-inline" action="<%= getDestroyPublicationPath(publication) %>" method="post">
                                 <input type="hidden" name="_method" value="delete" />
                                 <button  class="button primary" type="submit">Delete</button>
@@ -81,6 +82,7 @@
                 </div>
               </div>
             </div>
+            </a>
           </div>
           <% }) %>
         </div>
