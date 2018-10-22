@@ -19,6 +19,9 @@
             Phone number: <%= user.phone %>
           </p>
         </div>
+        <div class="image-index-items">
+          <img src="<%= getUserImagePath(user) %>" alt="Photo of the user"/>
+        </div>
         <div class="card-footer">
           <ul>
             <li class="button"><a href="<%= getShowPath(user) %>">See profile</a></li>

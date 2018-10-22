@@ -1,4 +1,4 @@
-<form class="crud" action="<%= submitPath %>" method="post">
+<form class="crud" action="<%= submitPath %>" method="post" enctype="multipart/form-data">
     <% if (locals.errors) { %>
       <p class="errors">You must correct the following errors to continue:</p>
       <ul>
@@ -41,6 +41,12 @@
       <% if (locals.errors && errors.password) { %>
        <span class="error"><%= errors.password.message %></span>
       <% } %>
+    </label>
+  </div>
+  <div class="center">
+    <label for="image">
+      <span>Image</span>
+      <input type="file" name="image" id="image" value="<%= user.image %>" />
     </label>
   </div>
   <div class="actions center">

@@ -20,6 +20,7 @@ router.get('users', '/', async (ctx) => {
       users,
       newUserPath: ctx.router.url('users-new'),
       getShowPath: user => ctx.router.url('users-show', user.id),
+      getUserImagePath: user => ctx.router.url('users-show-image', user.id),
       getEditPath: user => ctx.router.url('users-edit', user.id),
       getDestroyPath: user => ctx.router.url('users-destroy', user.id),
     });
@@ -40,6 +41,14 @@ router.post('users-create', '/', async (ctx) => {
   const user = ctx.orm.user.build(ctx.request.body);
   try {
     await user.save(ctx.request.body);
+    if (ctx.request.files.image.name) {
+      const { path: localImagePath, name: localImageName } = ctx.request.files.image;
+      const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'users/images', namePrefix: user.id });
+      await cloudStorage.upload(localImagePath, remoteImagePath);
+      await user.update({ image: remoteImagePath });
+    }else{
+      await user.update({ image: 'users/images/profile-placeholder.jpg' });
+    }
     ctx.redirect('/');
   } catch (error) {
     if (!isValidationError(error)) throw error;
@@ -163,6 +172,15 @@ router.get('users-show', '/:id', async (ctx) => {
   ctx.redirect('/');
 });
 
+router.get('users-show-image', '/:id/image', async (ctx) => {
+   const { image } = ctx.state.user;
+   if (/^https?:\/\//.test(image)) {
+    ctx.redirect(image);
+   } else {
+    ctx.body = cloudStorage.download(image);
+  }
+});
+
 router.get('users-edit', '/:id/edit', (ctx) => {
   const { user } = ctx.state;
   if (ctx.session.currentUserId == user.id) {
@@ -237,7 +255,12 @@ router.patch('users-update', '/:id', async (ctx) => {
       ctx.request.body,
       { fields: ['name', 'phone', 'email', 'password'] },
     );
-
+    if (ctx.request.files.image.name) {
+      const { path: localImagePath, name: localImageName } = ctx.request.files.image;
+      const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'users/images', namePrefix: user.id });
+      await cloudStorage.upload(localImagePath, remoteImagePath);
+      await user.update({ image: remoteImagePath });
+    }
     ctx.redirect(ctx.router.url('users-show', user.id));
   } catch (error) {
     if (!isValidationError(error)) throw error;

@@ -41,10 +41,14 @@ router.get('items-new', '/new/:pid', (ctx) => {
 
 router.post('items-create', '/', async (ctx) => {
   const new_item = await ctx.orm.item.create(ctx.request.body);
-  const { path: localImagePath, name: localImageName } = ctx.request.files.image;
-  const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'items/images', namePrefix: new_item.id });
-  await cloudStorage.upload(localImagePath, remoteImagePath);
-  await new_item.update({ image: remoteImagePath });
+  if (ctx.request.files.image.name) {
+    const { path: localImagePath, name: localImageName } = ctx.request.files.image;
+    const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'items/images', namePrefix: new_item.id });
+    await cloudStorage.upload(localImagePath, remoteImagePath);
+    await new_item.update({ image: remoteImagePath });
+  }else{
+    await new_item.update({ image: 'items/images/item-placeholder.png' });
+  }
   ctx.redirect(ctx.router.url('publications-show', new_item.publication_id));
 });
 
@@ -90,8 +94,14 @@ router.patch('items-update', '/:id', async (ctx) => {
   try {
     await item.update(
       ctx.request.body,
-      { fields: ['model', 'brand', 'aditional', 'state', 'category', 'screenSize', 'publication_id', 'image'] },
+      { fields: ['model', 'brand', 'aditional', 'state', 'category', 'screenSize', 'publication_id'] },
     );
+    if (ctx.request.files.image.name) {
+      const { path: localImagePath, name: localImageName } = ctx.request.files.image;
+      const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'items/images', namePrefix: item.id });
+      await cloudStorage.upload(localImagePath, remoteImagePath);
+      await item.update({ image: remoteImagePath });
+    }
     ctx.redirect(ctx.router.url('items-show', item.id));
   } catch (error) {
     if (!isValidationError(error)) throw error;
