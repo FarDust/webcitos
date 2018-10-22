@@ -1,6 +1,8 @@
 <h1>All your trades</h1>
 
-<p>You have <%= trades.length %> trades.</p>
+<% if (trades.length == 0) { %>
+<p>You don't have any trades yet.</p>
+<% } %>
 
 <% if (trades.length > 0) { %>
 <% let i = -1 %>

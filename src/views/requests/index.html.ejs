@@ -4,7 +4,9 @@
   <h1>All your requests </h1>
 <%}%>
 
-<p>There are <%= requests.length %> requests.</p>
+<% if (requests.length == 0) { %>
+<p>There are no requests yet.</p>
+<% } %>
 
 <% if (requests.length > 0) { %>
 <table>

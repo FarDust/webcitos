@@ -1,7 +1,6 @@
 <h1>All items</h1>
 
 <div class="row">
-  <p>There are <%= items.length %> items.</p>
   <div class="col-2"></div>
   <div class="col-8">
     <div class="row">
@@ -25,7 +24,7 @@
               <hr />
               Others: <%= item.aditional %>
               <div class="image-index-items">
-                <img src="<%= getItemImagePath(item) %>" alt="Photo of the item"/>
+                <img class="card-image header" src="<%= getItemImagePath(item) %>" alt="Photo of the item"/>
               </div>
             </div>
             <div class="card-footer">

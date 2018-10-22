@@ -49,6 +49,8 @@ router.post('users-create', '/', async (ctx) => {
     }else{
       await user.update({ image: 'users/images/profile-placeholder.jpg' });
     }
+    ctx.flashMessage.notice = 'Welcome to the TradeAway app!';
+    ctx.session.currentUserId = user.id;
     ctx.redirect('/');
   } catch (error) {
     if (!isValidationError(error)) throw error;
@@ -155,8 +157,9 @@ router.get('users-show', '/:id', async (ctx) => {
       {
         name: user.name,
         user_id: user.id,
+        getUserImagePath: user_id => ctx.router.url('users-show-image', user_id),
         userEditPath: user_id => ctx.router.url('users-edit', user_id),
-        ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
+        ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name', 'image'],
         publications: publication,
         newPublicationPath: ctx.router.url('publications-new'),
         showPublicationPath: publi => ctx.router.url('publications-show', { id: publi.id }),
