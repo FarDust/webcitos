@@ -30,9 +30,6 @@
   scroll-snap-points-x: repeat(300px);
   scroll-snap-type: mandatory;
 
-  -webkit-scrollbar {
-    display: none;
-  }
 }
 .slider > div {
   /* make sure the width is honored */

@@ -32,14 +32,11 @@
   </div>
   <div id="right" class="col-7">
 
-    <div class="Publications">
+    <div class="user-context">
       <h1> Publications </h1>
       <div class="content">
-
-        <p>You have <%= publications.length %> publications.</p>
         <% if (state.id === currentUser.id) { %>
           <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication</button>
-          <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See my offers</button>
           <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See my trades</button>
         <% } %>
 
@@ -65,9 +62,11 @@
                     <div class="col-8">
                         <% if (state.id === currentUser.id) { %>
                           <ul>
+                          <% if (publication.state !== 'pendent') { %>
                             <li>
                               <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
                             </li>
+                            <%}%>
                             <li>
                               <form class="form-inline" action="<%= getDestroyPublicationPath(publication) %>" method="post">
                                 <input type="hidden" name="_method" value="delete" />
@@ -85,6 +84,68 @@
           </div>
           <% }) %>
         </div>
+      </div>
+    </div>
+
+    <div class="user-context">
+      <h1>Inventory</h1>
+      <div class="content">
+        <div class="row card-group slider">
+          <% inventory.forEach(inventorie => { %>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-contex">
+              <a href="<%-showPublicationPath(inventorie)%>">
+                <h4 class="card-header"><%= inventorie.title %></h4>
+                <div class="card-content">
+                    <%= inventorie.description %>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                    <div class="col-4">
+                        <p>
+                          <span>State:</span> <%= inventorie.state %>
+                        </p>
+                    </div>
+              </a>
+                    <div class="col-8">
+                        <% if (state.id === currentUser.id) { %>
+                          <ul>
+                            <li>
+                              <button class="button primary" onclick="window.location.href='<%-showRequestsPath(inventorie)%>'"><%= inventorie.state=='gift' ? 'See petitions' : 'See offers' %></button>
+                            </li>
+                            <li>
+                              <form class="form-inline" action="<%= getDestroyPublicationPath(inventorie) %>" method="post">
+                                <input type="hidden" name="_method" value="delete" />
+                                <button  class="button primary" type="submit">Delete</button>
+                              </form>
+                            </li>
+                          </ul>
+                        <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="user-context">
+      <h1>Trades</h1>
+      <div class="content">
+
+      </div>
+    </div>
+
+    <div class="user-context">
+      <h1>Offers</h1>
+      <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
+      <div class="content">
+
       </div>
     </div>
 

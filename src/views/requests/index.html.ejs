@@ -4,8 +4,6 @@
   <h1>All your requests </h1>
 <%}%>
 
-<p>There are <%= requests.length %> requests.</p>
-
 <% if (requests.length > 0) { %>
 <table>
   <thead>
@@ -26,7 +24,7 @@
         <td><%= request["item"].model %></td>
         <td>
           <ul>
-            <% if (request['user'].id !== currentUser.id) {%>
+            <% if (request['request'].userID !== currentUser.id) {%>
               <form class= "form-inline" action="<%= postNewTradePath(request['request']) %>" method="get">
                 <input type="hidden" name="id_request" value="<%=request['request'].id%>" />
                 <input type="hidden" name="state" value="pendent" />

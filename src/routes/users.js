@@ -141,6 +141,15 @@ async function getStatics(orm, user) {
 router.get('users-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
     const publication = await ctx.state.user.getPublications();
+    const publications = [];
+    const inventory = [];
+    publication.forEach(pub => {
+      if (pub.state === 'inventory') {
+        inventory.push(pub);
+      } else {
+        publications.push(pub);
+      }
+    });
     const user = ctx.state.user;
     return ctx.render('users/show',
       {
@@ -148,7 +157,8 @@ router.get('users-show', '/:id', async (ctx) => {
         user_id: user.id,
         userEditPath: user_id => ctx.router.url('users-edit', user_id),
         ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
-        publications: publication,
+        publications: publications,
+        inventory: inventory,
         newPublicationPath: ctx.router.url('publications-new'),
         showPublicationPath: publi => ctx.router.url('publications-show', { id: publi.id }),
         showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
