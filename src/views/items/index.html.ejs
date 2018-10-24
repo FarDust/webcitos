@@ -1,18 +1,18 @@
 <div class="products">
-      <div class="pcard">
-          <% items.forEach((item) => { %>
-            <a class="box" href="<%= getShowPath(item) %>" style="text-decoration:none;">
-              <img class="imgcard" src="<%= getItemImagePath(item) %>" alt="Photo of the item"/>
-              <h4><%= item.model %></h4>
-              Brand: <%= item.brand %> <br/>
-              Current state: <%= item.state %> <br/>
-              Category: <%= item.category %>
-              <br>
-              <!--
-              <a href="<%= getPublicationPath(item.publication_id) %>">See publication</a>
-              <a href="<%= getShowPath(item) %>">View details</a>
-              -->
-            </a>
-            <% }) %>
-      </div>
+    <div class="pcard">
+        <% items.forEach((item) => { %>
+          <a class="box" href="<%= getShowPath(item) %>" style="text-decoration:none;">
+            <img class="imgcard" src="<%= getItemImagePath(item) %>" alt="Photo of the item"/>
+            <h4><%= item.model %></h4>
+            Brand: <%= item.brand %> <br/>
+            Current state: <%= item.state %> <br/>
+            Category: <%= item.category %>
+            <br>
+            <!--
+            <a href="<%= getPublicationPath(item.publication_id) %>">See publication</a>
+            <a href="<%= getShowPath(item) %>">View details</a>
+            -->
+          </a>
+          <% }) %>
+    </div>
 </div>
