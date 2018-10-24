@@ -1,0 +1,63 @@
+/*index*/
+
+.products {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+.pcard {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+}
+
+.box {
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255,255,255,0.8);
+  margin: 15px;
+}
+
+.imgcard {
+  max-height: 30vh;
+  max-width: 20vw;
+  margin: 0 auto;
+}
+
+/*show*/
+
+.pcard_show {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 10px;
+  margin: 20 auto;
+}
+
+.box_show_1 {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(255,255,255,0.8);
+  margin: 15px;
+}
+
+.box_show_2 {
+  border-radius: 10px;
+  padding: 20px;
+  background-color: rgba(255,255,255,0.8);
+  margin: 15px;
+}
+
+.imgcard_show {
+  max-height: 50vh;
+  max-width: 40vw;
+  margin: 0;
+}
+
+#features{
+  text-align: left;
+}

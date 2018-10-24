@@ -56,9 +56,9 @@ router.get('items-show', '/:id', (ctx) => {
   if (ctx.state.currentUser) {
     return ctx.render('items/show',
       {
-        name: 'item',
-        ignore: ['createdAt', 'updatedAt', 'id'],
-        state: JSON.parse(JSON.stringify(ctx.state.item)),
+        item: ctx.state.item,
+        getItemImagePath: item => ctx.router.url('items-show-image', item.id),
+        getPublicationPath: publication_id => ctx.router.url('publications-show', publication_id),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';
