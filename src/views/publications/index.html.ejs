@@ -2,11 +2,11 @@
     <div class="pcard">
         <% publications.forEach((publication) => { %>
           <a class="box" href="<%= getShowPath(publication) %>" style="text-decoration:none;">
-            
             <h4><%= publication.title %></h4>
-            <%= publication.description %><br><br>
-            <span>State:</span> <%= publication.state %> <br>
-            <span>Added by:</span> <%= publication.userID %> <br>
+            <img class="imgcard" src="<%= getItemImagePath(items_ids[publication.id]) %>" alt="Photo of the item"/>
+            <p style="text-align: justify;"><%= publication.description %></p><br>
+            <span style="font-weight: bold;">State:</span> <%= publication.state %> <br>
+            <span style="font-weight: bold;">Added by:</span> <%= users_names[publication.id] %> <br>
           </a>
           <% }) %>
     </div>
