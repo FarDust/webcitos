@@ -4,9 +4,7 @@
 @import './hello';
 @import './card';
 @import './grid';
-@import "~slick-carousel/slick/slick.css";
-@import "~slick-carousel/slick/slick-theme.css";
-
+@import './items';
 
 li {
   list-style-type: none;

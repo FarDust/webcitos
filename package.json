@@ -54,6 +54,7 @@
     "package.json": "^2.0.1",
     "pg": "^7.1.2",
     "pg-hstore": "^2.3.2",
+    "pkgcloud": "^1.5.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

@@ -1,12 +1,7 @@
 <div class="row">
     <div id="user-profile" class="col-5">
     <div class="card">
-      <% if (currentUser.id == user_id){ %>
-        <h1>Hi <%=currentUser.name%>!</h1>
-      <% } else { %>
-        <h1>Hi! I am <%=state.name%></h1>
-      <% } %>
-      <img class="card-image header" src="<%= assetPath('avatar.svg') %>" alt="avatar">
+      <img class="card-image header" src="<%= getUserImagePath(user_id) %>" alt="avatar"/>
       <div class="card-context">
         <div class="card-content">
           <div class="infotag">
