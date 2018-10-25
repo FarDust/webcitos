@@ -86,7 +86,7 @@
         </div>
       </div>
     </div>
-
+    <% if (inventory.length > 0) { %>
     <div class="user-context">
       <h1>Inventory</h1>
       <div class="content">
@@ -134,17 +134,73 @@
       </div>
     </div>
 
+    <%}%>
+
     <div class="user-context">
-      <h1>Trades</h1>
+      <h1>Active Trades</h1>
       <div class="content">
+        <div class="row card-group slider">
+          <div class="col-6">
+            <div class="card">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="user-context">
+      <h1>Last Offers</h1>
+      <div class="content">
+        <div class="row card-group slider">
+          <% offered_requests.forEach(ureq => { %>
+          <div class="col-6">
+            <div class="card">
+              <h4 class="card-header">Offer from <a href="<%=showUserPath(ureq['req_user'])%>"><%= ureq['req_user'].name %></h4>
+              <a href="<%=showPublicationPath(ureq['pub_offered'])%>">
+              <div class="card-content">
+                <%= ureq['request'].message %>
+              </div>
+              </a>
+              <div class="card-footer">
+                <ul>
+                  <li>
+                    <form class= "form-inline" action="<%= postNewTradePath(ureq['request']) %>" method="get">
+                      <input type="hidden" name="id_request" value="<%=ureq['request'].id%>" />
+                      <input type="hidden" name="state" value="pendent" />
+                      <li><button <%=ureq['pub_offered'].state==='pendent'?disabled=true:enabled=true%> class="button primary" type="submit" formmethod="post">Accept offer</button></li>
+                    </form>
+                  </li>
+                  <li>
+                    <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
+                      <input type="hidden" name="_method" value="delete" />
+                      <button class="button primary" type="submit">Delete</button>
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <%})%>
+        </div>
 
       </div>
     </div>
 
     <div class="user-context">
-      <h1>Offers</h1>
+      <h1>Your Last Offers</h1>
       <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
       <div class="content">
+        <div class="row card-group slider">
+          <% publications.forEach(ureq => { %>
+          <div class="col-6">
+            <div class="card">
+            <h4 class="card-header"><%= ureq.title %></h4>
+
+            </div>
+          </div>
+          <%})%>
+        </div>
 
       </div>
     </div>

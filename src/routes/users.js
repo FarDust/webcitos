@@ -140,14 +140,28 @@ async function getStatics(orm, user) {
 
 router.get('users-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
-    const publication = await ctx.state.user.getPublications();
-    const publications = [];
+    const publications = await ctx.state.user.getPublications();
+    const mine_requests = await ctx.state.user.getRequests();
+    const publication = [];
     const inventory = [];
-    publication.forEach(pub => {
+    const requesting = [];
+    var request_counter = 0;
+    publications.forEach(async pub => {
+      if (request_counter < 20) {
+        var many = await pub.getRequests();
+        request_counter += many.length;
+        many.forEach(async req => {
+          var user_req = await ctx.orm.user.findById(req.userID);
+          var item_offered = await ctx.orm.item.findById(req.item_offered_id);
+          var publication_offered = await item_offered.getPublication();
+          requesting.push({'req_user': user_req, 'pub_offered': publication_offered, 'item_offered': item_offered, 'request': req})
+        });
+
+      }
       if (pub.state === 'inventory') {
         inventory.push(pub);
       } else {
-        publications.push(pub);
+        publication.push(pub);
       }
     });
     const user = ctx.state.user;
@@ -157,9 +171,13 @@ router.get('users-show', '/:id', async (ctx) => {
         user_id: user.id,
         userEditPath: user_id => ctx.router.url('users-edit', user_id),
         ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name'],
-        publications: publications,
+        publications: publication,
+        offered_requests: requesting,
         inventory: inventory,
         newPublicationPath: ctx.router.url('publications-new'),
+        showUserPath: user => ctx.router.url('users-show', {id: user.id}),
+        postNewTradePath: request => ctx.router.url('trades-new', request.id),
+        getDestroyRequestPath: request => ctx.router.url('requests-destroy', request.id),
         showPublicationPath: publi => ctx.router.url('publications-show', { id: publi.id }),
         showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
         showMineRequestsPath: ctx.router.url('requests-mine'),
