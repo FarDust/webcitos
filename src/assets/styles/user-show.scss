@@ -18,8 +18,8 @@
 
 
 .slider {
-  /* line them up horizontally */
   display: flex;
+  border-radius: 10%;
 
   /* allow for scrolling */
   overflow-x: auto;
@@ -32,8 +32,26 @@
 
 }
 .slider > div {
-  /* make sure the width is honored */
   flex-shrink: 0;
   width: 300px;
   height: 300px;
+}
+
+.card-context #img-display {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  max-height: 50%;
+  max-width: 50%;
+}
+
+.rounded {
+  border-radius: 50%;
+}
+
+.centered {
+  text-align: center;
+}
+
+.card-contex a {
+  text-decoration: none;
 }

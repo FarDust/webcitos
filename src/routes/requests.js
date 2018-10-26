@@ -1,5 +1,5 @@
 const KoaRouter = require('koa-router');
-
+const { getInfoRequests } = require('./general_info')
 const { forEach } = require('p-iteration');
 
 const router = new KoaRouter();
@@ -17,36 +17,6 @@ router.param('id', async (id, ctx, next) => {
   return next();
 });
 
-async function getInfo(ctx, requests, category) {
-  const final = [];
-    await forEach(requests, async (req) => {
-      const aux = {};
-      aux.request = req;
-      const trad = await req.getTrade();
-      aux.trade = trad;
-      const itm = await ctx.orm.item.findById(req.item_offered_id);
-      aux.item = itm;
-      if (category === "mine") {
-        // Aquí quiero el usuario de la publicacion del request, la publicacion del
-        // request y el item ofrecido por mi hacia ellos
-        const publ = await ctx.orm.publication.findById(req.publication_id);
-        aux.publication = publ;
-        const usr = await ctx.orm.user.findById(publ.userID);
-        aux.user = usr;
-      }
-      // Aquí quiero el usuario y el item del request, mientras quiero la publicacion
-      // del item del request
-      else
-      {
-        const usr = await ctx.orm.user.findById(req.userID);
-        aux.user = usr;
-        const publ = await itm.getPublication();
-        aux.publication = publ;
-      }
-      final.push(aux);
-    });
-    return final;
-}
 
 router.get('requests-mine', '/actualUser', async (ctx) => {
   if (ctx.state.currentUser) {
@@ -57,7 +27,7 @@ router.get('requests-mine', '/actualUser', async (ctx) => {
         userRequests.push(req);
       }
     });
-    const requests = await getInfo(ctx, userRequests, "mine");
+    const requests = await getInfoRequests(ctx, userRequests, "mine");
 
 
     return ctx.render('requests/index', {
@@ -80,7 +50,7 @@ router.get('requests-all', '/publications/:pid/', async (ctx) => {
   if (ctx.state.currentUser) {
     const publication = await ctx.orm.publication.findById(ctx.params.pid);
     const allRequests = await publication.getRequests();
-    const requests = await getInfo(ctx, allRequests, "other");
+    const requests = await getInfoRequests(ctx, allRequests, "other");
 
     return ctx.render('requests/index', {
       requests,

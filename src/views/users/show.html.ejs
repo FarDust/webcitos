@@ -1,7 +1,14 @@
 <div class="row">
     <div id="user-profile" class="col-5">
     <div class="card">
-      <img class="card-image header" src="<%= getUserImagePath(user_id) %>" alt="avatar"/>
+      <div class="card-header">
+        <% if (currentUser.id === user_id) { %>
+          <h2> Hi, <%=user.name%>!</h2>
+        <%} else {%>
+          <h2> Welcome to <%=user.name%>'s profile! </h2>
+        <%}%>
+      </div>
+      <img class="card-image header rounded" src="<%= getUserImagePath(user_id) %>" alt="avatar"/>
       <div class="card-context">
         <div class="card-content">
           <div class="infotag">
@@ -26,18 +33,18 @@
     </div>
   </div>
   <div id="right" class="col-7">
+    <% if (state.id === currentUser.id) { %>
+      <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication</button>
+      <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See my trades</button>
+      <% } %>
 
     <div class="user-context">
       <h1> Publications </h1>
       <div class="content">
-        <% if (state.id === currentUser.id) { %>
-          <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication</button>
-          <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See my trades</button>
-        <% } %>
 
 
         <div class="row card-group slider">
-          <% publications.forEach(publication => { %>
+          <% info['publications'].forEach(publication => { %>
           <div class="col-6">
             <div class="card">
               <div class="card-contex">
@@ -48,13 +55,11 @@
                 </div>
                 <div class="card-footer">
                   <div class="row">
-                    <div class="col-4">
-                        <p>
-                          <span>State:</span> <%= publication.state %>
-                        </p>
-                    </div>
+                  <span>State:</span> <%= publication.state %>
+                  </div>
               </a>
-                    <div class="col-8">
+                  <div class="row centered">
+
                         <% if (state.id === currentUser.id) { %>
                           <ul>
                           <% if (publication.state !== 'pendent') { %>
@@ -70,8 +75,8 @@
                             </li>
                           </ul>
                         <% } %>
+
                     </div>
-                  </div>
                 </div>
               </div>
 
@@ -81,12 +86,12 @@
         </div>
       </div>
     </div>
-    <% if (inventory.length > 0) { %>
+    <% if (info['inventory'].length > 0) { %>
     <div class="user-context">
       <h1>Inventory</h1>
       <div class="content">
         <div class="row card-group slider">
-          <% inventory.forEach(inventorie => { %>
+          <% info['inventory'].forEach(inventorie => { %>
           <div class="col-6">
             <div class="card">
               <div class="card-contex">
@@ -96,14 +101,13 @@
                     <%= inventorie.description %>
                 </div>
                 <div class="card-footer">
-                  <div class="row">
-                    <div class="col-4">
+                    <div class="row centered">
                         <p>
                           <span>State:</span> <%= inventorie.state %>
                         </p>
                     </div>
               </a>
-                    <div class="col-8">
+                    <div class="row centered">
                         <% if (state.id === currentUser.id) { %>
                           <ul>
                             <li>
@@ -118,7 +122,6 @@
                           </ul>
                         <% } %>
                     </div>
-                  </div>
                 </div>
               </div>
 
@@ -128,18 +131,49 @@
         </div>
       </div>
     </div>
-
     <%}%>
+
+    <div class="user-context">
+      <h1>All your Items</h1>
+      <div class="content">
+        <div class="row card-group slider">
+          <% info['items'].forEach(item => { %>
+            <div class="col-6">
+              <div class="card">
+              <a href="<%=getItemShowPath(item.id)%>">
+              <div class="card-context">
+              <img class="imgcard" id="img-display" src="<%= getItemImagePath(item.id) %>" alt="Photo of the item"/>
+                <div class="card-content">
+                <h4 class="centered"><%= item.model %></h4>
+                <p class="centered">
+                Brand: <%= item.brand %> <br/>
+                Current state: <%= item.state %> <br/>
+                Category: <%= item.category %>
+                </p>
+                </div>
+                </div>
+                </a>
+              </div>
+            </div>
+          <%});%>
+        </div>
+      </div>
+    </div>
 
     <div class="user-context">
       <h1>Active Trades</h1>
       <div class="content">
         <div class="row card-group slider">
-          <div class="col-6">
-            <div class="card">
+          <% info['trades'].forEach(trade => { %>
+            <div class="col-6">
+              <div class="card">
+                <div class="card-context">
 
+
+                </div>
+              </div>
             </div>
-          </div>
+          <%});%>
         </div>
       </div>
     </div>
@@ -148,7 +182,7 @@
       <h1>Last Offers</h1>
       <div class="content">
         <div class="row card-group slider">
-          <% offered_requests.forEach(ureq => { %>
+          <% info['offered_requests'].forEach(ureq => { %>
           <div class="col-6">
             <div class="card">
               <h4 class="card-header">Offer from <a href="<%=showUserPath(ureq['req_user'])%>"><%= ureq['req_user'].name %></h4>
@@ -187,11 +221,28 @@
       <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
       <div class="content">
         <div class="row card-group slider">
-          <% publications.forEach(ureq => { %>
+          <% info['mine_requests'].forEach(ureq => { %>
           <div class="col-6">
             <div class="card">
-            <h4 class="card-header"><%= ureq.title %></h4>
-
+              <a href="<%=showUserPath(ureq['user'])%>">
+                <div class="card-header">
+                  <h3>You said to <%=ureq['user'].name%></h3>
+                </div>
+              </a>
+              <a href="<%=showPublicationPath(ureq['publication'])%>">
+              <div class="card-content">
+                <p> <%=ureq['request'].message %> </p>
+                <span>You offered</span> <%=ureq['item'].model %>
+              </div>
+              </a>
+                <div class="card-footer">
+                <div class="row">
+                  <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button class="button primary" type="submit">Delete</button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
           <%})%>
