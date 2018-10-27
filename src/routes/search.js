@@ -36,6 +36,7 @@ router.get('search', '/', async (ctx) => {
     publications_item,
     users,
     publicationShowPath : publication => ctx.router.url('publications-show', publication.id),
+    usersShowPath : user => ctx.router.url('users-show', user.id),
   });
 });
 
