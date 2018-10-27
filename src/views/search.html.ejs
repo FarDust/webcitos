@@ -4,7 +4,13 @@
     <div class="col-8">
       <ul>
         <% publications.forEach(publication => {  %>
-        <li> <%= publication.title %><a href="<%= publicationShowPath(publication) %>"></a></li>  
+        <li><%= publication.title %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
+        <% }); %>
+        <% publications_item.forEach(publication => {  %>
+        <li><%= publication.title %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
+        <% }); %>
+        <% publications.forEach(publication => {  %>
+        <li><%= users.title %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
         <% }); %>
       </ul>
     </div>
