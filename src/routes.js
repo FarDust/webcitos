@@ -17,6 +17,7 @@ router.use(async (ctx, next) => {
     newSessionPath: ctx.router.url('session-new'),
     destroySessionPath: ctx.router.url('session-destroy'),
     searchPath: ctx.router.url('search'),
+    newPublicationPath: ctx.router.url('publications-new'),
   });
   return next();
 });

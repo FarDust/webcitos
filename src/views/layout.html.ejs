@@ -37,12 +37,14 @@
           <input type="submit" value="Log out" />
         </form>
       </li>
+      
       <li class="functional">
         <form id="search" class="form-inline" action="<%= searchPath  %>" method="get">
           <input type="text" id="query" name="query" placeholder="Publications... "/>
           <button class="icon-container" type="submit"><i class="fas fa-search"></i></button>
         </form>
       </li>
+      <li class="functional"><a class="icon-container" title="Create a new publication" href="<%= newPublicationPath %>"><i class="far fa-clipboard"></i></a></li>
       <li class="functional"><a href="/users/<%=currentUser.id%>">Profile</a></li>
       <% } else { %>
       <li class="functional"><a href="<%= newSessionPath %>">Sign in</a></li>
