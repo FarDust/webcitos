@@ -1,8 +1,8 @@
 <% if (publication_title) { %>
-  <h1>Requests of <%=publication_title%></h1>
-<%}else {%>
+  <h1>Requests of <%= publication_title %></h1>
+<% }else { %>
   <h1>All your requests </h1>
-<%}%>
+<% } %>
 
 <% if (requests.length > 0) { %>
 <table>

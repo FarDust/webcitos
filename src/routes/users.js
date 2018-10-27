@@ -48,7 +48,7 @@ router.post('users-create', '/', async (ctx) => {
       const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'users/images', namePrefix: user.id });
       await cloudStorage.upload(localImagePath, remoteImagePath);
       await user.update({ image: remoteImagePath });
-    }else{
+    } else {
       await user.update({ image: 'users/images/profile-placeholder.jpg' });
     }
     ctx.flashMessage.notice = 'Welcome to the TradeAway app!';
@@ -222,10 +222,10 @@ router.get('users-show', '/:id', async (ctx) => {
 });
 
 router.get('users-show-image', '/:id/image', async (ctx) => {
-   const { image } = ctx.state.user;
-   if (/^https?:\/\//.test(image)) {
+  const { image } = ctx.state.user;
+  if (/^https?:\/\//.test(image)) {
     ctx.redirect(image);
-   } else {
+  } else {
     ctx.body = cloudStorage.download(image);
   }
 });
