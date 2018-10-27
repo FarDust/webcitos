@@ -3,6 +3,8 @@ const Sequelize = require('sequelize');
 const { forEach } = require('p-iteration');
 const cloudStorage = require('../lib/cloud-storage');
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
+const { getInfoRequests, getUserTrades, getTradeInfo, getOnlyTrades } = require('./general_info');
+
 
 const router = new KoaRouter();
 
@@ -151,8 +153,46 @@ async function getStatics(orm, user) {
 
 router.get('users-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
-    const publication = await ctx.state.user.getPublications();
-    const user = ctx.state.user;
+    const user = await ctx.orm.user.findById(ctx.params.id);
+    const publications = await user.getPublications();
+    const requests = await user.getRequests();
+    const mine_requests = await getInfoRequests(ctx, requests, "mine");
+    const publication = [];
+    const inventory = [];
+    const items = [];
+    const requesting = [];
+    var request_counter = 0;
+    publications.forEach(async pub => {
+      if (request_counter < 20) {
+        var many = await pub.getRequests();
+        request_counter += many.length;
+        many.forEach(async (req) => {
+          var user_req = await ctx.orm.user.findById(req.userID);
+          if (pub.state === 'gift') {
+            var item_offered = null;
+            var publication_offered = pub;
+          } else {
+            var item_offered = await ctx.orm.item.findById(req.item_offered_id);
+            var publication_offered = await item_offered.getPublication();
+          }
+          requesting.push({'req_user': user_req, 'pub_offered': publication_offered, 'item_offered': item_offered, 'request': req})
+        });
+
+      }
+      if (pub.state === 'inventory') {
+        inventory.push(pub);
+        let item = await pub.getItem();
+        items.push(item);
+      } else {
+        publication.push(pub);
+        let item = await pub.getItem();
+        items.push(item);
+      }
+    });
+
+    const infoTrades = await getOnlyTrades(ctx, user);
+    const info = {'trades': infoTrades, 'publications': publication, 'inventory': inventory, 'items': items, 'offered_requests': requesting, 'mine_requests': mine_requests};
+
     return ctx.render('users/show',
       {
         name: user.name,
@@ -160,11 +200,17 @@ router.get('users-show', '/:id', async (ctx) => {
         getUserImagePath: user_id => ctx.router.url('users-show-image', user_id),
         userEditPath: user_id => ctx.router.url('users-edit', user_id),
         ignore: ['createdAt', 'updatedAt', 'id', 'password', 'name', 'image'],
-        publications: publication,
+        info: info,
         newPublicationPath: ctx.router.url('publications-new'),
+        getItemImagePath: item_id => ctx.router.url('items-show-image', item_id),
+        getItemShowPath: item_id => ctx.router.url('items-show', item_id),
+        showUserPath: user => ctx.router.url('users-show', {id: user.id}),
+        postNewTradePath: request => ctx.router.url('trades-create', {'id_request': request.id, 'state': 'pendent'}),
+        getDestroyRequestPath: request => ctx.router.url('requests-destroy', request.id),
         showPublicationPath: publi => ctx.router.url('publications-show', { id: publi.id }),
         showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
         showMineRequestsPath: ctx.router.url('requests-mine'),
+        ShowTradePath: trade => ctx.router.url('trades-show', {'tid':trade.id}),
         showMineTradesPath: ctx.router.url('users-trades', user.id),
         getDestroyPublicationPath: publi => ctx.router.url('publications-destroy', { id: publi.id }),
         state: JSON.parse(JSON.stringify(user)),
@@ -202,44 +248,16 @@ router.get('users-edit', '/:id/edit', (ctx) => {
 router.get('users-trades', '/:id/trades', async (ctx) => {
   const { user } = ctx.state;
   if (ctx.session.currentUserId == user.id) {
-    const publications = await ctx.state.currentUser.getPublications();
-    const own_requests = await ctx.state.currentUser.getRequests();
-    const requests = [];
-    const trades = [];
-    const reviews = [];
-    const own_requests_id = [];
-    await forEach(publications, async (pub) => {
-      const requests = await pub.getRequests();
-      // console.log('requests',requests)
-      await forEach(requests, async (req) => {
-        const trade = await req.getTrade();
-        // console.log('trade!!!!', trade)
-        if (trade) {
-          const review = await trade.getReview();
-          reviews.push(review);
-          trades.push(trade);
-        }
-      });
-    });
-    // console.log(trades);
-    await forEach(own_requests, async (req) => {
-      const trade = await req.getTrade();
-      if (trade) {
-        const review = await trade.getReview();
-        reviews.push(review);
-        trades.push(trade);
-        own_requests_id.push(trade.id_request);
-      }
-    });
+    const info = await getUserTrades(ctx, user);
     // console.log('REVIEWS', reviews);
     return ctx.render(
       'users/trades',
       {
         user,
-        trades,
-        reviews,
-        own_requests_id,
-        tradesUrl: ctx.router.url('trades-show', { id: '0' }),
+        trades: info['trades'],
+        reviews: info['reviews'],
+        own_requests_id: info['own_requests_id'],
+        tradesUrl: ctx.router.url('trades-show', { tid: '0' }),
         requestsUrl: ctx.router.url('requests-show', { id: '0' }),
         reviewsUrl: ctx.router.url('reviews-show', { id: '0' }),
         reviewNewUrl: ctx.router.url('reviews-new', { tid: '0' }),
