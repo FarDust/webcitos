@@ -166,10 +166,15 @@ router.get('users-show', '/:id', async (ctx) => {
       if (request_counter < 20) {
         var many = await pub.getRequests();
         request_counter += many.length;
-        many.forEach(async req => {
+        many.forEach(async (req) => {
           var user_req = await ctx.orm.user.findById(req.userID);
-          var item_offered = await ctx.orm.item.findById(req.item_offered_id);
-          var publication_offered = await item_offered.getPublication();
+          if (pub.state === 'gift') {
+            var item_offered = null;
+            var publication_offered = pub;
+          } else {
+            var item_offered = await ctx.orm.item.findById(req.item_offered_id);
+            var publication_offered = await item_offered.getPublication();
+          }
           requesting.push({'req_user': user_req, 'pub_offered': publication_offered, 'item_offered': item_offered, 'request': req})
         });
 
@@ -205,6 +210,7 @@ router.get('users-show', '/:id', async (ctx) => {
         showPublicationPath: publi => ctx.router.url('publications-show', { id: publi.id }),
         showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
         showMineRequestsPath: ctx.router.url('requests-mine'),
+        ShowTradePath: trade => ctx.router.url('trades-show', {'tid':trade.id}),
         showMineTradesPath: ctx.router.url('users-trades', user.id),
         getDestroyPublicationPath: publi => ctx.router.url('publications-destroy', { id: publi.id }),
         state: JSON.parse(JSON.stringify(user)),

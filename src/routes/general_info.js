@@ -25,8 +25,12 @@ module.exports = {
         {
           const usr = await ctx.orm.user.findById(req.userID);
           aux.user = usr;
-          const publ = await itm.getPublication();
-          aux.publication = publ;
+          try {
+            const publ = await itm.getPublication();
+            aux.publication = publ;
+          } catch (e) {
+            aux.publication = null;
+          }
         }
         final.push(aux);
       });
@@ -83,11 +87,14 @@ module.exports = {
       await requests.forEach( async (req) => {
         const trade = await req.getTrade();
         if (trade) {
-          trade.my_item = pub.getItem();
+          trade.my_publication = pub;
+          trade.other_publication = null;
           if (req.item_offered_id) {
-            trade.other_item = await ctx.orm.item.findById(req.item_offered_id);
+            trade.is_gift = false;
+            trade.item = await ctx.orm.item.findById(req.item_offered_id);
           } else {
-            trade.other_item = null;
+            trade.is_gift = true;
+            trade.item = null;
           }
           trade.other_user = await ctx.orm.user.findById(req.userID);
           trades.push(trade);
@@ -99,11 +106,14 @@ module.exports = {
       const trade = await req.getTrade();
       if (trade) {
         const publication = await req.getPublication();
-        trade.other_item = publication.getItem();
+        trade.other_publication = publication;
+        trade.my_publication = null;
         if (req.item_offered_id) {
-          trade.my_item = await ctx.orm.item.findById(req.item_offered_id);
+          trade.is_gift = false;
+          trade.item = await ctx.orm.item.findById(req.item_offered_id);
         } else {
-          trade.my_item = null;
+          trade.is_gift = true;
+          trade.item = null;
         }
         trade.other_user = await ctx.orm.user.findById(publication.userID);
         trades.push(trade);

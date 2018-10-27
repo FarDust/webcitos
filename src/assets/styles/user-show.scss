@@ -51,14 +51,50 @@
   text-align: center;
 }
 
-.invisible-img-trade {
-  background-image: url('../images/exchange_transparent.png');
+.invisible-img-trade{
   background-position: center;
   background-repeat: no-repeat;
+  max-width: 100%;
+  max-height: 100%;
+  background-size: 60%;
+  background-image: url('../images/exchange_transparent.png');
+}
+.invisible-img-gift {
+  background-image: url('../images/gift_transparent.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 110%;
   max-width: 100%;
   max-height: 100%;
 }
 
 .card-contex a {
   text-decoration: none;
+}
+
+.mini-trade {
+  background-color: rgba(219, 84, 73, 0.6);
+  border-radius: 4px;
+  height: 60%;
+  max-width: 100%;
+  h4, h3 {
+    color: #FFF;
+  }
+  p {
+    color: #FFF;
+  }
+}
+
+.mini-gift {
+  background-color: rgba(219, 84, 73, 0.6);
+  border-radius: 4px;
+  padding: 2px;
+  height: 60%;
+  max-width: 100%;
+  h4, h3 {
+    color: #FFF;
+  }
+  p {
+    color: #FFF;
+  }
 }

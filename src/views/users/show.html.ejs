@@ -166,15 +166,54 @@
         <div class="row card-group slider">
           <% info['trades'].forEach(trade => { %>
             <div class="col-6">
-              <div class="card invisible-img-trade">
+              <% if (trade.is_gift) {%>
+                <a href="<%=ShowTradePath(trade)%>">
+                <div class="card invisible-img-gift">
                   <div class="card-header centered">
-                    <h3>Trade with <%=trade.other_user.name %></h3>
+                    <h4> <%=(trade.my_publication)?"Gift to "+trade.other_user.name:"Gift from "+trade.other_user.name%> </h4>
                   </div>
-                  <div class="card-content">
+                  <div class="card-content mini-gift centered">
+                    <h3> <%=(trade.my_publication)?"What you're giving":"What you're receiving"%></h3>
+                    <p> <%=(trade.my_publication)?trade.my_publication.title:trade.other_publication.title%> </p>
+                  </div>
+                </div>
+                </a>
+              <%} else {%>
+                <a href="<%=ShowTradePath(trade)%>">
+                <div class="card invisible-img-trade">
+                    <div class="card-header centered">
+                      <h3>Trade with <%=trade.other_user.name %></h3>
+                    </div>
+                    <div class="row card-content mini-trade">
+                      <div class="col-6 centered">
+                        <h4><%=(trade.my_publication)?'Offered':'What You Offered'%></h4>
+                        <p>
+                          <%=trade.item.model %>
+                        </p>
+                      </div>
+                    <% if (trade.my_publication) { %>
+                        <div class="col-6 centered">
+                            <h4> For your publication </h4>
+                            <p>
+                            <%=trade.my_publication.title %>
+                            </p>
+                        </div>
+                    <%} else {%>
+                        <div class="col-6 centered">
+                            <h4> For the publication </h4>
+                            <p>
+                            <%=trade.other_publication.title %>
+                            </p>
+                        </div>
+                      <%}%>
+                    </div>
+                    <div class="card-footer centered">
 
-                  </div>
-              </div>
+                    </div>
+                </div>
+              <%}%>
             </div>
+            </a>
           <%});%>
         </div>
       </div>
@@ -185,10 +224,26 @@
       <div class="content">
         <div class="row card-group slider">
           <% info['offered_requests'].forEach(ureq => { %>
-            <% if (ureq['pub_offered'].state!=='pendent') { %>
+            <% if (!ureq['pub_offered']) { %>
+              <div class="col-6">
+                <div class="card">
+                  <a href="<%=showUserPath(ureq['req_user'])%>">
+                    <h4 class="card-header"> Petition from <%=ureq['req_user'].name%></h4>
+                  </a>
+                  <a href="<%=showPublicationPath(ureq['pub_offered'])%>">
+                  <div class="card-content">
+                    <%= ureq['request'].message %>
+                  </div>
+                  </a>
+                </div>
+              </div>
+
+            <%} else if (ureq['pub_offered'] && ureq['pub_offered'].state!=='pendent') { %>
           <div class="col-6">
             <div class="card">
-              <h4 class="card-header">Offer from <a href="<%=showUserPath(ureq['req_user'])%>"><%= ureq['req_user'].name %></h4>
+              <a href="<%=showUserPath(ureq['req_user'])%>">
+              <h4 class="card-header">Offer from <%= ureq['req_user'].name %></h4>
+              </a>
               <a href="<%=showPublicationPath(ureq['pub_offered'])%>">
               <div class="card-content">
                 <%= ureq['request'].message %>

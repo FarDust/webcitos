@@ -20,8 +20,13 @@
       <tr>
         <td><%= request["request"].message %></td>
         <td><a href="<%= getShowUserPath(request['user']) %>" > <%= request["user"].name %></a></td>
-        <td><a href="<%= getShowPublicationPath(request['publication']) %>"> <%= request["publication"].title %> </a></td>
-        <td><%= request["item"].model %></td>
+        <% if (request['publication']) {%>
+          <td><a href="<%= getShowPublicationPath(request['publication']) %>"> <%= request["publication"].title %> </a></td>
+          <td><%= request["item"].model %></td>
+        <%} else {%>
+          <td></td>
+          <td></td>
+        <%}%>
         <td>
           <ul>
             <% if (request['request'].userID !== currentUser.id) {%>
