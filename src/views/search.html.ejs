@@ -2,17 +2,51 @@
   <div class="row">
     <div class="col-2"></div>
     <div class="col-8">
-      <ul>
-        <% publications.forEach(publication => {  %>
-        <li><%= publication.title %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
-        <% }); %>
-        <% publications_item.forEach(publication => {  %>
-        <li><%= publication.title %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
-        <% }); %>
-        <% publications.forEach(publication => {  %>
-        <li><%= users.title %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
-        <% }); %>
-      </ul>
+      <% if (publications.length >= 1) { %>
+      <div class="card">
+        <img class="card-image" src="" alt="">
+        <div class="card-context">
+          <h4 class="card-header">Publications match</h4>
+          <div class="card-content">
+            <ul>
+              <% publications.forEach(publication => {  %>
+              <li><%= publication.title %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      <% if (publications_item.length >= 1) { %>
+      <div class="card">
+        <img class="card-image" src="" alt="">
+        <div class="card-context">
+          <h4 class="card-header">Publications with item match</h4>
+          <div class="card-content">
+            <ul>
+                <% publications_item.forEach(publication => {  %>
+                <li><%= publication.title %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
+                <% }); %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      <% if (users.length >= 1) { %>
+      <div class="card">
+        <img class="card-image" src="" alt="">
+        <div class="card-context">
+          <h4 class="card-header">Users with similar names</h4>
+          <div class="card-content">
+            <ul>
+              <% users.forEach(user => {  %>
+              <li><%= user.name %>: <a href="<%= publicationShowPath(publication) %>">see more</a></li>  
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% } %>
     </div>
     <div class="col-2"></div>
   </div>
