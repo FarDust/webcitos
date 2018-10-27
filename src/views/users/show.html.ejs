@@ -5,7 +5,7 @@
         <% if (currentUser.id === user_id) { %>
           <h2> Hi, <%=user.name%>!</h2>
         <%} else {%>
-          <h2> Welcome to <%=user.name%>s profile! </h2>
+          <h2><%="Welcome to " + user.name + "'s profile!"%> </h2>
         <%}%>
       </div>
       <img class="card-image header rounded" src="<%= getUserImagePath(user_id) %>" alt="avatar"/>
@@ -35,7 +35,6 @@
   <div id="right" class="col-7">
     <% if (state.id === currentUser.id) { %>
       <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication</button>
-      <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See my trades</button>
       <% } %>
 
     <div class="user-context">
@@ -86,6 +85,9 @@
         </div>
       </div>
     </div>
+    <% if (currentUser.id === user_id) {%>
+
+
     <% if (info['inventory'].length > 0) { %>
     <div class="user-context">
       <h1>Inventory</h1>
@@ -161,65 +163,6 @@
     </div>
 
     <div class="user-context">
-      <h1>Active Trades</h1>
-      <div class="content">
-        <div class="row card-group slider">
-          <% info['trades'].forEach(trade => { %>
-            <div class="col-6">
-              <% if (trade.is_gift) {%>
-                <a href="<%=ShowTradePath(trade)%>">
-                <div class="card invisible-img-gift">
-                  <div class="card-header centered">
-                    <h4> <%=(trade.my_publication)?"Gift to "+trade.other_user.name:"Gift from "+trade.other_user.name%> </h4>
-                  </div>
-                  <div class="card-content mini-gift centered">
-                    <h3> <%=(trade.my_publication)?"What you're giving":"What you're receiving"%></h3>
-                    <p> <%=(trade.my_publication)?trade.my_publication.title:trade.other_publication.title%> </p>
-                  </div>
-                </div>
-                </a>
-              <%} else {%>
-                <a href="<%=ShowTradePath(trade)%>">
-                <div class="card invisible-img-trade">
-                    <div class="card-header centered">
-                      <h3>Trade with <%=trade.other_user.name %></h3>
-                    </div>
-                    <div class="row card-content mini-trade">
-                      <div class="col-6 centered">
-                        <h4><%=(trade.my_publication)?'Offered':'What You Offered'%></h4>
-                        <p>
-                          <%=trade.item.model %>
-                        </p>
-                      </div>
-                    <% if (trade.my_publication) { %>
-                        <div class="col-6 centered">
-                            <h4> For your publication </h4>
-                            <p>
-                            <%=trade.my_publication.title %>
-                            </p>
-                        </div>
-                    <%} else {%>
-                        <div class="col-6 centered">
-                            <h4> For the publication </h4>
-                            <p>
-                            <%=trade.other_publication.title %>
-                            </p>
-                        </div>
-                      <%}%>
-                    </div>
-                    <div class="card-footer centered">
-
-                    </div>
-                </div>
-              <%}%>
-            </div>
-            </a>
-          <%});%>
-        </div>
-      </div>
-    </div>
-
-    <div class="user-context">
       <h1>Last Offers</h1>
       <div class="content">
         <div class="row card-group slider">
@@ -277,8 +220,8 @@
 
     <div class="user-context">
       <h1>Your Last Offers</h1>
-      <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
       <div class="content">
+      <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
         <div class="row card-group slider">
           <% info['mine_requests'].forEach(ureq => { %>
           <div class="col-6">
@@ -308,12 +251,73 @@
           </div>
           <%})%>
         </div>
+        </div>
+
+        <div class="user-context">
+          <h1>Active Trades</h1>
+          <div class="content">
+          <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See all my trades</button>
+            <div class="row card-group slider">
+              <% info['trades'].forEach(trade => { %>
+                <% if (trade.state === 'pendent') {%>
+                <div class="col-6">
+                  <% if (trade.is_gift) {%>
+                    <a href="<%=ShowTradePath(trade)%>">
+                    <div class="card invisible-img-gift">
+                      <div class="card-header centered">
+                        <h4> <%=(trade.my_publication)?"Gift to "+trade.other_user.name:"Gift from "+trade.other_user.name%> </h4>
+                      </div>
+                      <div class="card-content mini-gift centered">
+                        <h3> <%=(trade.my_publication)?"What you're giving":"What you're receiving"%></h3>
+                        <p> <%=(trade.my_publication)?trade.my_publication.title:trade.other_publication.title%> </p>
+                      </div>
+                    </div>
+                    </a>
+                  <%} else {%>
+                    <a href="<%=ShowTradePath(trade)%>">
+                    <div class="card invisible-img-trade">
+                        <div class="card-header centered">
+                          <h3>Trade with <%=trade.other_user.name %></h3>
+                        </div>
+                        <div class="row card-content mini-trade">
+                          <div class="col-6 centered">
+                            <h4><%=(trade.my_publication)?'Offered':'What You Offered'%></h4>
+                            <p>
+                              <%=trade.item.model %>
+                            </p>
+                          </div>
+                        <% if (trade.my_publication) { %>
+                            <div class="col-6 centered">
+                                <h4> For your publication </h4>
+                                <p>
+                                <%=trade.my_publication.title %>
+                                </p>
+                            </div>
+                        <%} else {%>
+                            <div class="col-6 centered">
+                                <h4> For the publication </h4>
+                                <p>
+                                <%=trade.other_publication.title %>
+                                </p>
+                            </div>
+                          <%}%>
+                        </div>
+
+                    </div>
+                  <%}%>
+                </div>
+                </a>
+                <%};%>
+              <%});%>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
 
   </div>
-
+  <%}%>
 
 
 </div>

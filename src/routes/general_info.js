@@ -86,7 +86,7 @@ module.exports = {
       const requests = await pub.getRequests();
       await requests.forEach( async (req) => {
         const trade = await req.getTrade();
-        if (trade) {
+        if (trade && trade.state === 'pendent') {
           trade.my_publication = pub;
           trade.other_publication = null;
           if (req.item_offered_id) {
@@ -104,7 +104,7 @@ module.exports = {
 
     await own_requests.forEach(async (req) => {
       const trade = await req.getTrade();
-      if (trade) {
+      if (trade && trade.state === 'pendent') {
         const publication = await req.getPublication();
         trade.other_publication = publication;
         trade.my_publication = null;
