@@ -21,7 +21,7 @@ router.param('id', async (id, ctx, next) => {
 router.get('requests-mine', '/actualUser', async (ctx) => {
   if (ctx.state.currentUser) {
     const allRequests = await ctx.orm.request.findAll();
-    const userRequests = []
+    const userRequests = [];
     allRequests.forEach((req) => {
       if (req.userID === ctx.state.currentUser.id) {
         userRequests.push(req);
@@ -34,8 +34,8 @@ router.get('requests-mine', '/actualUser', async (ctx) => {
       requests,
       publication_title: null,
       publication_state: null,
-      getShowUserPath: user => ctx.router.url('users-show', {id: user.id}),
-      getShowPublicationPath: publication => ctx.router.url('publications-show', {id: publication.id}),
+      getShowUserPath: user => ctx.router.url('users-show', { id: user.id }),
+      getShowPublicationPath: publication => ctx.router.url('publications-show', { id: publication.id }),
       postNewTradePath: request => ctx.router.url('trades-new', request.id),
       getShowPath: request => ctx.router.url('requests-show', request.id),
       getEditPath: request => ctx.router.url('requests-edit', request.id),
@@ -56,8 +56,8 @@ router.get('requests-all', '/publications/:pid/', async (ctx) => {
       requests,
       publication_title: publication.title,
       publication_state: publication.state,
-      getShowUserPath: user => ctx.router.url('users-show', {id: user.id}),
-      getShowPublicationPath: publication => ctx.router.url('publications-show', {id: publication.id}),
+      getShowUserPath: user => ctx.router.url('users-show', { id: user.id }),
+      getShowPublicationPath: publication => ctx.router.url('publications-show', { id: publication.id }),
       postNewTradePath: request => ctx.router.url('trades-create', { id_request: request.id, state: 'not_concreted' }),
       getShowPath: request => ctx.router.url('requests-show', request.id),
       getDestroyPath: request => ctx.router.url('requests-destroy', request.id),

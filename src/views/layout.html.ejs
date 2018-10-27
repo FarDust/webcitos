@@ -9,6 +9,7 @@
     <% } %>
     <link rel="stylesheet" href="<%= assetPath('fardust.css') %>">
     <link rel="icon" href="<%= assetPath('favicon.png') %>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
   </head>
 
   <body>
@@ -37,9 +38,9 @@
         </form>
       </li>
       <li class="functional">
-        <form id="search" class="form-inline" action="<%=  %>" method="get">
-          <input type="text" id="query" name="query" placeholder="Search"/>
-          <input type="submit" value="" />
+        <form id="search" class="form-inline" action="<%= searchPath  %>" method="get">
+          <input type="text" id="query" name="query" placeholder="Publications... "/>
+          <button class="icon-container" type="submit"><i class="fas fa-search"></i></button>
         </form>
       </li>
       <li class="functional"><a href="/users/<%=currentUser.id%>">Profile</a></li>
