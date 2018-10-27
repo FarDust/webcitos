@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const Sequelize = require('sequelize');
 
 const router = new KoaRouter();
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');

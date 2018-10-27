@@ -1,0 +1,61 @@
+<div class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <% if (publications && publications.length >= 1) { %>
+      <div class="card">
+        <div class="card-context">
+          <h4 class="card-header">Publications match</h4>
+          <div class="card-content">
+            <ul>
+              <% publications.forEach(publication => {  %>
+                <li>
+                  <a href="<%= publicationShowPath(publication) %>"><%= publication.title %></a><br/>
+                  <% publication.description %>
+                  <hr/>
+                </li>  
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      <% if (publications_item && publications_item.length >= 1) { %>
+      <div class="card">
+        <div class="card-context">
+          <h4 class="card-header">Publications with item match</h4>
+          <div class="card-content">
+            <ul>
+                <% publications_item.forEach(publication => {  %>
+                <li>
+                  <a href="<%= publicationShowPath(publication) %>"><%= publication.title %></a><br/>
+                  <% publication.description %>
+                  <hr/>
+                </li>  
+                <% }); %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% } %>
+      <% if (users && users.length >= 1) { %>
+      <div class="card">
+        <div class="card-context">
+          <h4 class="card-header">Users with similar names</h4>
+          <div class="card-content">
+            <ul>
+              <% users.forEach(user => {  %>
+                <li>
+                  <a href="<%= usersShowPath(user) %>"><%= user.name %></a>
+                  <hr/>
+                </li>  
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>

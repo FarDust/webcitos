@@ -59,10 +59,28 @@ router.param('id', async (id, ctx, next) => {
     },
   );
   try {
+    trade.receptor.item = await ctx.orm.item.findOne(
+      {
+        include: [
+          {
+            model: ctx.orm.request,
+            required: true,
+            include: [
+              {
+                model: ctx.orm.trade,
+                required: true,
+                where: { id: trade.id },
+              },
+            ],
+          },
+        ],
+      },
+    );
+    console.log(trade.receptor.item);
+  } catch (error) {
+    console.log(error);
     const request = await trade.getRequest();
     trade.receptor.item = await request.getItem();
-  } catch (error) {
-    trade.receptor.item = null;
   }
   trade.review = await trade.getReview();
   ctx.assert(trade, 404);

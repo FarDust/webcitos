@@ -92,6 +92,19 @@ p.slogan{
   background: #ececec
 }
 
+.icon-container {
+  background: transparent;
+  border: none;
+}
+
+i {
+  color: black;
+}
+
+i:hover{
+  color: #3f3f3f;
+}
+
 @media screen and (max-width: 800px){
   .center {
     width: 75%;
