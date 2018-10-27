@@ -8,7 +8,7 @@ const reviews = require('./routes/reviews');
 const trades = require('./routes/trades');
 const session = require('./routes/session');
 const hello = require('./routes/hello');
-const search = require('./routes/search')
+const search = require('./routes/search');
 
 const router = new KoaRouter();
 
