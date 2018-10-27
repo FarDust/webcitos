@@ -49,7 +49,7 @@
   border-radius: 10px;
   padding: 20px;
   background-color: rgba(255,255,255,0.8);
-  margin: 15px;
+  margin: 15px
 }
 
 .imgcard_show {
@@ -60,4 +60,9 @@
 
 #features{
   text-align: left;
+}
+
+#mouse :hover {
+  box-shadow: 8px 8px 16px 2px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
 }

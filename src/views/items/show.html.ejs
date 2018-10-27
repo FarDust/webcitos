@@ -4,7 +4,7 @@
 		  <img class="imgcard_show" src="<%= getItemImagePath(item) %>" alt="Photo of the item"/>
 		</div>
 		<div class="box_show_2">
-		  <h4><%= item.model %></h4>
+		  <h1><%= item.model %></h1>
 		  <p id="features">
 		  	Brand: <%= item.brand %> <br>
 		  	Screen size: <%= item.screenSize %> inches <br>
@@ -12,7 +12,7 @@
 		  	Aditional: <%= item.aditional %> inches <br>
 		  	Category: <%= item.category %> <br>
 		  </p>
-		  <a href="<%= getPublicationPath(item.publication_id) %>">See publication</a>
+		  <button class="button-publi" onclick="window.location.href='<%= getPublicationPath(item.publication_id) %>'">See publication</button>
 		</div>
     </div>
 </div>

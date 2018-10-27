@@ -1,0 +1,57 @@
+#user-profile {
+  display: flex;
+  height: auto;
+  position: fixed;
+  text-align: center;
+  justify-content: center;
+}
+
+#right {
+  float: right;
+}
+
+.infotag {
+  text-align: left;
+  padding: 5px;
+  font-weight: bold;
+}
+
+
+.slider {
+  display: flex;
+  border-radius: 10%;
+
+  /* allow for scrolling */
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* make it smooth on iOS */
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-points-x: repeat(300px);
+  scroll-snap-type: mandatory;
+
+}
+.slider > div {
+  flex-shrink: 0;
+  width: 300px;
+  height: 300px;
+}
+
+.card-context #img-display {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  max-height: 50%;
+  max-width: 50%;
+}
+
+.rounded {
+  border-radius: 50%;
+}
+
+.centered {
+  text-align: center;
+}
+
+.card-contex a {
+  text-decoration: none;
+}

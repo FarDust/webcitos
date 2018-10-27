@@ -1,9 +1,11 @@
 @import './fardust'; /* Base CSS style */
 @import './layout';
+@import './user-show';
 @import './hello';
 @import './card';
 @import './grid';
 @import './items';
+@import './publications';
 
 li {
   list-style-type: none;

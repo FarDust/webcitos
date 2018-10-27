@@ -1,0 +1,41 @@
+.imgcard_publi {
+  max-height: 35vh;
+  max-width: 25vw;
+  margin: 0;
+}
+
+.imgcard_publi_user {
+	max-height: 20vh;
+  max-width: 10vw;
+  margin: 0;	
+}
+
+.button-publi{
+  background-color: #db5449;
+  border-color: transparent;
+  text-align: center;
+  font-weight: bold;
+  line-height: 24px;
+  color: white;
+  border-radius: 4px;
+  padding: 3px 16px;
+}
+
+.button-publi:hover{
+  background-color: #a32021;
+}
+
+.form-button-publi{
+  background-color: rgba(255,255,255,0.8);
+  padding: 5px;
+}
+
+.form-button-publi input[type=submit]{
+	border-radius: 4px;
+	width: 27%;
+	color: white;
+	font-weight: bold;
+	line-height: 11px;
+	padding: 12px 16px;
+  margin: 0px;
+}

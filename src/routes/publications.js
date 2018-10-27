@@ -68,22 +68,23 @@ router.post('publications-create', '/', async (ctx) => {
 
 router.get('publications-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {
-    const users = await ctx.orm.user;
-    const proper_user = await users.findById(ctx.state.publication.userID);
-    const items = await ctx.state.publication.getItem();
+    const publication = ctx.state.publication;
+    const user = await ctx.orm.user.findById(ctx.state.publication.userID);
+    const item = await ctx.state.publication.getItem();
     return ctx.render('publications/show',
       {
-        name: 'publication',
-        ignore: ['createdAt', 'updatedAt', 'id'],
-        propietary_user: proper_user,
+        publication,
+        user,
+        item,
         createRequestPath: publi => ctx.router.url('requests-new', { pid: publi.id }),
         showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
         editPublicationPath: publi => ctx.router.url('publications-edit', { id: publi.id }),
         editItemPath: item => ctx.router.url('items-edit', { id: item.id }),
         destroyPublicationPath: publi => ctx.router.url('publications-destroy', { id: publi.id }),
         userPath: user => ctx.router.url('users-show', user.id),
-        item: JSON.parse(JSON.stringify(items)),
-        state: JSON.parse(JSON.stringify(ctx.state.publication)),
+        getUserImagePath: user => ctx.router.url('users-show-image', user.id),
+        getItemImagePath: item => ctx.router.url('items-show-image', item.id),
+        getItemShowPath: item => ctx.router.url('items-show', item.id),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';
