@@ -19,7 +19,6 @@
 
 .slider {
   display: flex;
-  border-radius: 10%;
 
   /* allow for scrolling */
   overflow-x: auto;
@@ -50,6 +49,14 @@
 
 .centered {
   text-align: center;
+}
+
+.invisible-img-trade {
+  background-image: url('../images/exchange_transparent.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .card-contex a {

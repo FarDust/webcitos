@@ -33,11 +33,15 @@ module.exports = {
       return final;
   },
 
-  getInfoTrades: async function(ctx, publications, own_requests) {
+  getUserTrades: async function(ctx, user) {
+
+    const publications = await user.getPublications();
+    const own_requests = await user.getRequests();
 
     const reviews = [];
     const trades = [];
     const own_requests_id = [];
+    const all_info = []
 
     await publications.forEach(async (pub) => {
           const requests = await pub.getRequests();
@@ -47,6 +51,7 @@ module.exports = {
             // console.log('trade!!!!', trade)
             if (trade) {
               const review = await trade.getReview();
+              //const all_trade = await getTradeInfo(trade.id, ctx);
               reviews.push(review);
               trades.push(trade);
             }
@@ -57,6 +62,7 @@ module.exports = {
         const trade = await req.getTrade();
         if (trade) {
           const review = await trade.getReview();
+          //const all_trade = await getTradeInfo(trade.id, ctx);
           reviews.push(review);
           trades.push(trade);
           own_requests_id.push(trade.id_request);
@@ -64,6 +70,91 @@ module.exports = {
       });
       return {'trades': trades, 'reviews': reviews, 'own_requests_id': own_requests_id};
 
-  }
+  },
+
+  getOnlyTrades: async function (ctx, user) {
+    const publications = await user.getPublications();
+    const own_requests = await user.getRequests();
+
+    const trades = [];
+
+    await publications.forEach(async (pub) => {
+      const requests = await pub.getRequests();
+      await requests.forEach( async (req) => {
+        const trade = await req.getTrade();
+        if (trade) {
+          trade.my_item = pub.getItem();
+          if (req.item_offered_id) {
+            trade.other_item = await ctx.orm.item.findById(req.item_offered_id);
+          } else {
+            trade.other_item = null;
+          }
+          trade.other_user = await ctx.orm.user.findById(req.userID);
+          trades.push(trade);
+        }
+      });
+    });
+
+    await own_requests.forEach(async (req) => {
+      const trade = await req.getTrade();
+      if (trade) {
+        const publication = await req.getPublication();
+        trade.other_item = publication.getItem();
+        if (req.item_offered_id) {
+          trade.my_item = await ctx.orm.item.findById(req.item_offered_id);
+        } else {
+          trade.my_item = null;
+        }
+        trade.other_user = await ctx.orm.user.findById(publication.userID);
+        trades.push(trade);
+      }
+    });
+    return trades;
+  },
+
+  getTradeInfo: async function(id, ctx) {
+    const trade = await ctx.orm.trade.findById(id);
+    trade.publication = await ctx.orm.publication.findOne(
+      {
+        include: [
+          {
+            model: ctx.orm.request,
+            include: [
+              {
+                model: ctx.orm.trade,
+                where: { id: trade.id },
+              },
+            ],
+          },
+        ],
+      },
+    );
+    trade.emmiter = await trade.publication.getUser();
+
+    trade.emmiter.item = await trade.publication.getItem();
+    trade.receptor = await ctx.orm.user.findOne(
+      {
+        include: [
+          {
+            model: ctx.orm.request,
+            include: [
+              {
+                model: ctx.orm.trade,
+                where: { id: trade.id },
+              },
+            ],
+          },
+        ],
+      },
+    );
+    try {
+      const request = await trade.getRequest();
+      trade.receptor.item = await request.getItem();
+    } catch (error) {
+      trade.receptor.item = null;
+    }
+    trade.review = await trade.getReview();
+    return trade;
+  },
 
 };

@@ -5,7 +5,7 @@
         <% if (currentUser.id === user_id) { %>
           <h2> Hi, <%=user.name%>!</h2>
         <%} else {%>
-          <h2> Welcome to <%=user.name%>'s profile! </h2>
+          <h2> Welcome to <%=user.name%>s profile! </h2>
         <%}%>
       </div>
       <img class="card-image header rounded" src="<%= getUserImagePath(user_id) %>" alt="avatar"/>
@@ -47,7 +47,7 @@
           <% info['publications'].forEach(publication => { %>
           <div class="col-6">
             <div class="card">
-              <div class="card-contex">
+              <div class="card-context">
               <a href="<%-showPublicationPath(publication)%>">
                 <h4 class="card-header"><%= publication.title %></h4>
                 <div class="card-content">
@@ -94,7 +94,7 @@
           <% info['inventory'].forEach(inventorie => { %>
           <div class="col-6">
             <div class="card">
-              <div class="card-contex">
+              <div class="card-context">
               <a href="<%-showPublicationPath(inventorie)%>">
                 <h4 class="card-header"><%= inventorie.title %></h4>
                 <div class="card-content">
@@ -166,11 +166,13 @@
         <div class="row card-group slider">
           <% info['trades'].forEach(trade => { %>
             <div class="col-6">
-              <div class="card">
-                <div class="card-context">
+              <div class="card invisible-img-trade">
+                  <div class="card-header centered">
+                    <h3>Trade with <%=trade.other_user.name %></h3>
+                  </div>
+                  <div class="card-content">
 
-
-                </div>
+                  </div>
               </div>
             </div>
           <%});%>
@@ -183,6 +185,7 @@
       <div class="content">
         <div class="row card-group slider">
           <% info['offered_requests'].forEach(ureq => { %>
+            <% if (ureq['pub_offered'].state!=='pendent') { %>
           <div class="col-6">
             <div class="card">
               <h4 class="card-header">Offer from <a href="<%=showUserPath(ureq['req_user'])%>"><%= ureq['req_user'].name %></h4>
@@ -197,7 +200,7 @@
                     <form class= "form-inline" action="<%= postNewTradePath(ureq['request']) %>" method="get">
                       <input type="hidden" name="id_request" value="<%=ureq['request'].id%>" />
                       <input type="hidden" name="state" value="pendent" />
-                      <li><button <%=ureq['pub_offered'].state==='pendent'?disabled=true:enabled=true%> class="button primary" type="submit" formmethod="post">Accept offer</button></li>
+                      <li><button class="button primary" type="submit" formmethod="post">Accept offer</button></li>
                     </form>
                   </li>
                   <li>
@@ -210,6 +213,7 @@
               </div>
             </div>
           </div>
+          <%}%>
           <%})%>
         </div>
 
@@ -232,7 +236,9 @@
               <a href="<%=showPublicationPath(ureq['publication'])%>">
               <div class="card-content">
                 <p> <%=ureq['request'].message %> </p>
+                <% if (ureq['item']) { %>
                 <span>You offered</span> <%=ureq['item'].model %>
+                <% } %>
               </div>
               </a>
                 <div class="card-footer">
