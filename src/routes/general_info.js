@@ -140,7 +140,6 @@ module.exports = {
       },
     );
     trade.emmiter = await trade.publication.getUser();
-
     trade.emmiter.item = await trade.publication.getItem();
     trade.receptor = await ctx.orm.user.findOne(
       {

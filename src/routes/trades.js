@@ -6,6 +6,12 @@ const { isValidationError, getFirstErrors } = require('../lib/models/validation-
 
 const router = new KoaRouter();
 
+router.param('id', async (id, ctx, next) => {
+  const trade = await getTradeInfo(ctx.params.id, ctx);
+  ctx.assert(trade, 404);
+  ctx.state.trade = trade;
+  return next();
+});
 
 router.get('trades', '/', async (ctx) => {
   if (ctx.state.currentUser) {
@@ -94,29 +100,13 @@ router.get('trades-edit', '/:id/edit', (ctx) => {
 
 router.patch('trades-update', '/:id', async (ctx) => {
   const { trade } = ctx.state;
-  let request = await ctx.orm.request.findById(trade.id_request);
-  request.publication = await ctx.orm.publication.findOne({
-    include: [
-      {
-        require: true,
-        model: ctx.orm.item,
-        include: [
-          {
-            require: true,
-            model: ctx.orm.request,
-            where: { id: request.id },
-          },
-        ],
-      },
-    ],
-  });
-  let publication = await ctx.orm.publication.findById(request.publication_id);
-  
   try {
-    await trade.update(
-      ctx.request.body,
-      { fields: ['id_request', 'state'] },
-    );
+    if (ctx.session.currentUser.id === trade.receptor.id){
+      await trade.update(
+        ctx.request.body,
+        { fields: ['state'] },
+      );
+    }
     const request = await ctx.orm.request.findById(trade.id_request);
     const publication = await ctx.orm.publication.findById(request.publication_id);
     if (ctx.request.body.state == 'concreted') {
