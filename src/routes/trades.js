@@ -1,74 +1,11 @@
 const KoaRouter = require('koa-router');
 const Sequelize = require('sequelize');
+const { getTradeInfo } = require('./general_info')
 
 const { isValidationError, getFirstErrors } = require('../lib/models/validation-error');
 
 const router = new KoaRouter();
 
-router.param('id', async (id, ctx, next) => {
-  const trade = await ctx.orm.trade.findById(ctx.params.id);
-  trade.publication = await ctx.orm.publication.findOne(
-    {
-      include: [
-        {
-          model: ctx.orm.request,
-          include: [
-            {
-              model: ctx.orm.trade,
-              where: { id: trade.id },
-            },
-          ],
-        },
-      ],
-    },
-  );
-  trade.emmiter = await ctx.orm.user.findOne(
-    {
-      include: [
-        {
-          model: ctx.orm.publication,
-          include: [
-            {
-              model: ctx.orm.request,
-              include: [
-                {
-                  model: ctx.orm.trade,
-                  where: { id: trade.id },
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  );
-  trade.emmiter.item = await trade.publication.getItem();
-  trade.receptor = await ctx.orm.user.findOne(
-    {
-      include: [
-        {
-          model: ctx.orm.request,
-          include: [
-            {
-              model: ctx.orm.trade,
-              where: { id: trade.id },
-            },
-          ],
-        },
-      ],
-    },
-  );
-  try {
-    const request = await trade.getRequest();
-    trade.receptor.item = await request.getItem();
-  } catch (error) {
-    trade.receptor.item = null;
-  }
-  trade.review = await trade.getReview();
-  ctx.assert(trade, 404);
-  ctx.state.trade = trade;
-  return next();
-});
 
 router.get('trades', '/', async (ctx) => {
   if (ctx.state.currentUser) {
@@ -76,7 +13,7 @@ router.get('trades', '/', async (ctx) => {
     return ctx.render('trades/index', {
       trades,
       newTradePath: ctx.router.url('trades-new'),
-      getShowPath: trade => ctx.router.url('trades-show', trade.id),
+      getShowPath: trade => ctx.router.url('trades-show', {'tid':trade.id}),
       getEditPath: trade => ctx.router.url('trades-edit', trade.id),
       getDestroyPath: trade => ctx.router.url('trades-destroy', trade.id),
     });
@@ -119,13 +56,14 @@ router.post('trades-create', '/:id_request/:state', async (ctx) => {
         const other_publication = await other_item.getPublication();
         await other_publication.update({ state: 'pendent' }, { fields: ['state'] });
       }
-      ctx.redirect(ctx.router.url('users-trades', { id: ctx.state.currentUser.id }));
+      ctx.redirect(ctx.router.url('users-show', { id: ctx.state.currentUser.id }));
     }
   }
 });
 
-router.get('trades-show', '/:id', (ctx) => {
+router.get('trades-show', '/:tid', async (ctx) => {
   if (ctx.state.currentUser) {
+    ctx.state.trade = await getTradeInfo(ctx.params.tid, ctx);
     return ctx.render('trades/show',
       {
         trade: ctx.state.trade,
@@ -185,7 +123,7 @@ router.patch('trades-update', '/:id', async (ctx) => {
         await publication.update({ state: 'gift' }, { fields: ['state'] });
       }
     }
-    ctx.redirect(ctx.router.url('trades-show', trade.id));
+    ctx.redirect(ctx.router.url('trades-show', {'tid':trade.id}));
   } catch (error) {
     console.log('ERROR', error);
     if (!isValidationError(error)) {

@@ -8,6 +8,7 @@ const reviews = require('./routes/reviews');
 const trades = require('./routes/trades');
 const session = require('./routes/session');
 const hello = require('./routes/hello');
+const search = require('./routes/search');
 
 const router = new KoaRouter();
 
@@ -15,6 +16,8 @@ router.use(async (ctx, next) => {
   Object.assign(ctx.state, {
     newSessionPath: ctx.router.url('session-new'),
     destroySessionPath: ctx.router.url('session-destroy'),
+    searchPath: ctx.router.url('search'),
+    newPublicationPath: ctx.router.url('publications-new'),
   });
   return next();
 });
@@ -35,5 +38,6 @@ router.use('/users', users.routes());
 router.use('/reviews', reviews.routes());
 router.use('/trades', trades.routes());
 router.use('/session', session.routes());
+router.use('/search', search.routes());
 
 module.exports = router;

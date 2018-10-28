@@ -1,5 +1,6 @@
 const KoaRouter = require('koa-router');
 const cloudStorage = require('../lib/cloud-storage');
+
 const router = new KoaRouter();
 
 router.param('id', async (id, ctx, next) => {
@@ -46,7 +47,7 @@ router.post('items-create', '/', async (ctx) => {
     const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'items/images', namePrefix: new_item.id });
     await cloudStorage.upload(localImagePath, remoteImagePath);
     await new_item.update({ image: remoteImagePath });
-  }else{
+  } else {
     await new_item.update({ image: 'items/images/item-placeholder.png' });
   }
   ctx.redirect(ctx.router.url('publications-show', new_item.publication_id));
@@ -66,7 +67,7 @@ router.get('items-show', '/:id', (ctx) => {
 });
 
 router.get('items-show-image', '/:id/image', async (ctx) => {
-    const { image } = ctx.state.item;
+  const { image } = ctx.state.item;
   if (/^https?:\/\//.test(image)) {
     ctx.redirect(image);
   } else {

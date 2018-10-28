@@ -46,6 +46,7 @@ ul li.functional{
 
 .form-inline input::placeholder {
   color: #8f8f8f;
+  padding-left: 4px;
 }
 
 .form-inline :focus {
@@ -59,4 +60,8 @@ ul li .form-inline{
 
 .form-inline input[type=submit]{
   display: none;
+}
+
+.topbar i.fa-clipboard {
+  font-size: 19px;
 }
