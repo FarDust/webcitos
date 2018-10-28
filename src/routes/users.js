@@ -249,13 +249,13 @@ router.get('users-trades', '/:id/trades', async (ctx) => {
   const { user } = ctx.state;
   if (ctx.session.currentUserId === user.id) {
     const info = await getUserTrades(ctx, user);
+    console.log(info);
     return ctx.render(
       'users/trades',
       {
         user,
         trades: info['trades'],
         reviews: info['reviews'],
-        own_requests_id: info['own_requests_id'],
         tradesUrl: ctx.router.url('trades-show', { tid: '0' }),
         requestsUrl: ctx.router.url('requests-show', { id: '0' }),
         reviewsUrl: ctx.router.url('reviews-show', { id: '0' }),
