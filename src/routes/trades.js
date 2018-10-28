@@ -101,7 +101,7 @@ router.get('trades-edit', '/:id/edit', (ctx) => {
 router.patch('trades-update', '/:id', async (ctx) => {
   const { trade } = ctx.state;
   try {
-    if (ctx.session.currentUser.id === trade.receptor.id){
+    if (ctx.session.currentUserId === trade.receptor.id){
       await trade.update(
         ctx.request.body,
         { fields: ['state'] },

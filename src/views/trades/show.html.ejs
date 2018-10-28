@@ -42,7 +42,7 @@
         <div id="arrows" class="col-2">
           <br/>
           <div><i class="fas fa-exchange-alt fa-w-14 fa-7x"></i></div>
-          <% if (currentUser.id === trade.receptor.id) { %>
+          <% if (currentUser.id === trade.receptor.id && trade.state === 'pendent') { %>
           <div>
             <form class="form-inline" action="<%= getEditPath(trade) %>" method="POST">
               <input type="hidden" name="_method" value="patch" />

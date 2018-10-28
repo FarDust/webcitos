@@ -32,11 +32,11 @@
               <button class="button primary" onclick="window.location.href='<%= tradesUrl + trade.id.toString() + edit_string %>'">
                 Finish trade
               </button>
-            <% } else if (trade.state == 'concreted' && reviews[i]) {%>
+            <% } else if (trade.state == 'concreted' && reviews[i]) { %>
               <button class="button primary" onclick="window.location.href='<%= reviewsUrl + reviews[i].id.toString() %>'">
                 See review
               </button>
-            <% } else if (trade.state == 'concreted' && own_requests_id.includes(trade.id_request)) {%>
+            <% } else if (trade.state == 'concreted' && own_requests_id.includes(trade.id_request)) { %>
                 <button class="button primary" onclick="window.location.href='<%= reviewNewUrl + trade.id.toString() %>'">
                   Add review
                 </button>

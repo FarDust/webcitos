@@ -247,9 +247,8 @@ router.get('users-edit', '/:id/edit', (ctx) => {
 
 router.get('users-trades', '/:id/trades', async (ctx) => {
   const { user } = ctx.state;
-  if (ctx.session.currentUserId == user.id) {
+  if (ctx.session.currentUserId === user.id) {
     const info = await getUserTrades(ctx, user);
-    // console.log('REVIEWS', reviews);
     return ctx.render(
       'users/trades',
       {

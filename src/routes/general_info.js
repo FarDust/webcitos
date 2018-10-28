@@ -47,8 +47,8 @@ module.exports = {
     const own_requests_id = [];
     const all_info = []
 
-    await publications.forEach(async (pub) => {
-          const requests = await pub.getRequests();
+    await publications.forEach(async (publication) => {
+          const requests = await publication.getRequests();
           // console.log('requests',requests)
           await forEach(requests, async (req) => {
             const trade = await req.getTrade();
@@ -82,12 +82,12 @@ module.exports = {
 
     const trades = [];
 
-    await publications.forEach(async (pub) => {
-      const requests = await pub.getRequests();
+    await publications.forEach(async (publication) => {
+      const requests = await publication.getRequests();
       await requests.forEach( async (req) => {
         const trade = await req.getTrade();
         if (trade && trade.state === 'pendent') {
-          trade.my_publication = pub;
+          trade.my_publication = publication;
           trade.other_publication = null;
           if (req.item_offered_id) {
             trade.is_gift = false;
