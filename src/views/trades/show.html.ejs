@@ -44,11 +44,15 @@
           <div><i class="fas fa-exchange-alt fa-w-14 fa-7x"></i></div>
           <div>
             <form class="form-inline" action="<%= getEditPath(trade) %>" method="POST">
+              <input type="hidden" name="_method" value="patch" />
+              <input type="hidden" name="action" value="reject" />
               <button title="reject" class="icon-container" type="submit">
                 <i class="fas fa-times fa-2x"></i>
               </button>
             </form>
             <form class="form-inline" action="<%= getEditPath(trade) %>">
+              <input type="hidden" name="_method" value="patch" />
+              <input type="hidden" name="action" value="concrete" />
               <button title="concrete" class="icon-container" type="submit">
                 <i class="fas fa-handshake fa-2x"></i>
               </button>
