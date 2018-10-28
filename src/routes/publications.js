@@ -1,7 +1,7 @@
 const KoaRouter = require('koa-router');
 const { forEach } = require('p-iteration');
 const Sequelize = require('sequelize');
-const { getTradeInfo } = require('./general_info')
+const { getTradeInfo } = require('./general_info');
 
 
 const router = new KoaRouter();
