@@ -67,7 +67,7 @@ router.get('trades-show', '/:tid', async (ctx) => {
     return ctx.render('trades/show',
       {
         trade: ctx.state.trade,
-        getEditPath: trade => ctx.router.url('trades-edit', trade.id),
+        getEditPath: trade => ctx.router.url('trades-update', trade.id),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';
@@ -94,6 +94,24 @@ router.get('trades-edit', '/:id/edit', (ctx) => {
 
 router.patch('trades-update', '/:id', async (ctx) => {
   const { trade } = ctx.state;
+  let request = await ctx.orm.request.findById(trade.id_request);
+  request.publication = await ctx.orm.publication.findOne({
+    include: [
+      {
+        require: true,
+        model: ctx.orm.item,
+        include: [
+          {
+            require: true,
+            model: ctx.orm.request,
+            where: { id: request.id },
+          },
+        ],
+      },
+    ],
+  });
+  let publication = await ctx.orm.publication.findById(request.publication_id);
+  
   try {
     await trade.update(
       ctx.request.body,
