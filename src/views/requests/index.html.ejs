@@ -22,7 +22,11 @@
         <td><a href="<%= getShowUserPath(request['user']) %>" > <%= request["user"].name %></a></td>
         <% if (request['publication']) {%>
           <td><a href="<%= getShowPublicationPath(request['publication']) %>"> <%= request["publication"].title %> </a></td>
+          <% if(request["item"]){ %>
           <td><%= request["item"].model %></td>
+          <%} else {%>
+          <td> </td>
+          <%}%>
         <%} else {%>
           <td></td>
           <td></td>

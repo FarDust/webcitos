@@ -86,7 +86,7 @@ module.exports = {
     const publications = await user.getPublications();
     const own_requests = await user.getRequests();
 
-    let reviews = [];
+    let reviews = {};
     let trades = [];
     let own_requests_id = [];
     let all_info = []
@@ -133,17 +133,20 @@ module.exports = {
       let trade = emitingTrades[trade_index];
       let review = await trade.getReview();
       let complete_trade = await getTradeInfo(trade.id, ctx);
-      reviews.push(review);
+      reviews[trade.id] = review;
       trades.push(complete_trade);
     }
 
     for (trade_index in receptingTrades) {
       let trade = receptingTrades[trade_index];
+      let review = await trade.getReview();
       let complete_trade = await getTradeInfo(trade.id, ctx);
+      reviews[trade.id] = review;
       trades.push(complete_trade);
     }
 
     console.log(trades);
+    console.log(reviews);
     return {'trades': trades, 'reviews': reviews};
 
   },

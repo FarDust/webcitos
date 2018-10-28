@@ -74,6 +74,7 @@ router.get('trades-show', '/:tid', async (ctx) => {
       {
         trade: ctx.state.trade,
         getEditPath: trade => ctx.router.url('trades-update', trade.id),
+        getReviewNewUrl: trade => ctx.router.url('reviews-new', { tid: trade.id }),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';

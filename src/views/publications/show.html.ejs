@@ -136,15 +136,18 @@
               </div>
             </div>
         </div>
-        <% if(trade.receptor.item !== null) { %>
+
         <div class="col-2">
-          <img class="exchange_image" src="https://storage.googleapis.com/webcitos_images/exchange.png" alt="trade"/>
+          <% if(trade.receptor.item !== null) { %>
+            <img class="exchange_image" src="https://storage.googleapis.com/webcitos_images/exchange.png" alt="trade"/>
+          <% } else { %>
+            <img class="exchange_image" src="https://storage.googleapis.com/webcitos_images/logo.svg" alt="trade"/>
+            <% } %>
+          <% if (!trade.review && currentUser.id == trade.receptor.id) {%>
+          <button class="button-publi" onclick="window.location.href='<%= getReviewNewUrl(trade) %>'">Add review </button>
+          <% } %>
         </div>
-        <% } else { %>
-        <div class="col-2">
-          <img class="exchange_image" src="https://storage.googleapis.com/webcitos_images/logo.svg" alt="trade"/>
-        </div>
-        <% } %>
+
         <div class="col-5">
           <div id="receptor-user" class="card">
             <div class="card-contex">
@@ -194,8 +197,6 @@
       </div>
     </div>
   </div>
-  <% } else if (currentUser.id == trade.receptor.id) {%>
-    <button class="button-publi" onclick="window.location.href='<%= getReviewNewUrl(trade) %>'">Add review </button>
   <% } %>
 </div>
   <% } %>
