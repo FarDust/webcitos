@@ -71,11 +71,32 @@ router.get('publications-show', '/:id', async (ctx) => {
     const publication = ctx.state.publication;
     const user = await ctx.orm.user.findById(ctx.state.publication.userID);
     const item = await ctx.state.publication.getItem();
+    const requests = await publication.getRequests();
+    let trade;
+    let review;
+    let users_requests = {};
+    let items_requests = {};
+    await forEach(requests, async (req) => {
+      const user_req = await ctx.orm.user.findById(req.userID);
+      const item_req = await ctx.orm.item.findById(req.item_offered_id);
+      users_requests[req.id] = user_req.name;
+      items_requests[req.id] = item_req;
+      trade = await req.getTrade();
+      // console.log('trade!!!!', trade)
+      if (trade) {
+        review = await trade.getReview();
+      }
+    });
     return ctx.render('publications/show',
       {
         publication,
         user,
         item,
+        requests,
+        trade,
+        review,
+        users_requests,
+        items_requests,
         createRequestPath: publi => ctx.router.url('requests-new', { pid: publi.id }),
         showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
         editPublicationPath: publi => ctx.router.url('publications-edit', { id: publi.id }),

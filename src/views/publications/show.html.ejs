@@ -27,12 +27,22 @@
         Brand: <%= item.brand %> <br>
         Screen size: <%= item.screenSize %> inches <br>
         Current state: <%= item.state %> <br>
-        Aditional: <%= item.aditional %> inches <br>
+        Aditional: <%= item.aditional %><br>
         Category: <%= item.category %> <br>
       </p>
       <% if (publication.userID === currentUser.id) { %>
         <button class="button-publi" onclick="window.location.href='<%= editItemPath(item) %>'">Edit item</button>
       <% } %>
     </div>
-    </div>
+  </div>
+  <% if(requests.length > 0) {%>
+  <div class="pcard">
+    <% requests.forEach((request) => { %>
+      <a class="box" href="/" style="text-decoration:none;">
+        <h4>Request from <%= users_requests[request.id] %></h4>
+        <p><%= request.message %></p> <br/>
+      </a>
+    <% }) %>
+  </div>
+  <% } %>
 </div>
