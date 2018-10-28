@@ -1,6 +1,7 @@
 const KoaRouter = require('koa-router');
 const { forEach } = require('p-iteration');
 const Sequelize = require('sequelize');
+const { getTradeInfo } = require('./general_info')
 
 
 const router = new KoaRouter();
@@ -74,18 +75,26 @@ router.get('publications-show', '/:id', async (ctx) => {
     const user = await ctx.orm.user.findById(ctx.state.publication.userID);
     const item = await ctx.state.publication.getItem();
     const requests = await publication.getRequests();
-    let trade;
-    let review;
+    let trade = null;
+    let review = null;
     let users_requests = {};
+    let publi_requests = {};
     let items_requests = {};
     await forEach(requests, async (req) => {
       const user_req = await ctx.orm.user.findById(req.userID);
-      const item_req = await ctx.orm.item.findById(req.item_offered_id);
-      users_requests[req.id] = user_req.name;
-      items_requests[req.id] = item_req;
+      users_requests[req.id] = user_req;
+      if (req.item_offered_id) {
+        const item_req = await ctx.orm.item.findById(req.item_offered_id);
+        const publi_req = await item_req.getPublication();
+        items_requests[req.id] = item_req;
+        publi_requests[req.id] = publi_req.id;
+      } else {
+        items_requests[req.id] = null;
+        publi_requests[req.id] = null;
+      }
       trade = await req.getTrade();
-      // console.log('trade!!!!', trade)
       if (trade) {
+        trade = await getTradeInfo(trade.id, ctx);
         review = await trade.getReview();
       }
     });
@@ -99,6 +108,7 @@ router.get('publications-show', '/:id', async (ctx) => {
         review,
         users_requests,
         items_requests,
+        publi_requests,
         createRequestPath: publi => ctx.router.url('requests-new', { pid: publi.id }),
         showRequestsPath: publi => ctx.router.url('requests-all', { pid: publi.id }),
         editPublicationPath: publi => ctx.router.url('publications-edit', { id: publi.id }),
@@ -108,6 +118,9 @@ router.get('publications-show', '/:id', async (ctx) => {
         getUserImagePath: user => ctx.router.url('users-show-image', user.id),
         getItemImagePath: item => ctx.router.url('items-show-image', item.id),
         getItemShowPath: item => ctx.router.url('items-show', item.id),
+        getPubliShowPath: publi_id => ctx.router.url('publications-show', publi_id),
+        postNewTradePath: request => ctx.router.url('trades-create', {'id_request': request.id, 'state': 'pendent'}),
+        getDestroyRequestPath: request => ctx.router.url('requests-destroy', request.id),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';
