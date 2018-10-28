@@ -25,7 +25,7 @@
               E-Mail: <%=state.email%>
             </div>
             <% if (currentUser.id == user_id){ %>
-            <button class="button primary" onclick="window.location.href='<%= userEditPath(currentUser.id) %>'">Edit my profile</button>
+            <button class="button-publi" onclick="window.location.href='<%= userEditPath(currentUser.id) %>'">Edit my profile</button>
             <% } %>
           </div>
         </div>
@@ -61,13 +61,13 @@
                           <ul>
                           <% if (publication.state !== 'pendent') { %>
                             <li>
-                              <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
+                              <button class="button-publi" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
                             </li>
                             <%}%>
                             <li>
                               <form class="form-inline" action="<%= getDestroyPublicationPath(publication) %>" method="post">
                                 <input type="hidden" name="_method" value="delete" />
-                                <button  class="button primary" type="submit">Delete</button>
+                                <button  class="button-publi" type="submit">Delete</button>
                               </form>
                             </li>
                           </ul>
@@ -127,12 +127,12 @@
                         <% if (state.id === currentUser.id) { %>
                           <ul>
                             <li>
-                              <button class="button primary" onclick="window.location.href='<%-showRequestsPath(inventorie)%>'"><%= inventorie.state=='gift' ? 'See petitions' : 'See offers' %></button>
+                              <button class="button-publi" onclick="window.location.href='<%-showRequestsPath(inventorie)%>'"><%= inventorie.state=='gift' ? 'See petitions' : 'See offers' %></button>
                             </li>
                             <li>
                               <form class="form-inline" action="<%= getDestroyPublicationPath(inventorie) %>" method="post">
                                 <input type="hidden" name="_method" value="delete" />
-                                <button  class="button primary" type="submit">Delete</button>
+                                <button  class="button-publi" type="submit">Delete</button>
                               </form>
                             </li>
                           </ul>
@@ -230,13 +230,13 @@
                     <form class= "form-inline" action="<%= postNewTradePath(ureq['request']) %>" method="get">
                       <input type="hidden" name="id_request" value="<%=ureq['request'].id%>" />
                       <input type="hidden" name="state" value="pendent" />
-                      <li><button class="button primary" type="submit" formmethod="post">Accept offer</button></li>
+                      <li><button class="button-publi" type="submit" formmethod="post">Accept offer</button></li>
                     </form>
                   </li>
                   <li>
                     <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
                       <input type="hidden" name="_method" value="delete" />
-                      <button class="button primary" type="submit">Delete</button>
+                      <button class="button-publi" type="submit">Delete</button>
                     </form>
                   </li>
                 </ul>
@@ -262,7 +262,7 @@
     <div class="user-context">
       <h1>Your Last Offers</h1>
       <div class="content">
-      <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
+      <button class="button-publi" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
         <div class="row card-group slider">
           <% info['mine_requests'].forEach(ureq => { %>
           <div class="col-6">
@@ -284,7 +284,7 @@
                 <div class="row">
                   <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
                     <input type="hidden" name="_method" value="delete" />
-                    <button class="button primary" type="submit">Delete</button>
+                    <button class="button-publi" type="submit">Delete</button>
                   </form>
                 </div>
               </div>
@@ -306,7 +306,7 @@
         <div class="user-context">
           <h1>Active Trades</h1>
           <div class="content">
-          <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See all my trades</button>
+          <button class="button-publi" onclick="window.location.href='<%-showMineTradesPath%>'">See all my trades</button>
             <div class="row card-group slider">
               <% info['trades'].forEach(trade => { %>
                 <% if (trade.state === 'pendent') {%>

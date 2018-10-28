@@ -194,6 +194,8 @@
       </div>
     </div>
   </div>
+  <% } else if (currentUser.id == trade.receptor.id) {%>
+    <button class="button-publi" onclick="window.location.href='<%= getReviewNewUrl(trade) %>'">Add review </button>
   <% } %>
 </div>
   <% } %>

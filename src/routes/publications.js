@@ -121,6 +121,7 @@ router.get('publications-show', '/:id', async (ctx) => {
         getPubliShowPath: publi_id => ctx.router.url('publications-show', publi_id),
         postNewTradePath: request => ctx.router.url('trades-create', {'id_request': request.id, 'state': 'pendent'}),
         getDestroyRequestPath: request => ctx.router.url('requests-destroy', request.id),
+        getReviewNewUrl: trade => ctx.router.url('reviews-new', { tid: trade.id }),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';
