@@ -5,7 +5,7 @@
   <div class="center">
     <label for="fullfillment_offer">
       <span class="form">Fullfilment offer</span><br/>
-      <input class="form-centered" type="text" name="fullfillment_offer" id="fullfillment_offer" value="<%= review.fullfillment_offer %>" /><br/>
+      <input class="form-centered" type="number" max="5" name="fullfillment_offer" id="fullfillment_offer" value="<%= review.fullfillment_offer %>" /><br/>
         <% if (locals.errors && errors.fullfillment_offer) { %>
           <span class="error"><%= errors.fullfillment_offer.message %></span>
         <% } %>
@@ -14,7 +14,7 @@
   <div class="center">
     <label for="quality_offered">
       <span class="form">Quality offered</span><br/>
-      <input class="form-centered" type="text" name="quality_offered" id="quality_offered" value="<%= review.quality_offered %>" /><br/>
+      <input class="form-centered" type="number" max="5" name="quality_offered" id="quality_offered" value="<%= review.quality_offered %>" /><br/>
         <% if (locals.errors && errors.quality_offered) { %>
           <span class="error"><%= errors.quality_offered.message %></span>
         <% } %>
@@ -23,7 +23,7 @@
   <div class="center">
     <label for="puntuality">
       <span class="form">Puntuality</span><br/>
-      <input class="form-centered" type="text" name="puntuality" id="puntuality" value="<%= review.puntuality %>" /><br/>
+      <input class="form-centered" type="number" max="5" name="puntuality" id="puntuality" value="<%= review.puntuality %>" /><br/>
         <% if (locals.errors && errors.puntuality) { %>
           <span class="error"><%= errors.puntuality.message %></span>
         <% } %>
