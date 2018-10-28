@@ -36,6 +36,6 @@
       <input class="form-centered" type="hidden" name="userID" id="userID" value="<%=user_id%>" />
       <% } %>
       <div class="actions center">
-        <input class="form-centered" type="submit" value="<%= request.isNewRecord ? 'Create' : 'Edit' %>" />
+        <input class="form-centered" id="button-form" type="submit" value="<%= request.isNewRecord ? 'Create' : 'Edit' %>" />
       </div>
     </form>

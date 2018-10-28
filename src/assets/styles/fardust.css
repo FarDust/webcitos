@@ -141,6 +141,11 @@ input, select {
   width: 100%;
 }
 
+#button-form {
+  color: white;
+  font-weight: bold;
+}
+
 input[type=hidden] {
   display: none;
 }
