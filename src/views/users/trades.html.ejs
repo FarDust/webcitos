@@ -18,7 +18,11 @@
             <% if (trade.id_request !== null ) { %>
               Assigned request:
               <a href="<%= requestsUrl + trade.id_request.toString() %>">
-                <%= trade.receptor.item.model %>
+                <% if (trade.receptor.item ) { %>
+                  <%= trade.receptor.item.model %>
+                <% } else { %>
+                  See request
+                <% } %>
               </a>
             <% } %>
           </div>
