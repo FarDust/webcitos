@@ -40,10 +40,19 @@
             </div>
         </div>
         <div id="arrows" class="col-2">
-          <div>=></div>
-          <div class="row">
-            <div class="col-8"></div>
-            <div class="col-2"><=</div>
+          <br/>
+          <div><i class="fas fa-exchange-alt fa-w-14 fa-7x"></i></div>
+          <div>
+            <form class="form-inline" action="<%= getEditPath(trade) %>" method="POST">
+              <button title="reject" class="icon-container" type="submit">
+                <i class="fas fa-times fa-2x"></i>
+              </button>
+            </form>
+            <form class="form-inline" action="<%= getEditPath(trade) %>">
+              <button title="concrete" class="icon-container" type="submit">
+                <i class="fas fa-handshake fa-2x"></i>
+              </button>
+            </form>
           </div>
         </div>
         <div class="col-5">
