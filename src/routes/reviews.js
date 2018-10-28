@@ -62,8 +62,8 @@ router.get('reviews-new', '/trades/new/:tid', (ctx) => {
 });
 
 router.post('reviews-create', '/', async (ctx) => {
-  await ctx.orm.review.create(ctx.request.body);
-  ctx.redirect(ctx.router.url('reviews'));
+  const new_review = await ctx.orm.review.create(ctx.request.body);
+  ctx.redirect(ctx.router.url('trades-show', {'tid': new_review.trade_id}));
 });
 
 router.get('reviews-show', '/:id', (ctx) => {
