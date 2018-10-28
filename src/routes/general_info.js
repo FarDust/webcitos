@@ -1,5 +1,49 @@
 const { forEach } = require('p-iteration');
 
+async function getTradeInfo(id, ctx) {
+  const trade = await ctx.orm.trade.findById(id);
+  trade.publication = await ctx.orm.publication.findOne(
+    {
+      include: [
+        {
+          model: ctx.orm.request,
+          include: [
+            {
+              model: ctx.orm.trade,
+              where: { id: trade.id },
+            },
+          ],
+        },
+      ],
+    },
+  );
+  trade.emmiter = await trade.publication.getUser();
+  trade.emmiter.item = await trade.publication.getItem();
+  trade.receptor = await ctx.orm.user.findOne(
+    {
+      include: [
+        {
+          model: ctx.orm.request,
+          include: [
+            {
+              model: ctx.orm.trade,
+              where: { id: trade.id },
+            },
+          ],
+        },
+      ],
+    },
+  );
+  try {
+    const request = await trade.getRequest();
+    trade.receptor.item = await request.getItem();
+  } catch (error) {
+    trade.receptor.item = null;
+  }
+  trade.review = await trade.getReview();
+  return trade;
+}
+
 module.exports = {
 
   getInfoRequests: async function (ctx, requests, category) {
@@ -37,42 +81,70 @@ module.exports = {
       return final;
   },
 
-  getUserTrades: async function(ctx, user) {
+  getUserTrades: async function (ctx, user) {
 
     const publications = await user.getPublications();
     const own_requests = await user.getRequests();
 
-    const reviews = [];
-    const trades = [];
-    const own_requests_id = [];
-    const all_info = []
+    let reviews = [];
+    let trades = [];
+    let own_requests_id = [];
+    let all_info = []
 
-    await publications.forEach(async (pub) => {
-          const requests = await pub.getRequests();
-          // console.log('requests',requests)
-          await forEach(requests, async (req) => {
-            const trade = await req.getTrade();
-            // console.log('trade!!!!', trade)
-            if (trade) {
-              const review = await trade.getReview();
-              //const all_trade = await getTradeInfo(trade.id, ctx);
-              reviews.push(review);
-              trades.push(trade);
-            }
-          });
-      });
+    receptingTrades = await ctx.orm.trade.findAll({
+      include: [
+        {
+          model: ctx.orm.request,
+          required: true,
+          include: [
+            {
+              model: ctx.orm.user,
+              required: true,
+              where: { id: user.id }
+            },
+          ],
+        },
+      ],
+    });
 
-      await own_requests.forEach(async (req) => {
-        const trade = await req.getTrade();
-        if (trade) {
-          const review = await trade.getReview();
-          //const all_trade = await getTradeInfo(trade.id, ctx);
-          reviews.push(review);
-          trades.push(trade);
-          own_requests_id.push(trade.id_request);
-        }
-      });
-      return {'trades': trades, 'reviews': reviews, 'own_requests_id': own_requests_id};
+    emitingTrades = await ctx.orm.trade.findAll({
+      include: [
+        {
+          model: ctx.orm.request,
+          required: true,
+          include: [
+            {
+              model: ctx.orm.publication,
+              required: true,
+              include: [
+                {
+                  model: ctx.orm.user,
+                  required: true,
+                  where: { id: user.id }
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    for (trade_index in emitingTrades) {
+      let trade = emitingTrades[trade_index];
+      let review = await trade.getReview();
+      let complete_trade = await getTradeInfo(trade.id, ctx);
+      reviews.push(review);
+      trades.push(complete_trade);
+    }
+
+    for (trade_index in receptingTrades) {
+      let trade = receptingTrades[trade_index];
+      let complete_trade = await getTradeInfo(trade.id, ctx);
+      trades.push(complete_trade);
+    }
+
+    console.log(trades);
+    return {'trades': trades, 'reviews': reviews};
 
   },
 
@@ -82,12 +154,12 @@ module.exports = {
 
     const trades = [];
 
-    await publications.forEach(async (pub) => {
-      const requests = await pub.getRequests();
+    await publications.forEach(async (publication) => {
+      const requests = await publication.getRequests();
       await requests.forEach( async (req) => {
         const trade = await req.getTrade();
         if (trade && trade.state === 'pendent') {
-          trade.my_publication = pub;
+          trade.my_publication = publication;
           trade.other_publication = null;
           if (req.item_offered_id) {
             trade.is_gift = false;
@@ -122,49 +194,6 @@ module.exports = {
     return trades;
   },
 
-  getTradeInfo: async function(id, ctx) {
-    const trade = await ctx.orm.trade.findById(id);
-    trade.publication = await ctx.orm.publication.findOne(
-      {
-        include: [
-          {
-            model: ctx.orm.request,
-            include: [
-              {
-                model: ctx.orm.trade,
-                where: { id: trade.id },
-              },
-            ],
-          },
-        ],
-      },
-    );
-    trade.emmiter = await trade.publication.getUser();
-
-    trade.emmiter.item = await trade.publication.getItem();
-    trade.receptor = await ctx.orm.user.findOne(
-      {
-        include: [
-          {
-            model: ctx.orm.request,
-            include: [
-              {
-                model: ctx.orm.trade,
-                where: { id: trade.id },
-              },
-            ],
-          },
-        ],
-      },
-    );
-    try {
-      const request = await trade.getRequest();
-      trade.receptor.item = await request.getItem();
-    } catch (error) {
-      trade.receptor.item = null;
-    }
-    trade.review = await trade.getReview();
-    return trade;
-  },
+  getTradeInfo: getTradeInfo,
 
 };

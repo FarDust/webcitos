@@ -6,6 +6,12 @@ const { isValidationError, getFirstErrors } = require('../lib/models/validation-
 
 const router = new KoaRouter();
 
+router.param('id', async (id, ctx, next) => {
+  const trade = await getTradeInfo(ctx.params.id, ctx);
+  ctx.assert(trade, 404);
+  ctx.state.trade = trade;
+  return next();
+});
 
 router.get('trades', '/', async (ctx) => {
   if (ctx.state.currentUser) {
@@ -67,7 +73,7 @@ router.get('trades-show', '/:tid', async (ctx) => {
     return ctx.render('trades/show',
       {
         trade: ctx.state.trade,
-
+        getEditPath: trade => ctx.router.url('trades-update', trade.id),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';
@@ -95,10 +101,12 @@ router.get('trades-edit', '/:id/edit', (ctx) => {
 router.patch('trades-update', '/:id', async (ctx) => {
   const { trade } = ctx.state;
   try {
-    await trade.update(
-      ctx.request.body,
-      { fields: ['id_request', 'state'] },
-    );
+    if (ctx.session.currentUserId === trade.receptor.id){
+      await trade.update(
+        ctx.request.body,
+        { fields: ['state'] },
+      );
+    }
     const request = await ctx.orm.request.findById(trade.id_request);
     const publication = await ctx.orm.publication.findById(request.publication_id);
     if (ctx.request.body.state == 'concreted') {
