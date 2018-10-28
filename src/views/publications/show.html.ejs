@@ -1,64 +1,203 @@
-<div class="content">
-  <div class="row">
-    <div class="col-6">
-      <div class="content">
-      <%- include('../layouts/_show') %>
-      <% if (state.userID === currentUser.id) { %>
-      <button class="button primary" onclick="window.location.href='<%= editPublicationPath(state) %>'">Edit publication</button>
-      <!--
-      <li>
-        <form class="form-button" action="<%= destroyPublicationPath(state) %>" method="post">
-          <input type="hidden" name="_method" value="delete" />
-          <input type="submit" value="Delete" />
+<div class="products">
+  <div class="pcard_show">
+    <a class="box_show_1" href="<%= userPath(user) %>" style="text-decoration:none;">
+      <h1><%= publication.title %></h1>
+      <h2>State: <%= publication.state %></h2>
+      <%= publication.description %> <br>
+      <h4> Uploaded by <%=user.name%></h4>
+      <img class="imgcard_publi_user rounded" src="<%= getUserImagePath(user) %>" alt="avatar"/>
+      <h4>Information</h4>
+      Phone: <%=user.phone%> <br>
+      E-mail: <%=user.email%> <br> <br>
+      <% if (publication.userID === currentUser.id) { %>
+        <button class="button-publi" onclick="window.location.href='<%= editPublicationPath(publication) %>'">Edit publication</button>
+      <% } else if (publication.state == 'gift' || publication.state == 'exchange'){ %>
+        <form class="form-button-publi" action="<%=createRequestPath(publication)%>">
+          <input type="submit" value="Create a new offer" />
         </form>
-      </li>
-      -->
       <% } %>
-      </div>
+    </a>
+    <div class="box_show_2">
+      <img class="imgcard_publi" src="<%= getItemImagePath(item) %>" alt="Photo of the item"/>
+      <h2><%= item.model %></h2>
+      <p id="features">
+        Brand: <%= item.brand %> <br>
+        Screen size: <%= item.screenSize %> inches <br>
+        Current state: <%= item.state %> <br>
+        Aditional: <%= item.aditional %><br>
+        Category: <%= item.category %> <br>
+      </p>
+      <% if (publication.userID === currentUser.id) { %>
+        <button class="button-publi" onclick="window.location.href='<%= editItemPath(item) %>'">Edit item</button>
+      <% } %>
     </div>
-    <div class="col-6">
-      <div class="content">
-      <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-          <h2 class="centered-header"><%= propietary_user.name %></h2>
-          <li class="button"><a href="<%= userPath(propietary_user) %>">See profile</a></li>
-        </div>
-        <div class="col-2"></div>
-        <div class="col-8">
-            <% if (state.userID === currentUser.id) { %>
-              <form class="form-button" action="<%=showRequestsPath(state)%>">
-                <input type="submit" value="See all offers" />
-              </form>
-            <% } else if (state.state == 'gift' || state.state == 'exchange'){ %>
-              <form class="form-button" action="<%=createRequestPath(state)%>">
-                <input type="submit" value="Create a new offer" />
-              </form>
+  </div>
+  <% if(requests.length > 0 && publication.userID === currentUser.id) {%>
+  <h2>Offers received</h2>
+  <div class="content">
+    <div class="row card-group slider">
+      <% requests.forEach((request) => { %>
+      <% if (publi_requests[request.id]) {%>
+      <div class="col-6">
+        <div class="card">
+            <a href="<%= userPath(users_requests[request.id]) %>">
+              <h4 class="card-header">Offer from <%= users_requests[request.id].name %></h4>
+            </a>
+            <a href="<%= getPubliShowPath(publi_requests[request.id]) %>">
+              <div class="card-content">
+                <%= request.message %> <br> <br>
+                Item offered: <%= items_requests[request.id].model %>
+              </div>
+            </a>
+            <% if (publication.state != 'pendent' && publication.state != 'inventory') {%>
+            <div class="card-footer">
+              <ul>
+                <li>
+                  <form class="form-button-publi" action="<%= postNewTradePath(request) %>" method="get">
+                    <input type="hidden" name="id_request" value="<%=request.id%>" />
+                    <input type="hidden" name="state" value="pendent" />
+                    <li><button class="button-publi" type="submit" formmethod="post">Accept offer</button></li>
+                  </form>
+                </li>
+                <li>
+                  <form class="form-button-publi" action="<%= getDestroyRequestPath(request) %>" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button class="button-publi" type="submit">Delete offer</button>
+                  </form>
+                </li>
+              </ul>
+            </div>
             <% } %>
         </div>
-        <div class="col-2"></div>
       </div>
+      <% } else {%>
+      <div class="col-6">
+        <div class="card">
+            <a href="<%= userPath(users_requests[request.id]) %>">
+              <h4 class="card-header">Petition from <%= users_requests[request.id].name %></h4>
+            </a>
+            <div class="card-content">
+              <%= request.message %> <br> <br>
+            </div>
+            <% if (publication.state != 'pendent' && publication.state != 'inventory') {%>
+            <div class="card-footer">
+              <ul>
+                <li>
+                  <form class="form-button-publi" action="<%= postNewTradePath(request) %>" method="get">
+                    <input type="hidden" name="id_request" value="<%=request.id%>" />
+                    <input type="hidden" name="state" value="pendent" />
+                    <li><button class="button-publi" type="submit" formmethod="post">Accept offer</button></li>
+                  </form>
+                </li>
+                <li>
+                  <form class="form-button-publi" action="<%= getDestroyRequestPath(request) %>" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button class="button-publi" type="submit">Delete offer</button>
+                  </form>
+                </li>
+              </ul>
+            </div>
+            <% } %>
+        </div>
       </div>
+      <% } %>
+      <% }) %>
     </div>
-    <div class="col-12 content">
-      <h3>Description of the item</h3>
+  </div>
+  <% } %>
+  <% if (trade && trade.state == 'concreted') {%>
+  <h2>Trade details</h2>
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-10">
+    <div class="content">
       <div class="row">
-        <div class="col-6">
-          <% for(let key in item) { %>
-            <% if (!ignore.includes(key) ) { %>
-              <div class="tag">
-                <%= key.replace(/\b[a-z]\B/g, function(letter) {return letter.toUpperCase(); } ); %>: <%= item[key] %>
+        <div class="col-5">
+            <div id="emmiter-user" class="card">
+              <div class="card-contex">
+                <h3 class="card-header"><%= trade.emmiter.name %></h3>
+                <div class="card-content">
+                  Email: <%= trade.emmiter.email %> <br/>
+                  Phone: <%= trade.emmiter.phone %>
+                </div>
               </div>
-            <% }%>
-          <% } %>
-          <% if (state.userID === currentUser.id) { %>
-          <button class="button primary" onclick="window.location.href='<%= editItemPath(item) %>'">Edit item</button>
+            </div>
+            <div id="emmiter-item" class="card">
+              <div class="card-contex">
+                <h4 class="card-header">Offer</h4>
+                <div class="card-content">
+                  Brand: <%= trade.emmiter.item.brand %> <br/>
+                  Model: <%= trade.emmiter.item.model %> <br/>
+                  Category: <%= trade.emmiter.item.category %> <br/>
+                  Screen size: <%= trade.emmiter.item.screenSize %>'' <br/>
+                  Description<br/>
+                  <%= trade.emmiter.item.aditional %>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-2">
+          <% if(trade.receptor.item !== null) { %>
+            <img class="exchange_image" src="https://storage.googleapis.com/webcitos_images/exchange.png" alt="trade"/>
+          <% } else { %>
+            <img class="exchange_image" src="https://storage.googleapis.com/webcitos_images/logo.svg" alt="trade"/>
+            <% } %>
+          <% if (!trade.review && currentUser.id == trade.receptor.id) {%>
+          <button class="button-publi" onclick="window.location.href='<%= getReviewNewUrl(trade) %>'">Add review </button>
           <% } %>
         </div>
-        <div class="col-6">
 
+        <div class="col-5">
+          <div id="receptor-user" class="card">
+            <div class="card-contex">
+              <h3 class="card-header"><%= trade.receptor.name %></h3>
+              <div class="card-content">
+                Email: <%= trade.receptor.email %> <br/>
+                Phone: <%= trade.receptor.phone %>
+              </div>
+            </div>
+          </div>
+          <% if (trade.receptor.item !== null) { %>
+          <div id="receptor-item" class="card">
+            <div class="card-contex">
+              <h4 class="card-header">Offer</h4>
+              <div class="card-content">
+                Brand: <%= trade.receptor.item.brand %> <br/>
+                Model: <%= trade.receptor.item.model %> <br/>
+                Category: <%= trade.receptor.item.category %> <br/>
+                Screen size: <%= trade.receptor.item.screenSize %>'' <br/>
+                Description<br/>
+                <%= trade.receptor.item.aditional %>
+              </div>
+            </div>
+          </div>
+          <% } %>
         </div>
       </div>
     </div>
   </div>
+  <div class="col-1"></div>
+  <% if (trade.review !== null) { %>
+  <div class="col-4"></div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-contex">
+        <h4 class="card-header">Review from <%= trade.receptor.name %></h4>
+        <div class="card-content">
+          Fullfillment offer: <%= trade.review.fullfillment_offer %> stars <br/>
+          Quallity offered: <%= trade.review.quality_offered %> stars <br/>
+          Puntuality: <%= trade.review.puntuality %> stars <br/>
+          <% if (trade.review.content !== '') { %>
+          <hr/>
+          Extra commentaries: <br/>
+          <%= trade.review.content %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
+  <% } %>
 </div>

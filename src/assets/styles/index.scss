@@ -1,8 +1,11 @@
 @import './fardust'; /* Base CSS style */
 @import './layout';
+@import './user-show';
 @import './hello';
 @import './card';
 @import './grid';
+@import './items';
+@import './publications';
 
 li {
   list-style-type: none;
@@ -43,11 +46,8 @@ p.slogan{
 .button{
   background-color: transparent;
   text-align: center;
-  font-size: 12px;
   font-weight: bold;
-  letter-spacing: 0.55px;
   line-height: 24px;
-  text-transform: uppercase;
   color: #db5449;
   fill: #db5449;
   border-width: 1px;
@@ -66,16 +66,17 @@ p.slogan{
 
 .button.primary{
   background-color: #db5449;
-  color: black;
-  fill: black;
-  border-color: #db5449
+  border-color: transparent;
+  text-align: center;
+  font-weight: bold;
+  line-height: 24px;
+  color: white;
+  border-radius: 4px;
+  padding: 3px 16px;
 }
 
 .button.primary:hover{
   background-color: #a32021;
-  color: white;
-  fill: white;
-  border-color: #a32021;
 }
 
 #main-buttons {
@@ -89,6 +90,19 @@ p.slogan{
 .container {
   padding: 10px;
   background: #ececec
+}
+
+.icon-container {
+  background: transparent;
+  border: none;
+}
+
+i {
+  color: black;
+}
+
+i:hover{
+  color: #3f3f3f;
 }
 
 @media screen and (max-width: 800px){

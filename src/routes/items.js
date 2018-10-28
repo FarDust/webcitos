@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const cloudStorage = require('../lib/cloud-storage');
 
 const router = new KoaRouter();
 
@@ -15,6 +16,7 @@ router.get('items', '/', async (ctx) => {
     return ctx.render('items/index', {
       items,
       // newItemPath: ctx.router.url('items-new'),
+      getItemImagePath: item => ctx.router.url('items-show-image', item.id),
       getShowPath: item => ctx.router.url('items-show', item.id),
       getEditPath: item => ctx.router.url('items-edit', item.id),
       getDestroyPath: item => ctx.router.url('items-destroy', item.id),
@@ -40,6 +42,14 @@ router.get('items-new', '/new/:pid', (ctx) => {
 
 router.post('items-create', '/', async (ctx) => {
   const new_item = await ctx.orm.item.create(ctx.request.body);
+  if (ctx.request.files.image.name) {
+    const { path: localImagePath, name: localImageName } = ctx.request.files.image;
+    const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'items/images', namePrefix: new_item.id });
+    await cloudStorage.upload(localImagePath, remoteImagePath);
+    await new_item.update({ image: remoteImagePath });
+  } else {
+    await new_item.update({ image: 'items/images/item-placeholder.png' });
+  }
   ctx.redirect(ctx.router.url('publications-show', new_item.publication_id));
 });
 
@@ -47,13 +57,22 @@ router.get('items-show', '/:id', (ctx) => {
   if (ctx.state.currentUser) {
     return ctx.render('items/show',
       {
-        name: 'item',
-        ignore: ['createdAt', 'updatedAt', 'id'],
-        state: JSON.parse(JSON.stringify(ctx.state.item)),
+        item: ctx.state.item,
+        getItemImagePath: item => ctx.router.url('items-show-image', item.id),
+        getPublicationPath: publication_id => ctx.router.url('publications-show', publication_id),
       });
   }
   ctx.flashMessage.notice = 'Please, log in to access these features';
   ctx.redirect('/');
+});
+
+router.get('items-show-image', '/:id/image', async (ctx) => {
+  const { image } = ctx.state.item;
+  if (/^https?:\/\//.test(image)) {
+    ctx.redirect(image);
+  } else {
+    ctx.body = cloudStorage.download(image);
+  }
 });
 
 router.get('items-edit', '/:id/edit', (ctx) => {
@@ -78,6 +97,12 @@ router.patch('items-update', '/:id', async (ctx) => {
       ctx.request.body,
       { fields: ['model', 'brand', 'aditional', 'state', 'category', 'screenSize', 'publication_id'] },
     );
+    if (ctx.request.files.image.name) {
+      const { path: localImagePath, name: localImageName } = ctx.request.files.image;
+      const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'items/images', namePrefix: item.id });
+      await cloudStorage.upload(localImagePath, remoteImagePath);
+      await item.update({ image: remoteImagePath });
+    }
     ctx.redirect(ctx.router.url('items-show', item.id));
   } catch (error) {
     if (!isValidationError(error)) throw error;

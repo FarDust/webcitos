@@ -12,6 +12,8 @@
   float: left;
   padding: 15px;
   /* border: 1px solid red;  Only for debug */
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: #2c3e50;
 }
 
 .col-{
@@ -50,7 +52,7 @@
 
 .col-7{
   @extend .col-;
-  width: 58,33%;
+  width: 58.33%;
 }
 
 .col-8{

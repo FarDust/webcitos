@@ -11,6 +11,7 @@ const assets = require('./assets');
 const mailer = require('./mailers');
 const routes = require('./routes');
 const orm = require('./models');
+const slick = require('react-slick');
 
 // App constructor
 const app = new Koa();

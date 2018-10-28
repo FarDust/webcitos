@@ -9,6 +9,7 @@
     <% } %>
     <link rel="stylesheet" href="<%= assetPath('fardust.css') %>">
     <link rel="icon" href="<%= assetPath('favicon.png') %>">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns" crossorigin="anonymous">
   </head>
 
   <body>
@@ -20,32 +21,31 @@
     </div>
     <!--topbar-->
     <ul class="topbar">
+      <!--topbar
       <li>
         <span id="side-open" onclick="openNav()">
           <img class="side-menu center" src="<%= assetPath('side.png') %>" >
         </span>
       </li>
+      -->
       <% if (locals.currentUser) { %>
-      <li><a href="/users/<%=currentUser.id%>">Profile</a></li>
-      <li><a href="/users/<%= currentUser.id %>/trades">Your trades</a></li>
-      <li><a href="/requests/actualUser %>">Your offers</a></li>
-      <li><a href="/users">Users</a></li>
       <li><a href="/publications">Publications</a></li>
       <li><a href="/items">Items</a></li>
-      <li><a href="/trades">Trades</a></li>
-      <li><a href="/reviews">Reviews</a></li>
       <li class="functional">
         <form class="form-button" action="<%= destroySessionPath %>" method="post">
           <input type="hidden" name="_method" value="delete" />
           <input type="submit" value="Log out" />
         </form>
       </li>
+      
       <li class="functional">
-        <form id="search" class="form-inline" action="<%=  %>" method="get">
-          <input type="text" id="query" name="query" placeholder="Search"/>
-          <input type="submit" value="" />
+        <form id="search" class="form-inline" action="<%= searchPath  %>" method="get">
+          <input type="text" id="query" name="query" placeholder="Publications... "/>
+          <button class="icon-container" type="submit"><i class="fas fa-search"></i></button>
         </form>
       </li>
+      <li class="functional"><a class="icon-container" title="Create a new publication" href="<%= newPublicationPath %>"><i class="far fa-clipboard"></i></a></li>
+      <li class="functional"><a href="/users/<%=currentUser.id%>">Profile</a></li>
       <% } else { %>
       <li class="functional"><a href="<%= newSessionPath %>">Sign in</a></li>
       <li class="functional"><a href="/users/new">Sign up</a></li>

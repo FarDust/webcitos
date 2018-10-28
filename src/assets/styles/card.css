@@ -1,13 +1,18 @@
 div.card{
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    color: #2c3e50;
     border: 1px;
     border-color: grey;
-    border-radius: 4px;
+    border-radius: 10px;
     padding: 6px;
     background-color: #e0e0e0;
     margin: 4px;
     z-index: -1;
     box-sizing: unset;
     width: 100%;
+    a {
+      text-decoration: none;
+    }
 }
 
 div.card .card-image{
@@ -18,27 +23,28 @@ div.card .card-image{
 }
 
 div.card .card-image.header{
-    width: 100%;
+    max-width: 100%;
     overflow: hidden;
-    max-height: 150px;
+    max-height: 200px;
     text-align: center;
 }
 
-div.card .card-contex{
+div.card .card-context{
+    border-radius: 10px;
     overflow: auto;
 }
 
-div.card-contex .card-header{
+div.card-context .card-header{
     text-overflow: clip;
     position: relative;
     top: 0px;
 }
 
-div.card-contex .card-content{
+div.card-context .card-content{
     text-overflow: clip;
 }
 
-div.card-contex .card-footer{
+div.card-context .card-footer{
     text-overflow: clip;
     position: relative;
     bottom: 0px;
@@ -54,7 +60,9 @@ div.card-contex .card-footer{
 }
 
 .card-footer span:hover{
+    text-decoration: none;
     color: #a32021;
+    text-decoration: none;
 }
 
 .card-footer ul{
@@ -71,10 +79,13 @@ div.card-contex .card-footer{
 .card-group .card{
     display: inline-block;
     height: 250px;
+    box-shadow: 3px 4px 8px 2px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255,255,255,0.8);
 }
 
 .card-group .card:hover{
-    background-color: #e9d4d2;
+    box-shadow: 8px 8px 16px 2px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
 }
 
 .card-group .card .card-image{
@@ -83,22 +94,22 @@ div.card-contex .card-footer{
 
 }
 
-.card-group .card .card-contex .card-header{
+.card-group .card .card-context .card-header{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 75%;
 }
 
-.card-group .card .card-contex .card-content{
+.card-group .card .card-context .card-content{
     height: 100px;
     text-overflow: ellipsis;
 }
 
 .card-group .card-footer ul{
     position: relative;
-    float: right; 
-    padding: 0px; 
+    float: right;
+    padding: 0px;
 }
 
 .card-footer ul li form.form-inline {

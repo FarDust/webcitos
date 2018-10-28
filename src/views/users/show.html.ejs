@@ -1,103 +1,383 @@
 <div class="row">
-  <div class="col-2"></div>
-  <div id="user-profile" class="col-4">
+    <div id="user-profile" class="col-5">
     <div class="card">
-      <img class="card-image header" src="<%= assetPath('avatar.svg') %>" alt="avatar">
+      <div class="card-header">
+        <% if (currentUser.id === user_id) { %>
+          <h2> Hi, <%=user.name%>!</h2>
+        <%} else {%>
+          <h2><%="Welcome to " + user.name + "'s profile!"%> </h2>
+        <%}%>
+      </div>
+      <img class="card-image header rounded" src="<%= getUserImagePath(user_id) %>" alt="avatar"/>
       <div class="card-context">
         <div class="card-content">
-            <%- include('../layouts/_show') %>
+          <div class="infotag">
+            <h2>Information</h2>
+          </div>
+          <div class="content">
+            <div class="infotag">
+              Rating:
+            </div>
+            <div class="infotag">
+              Phone: <%=state.phone%>
+            </div>
+            <div class="infotag">
+              E-Mail: <%=state.email%>
+            </div>
             <% if (currentUser.id == user_id){ %>
-            <button class="button primary" onclick="window.location.href='<%= userEditPath(currentUser.id) %>'">Edit my profile</button>
+            <button class="button-publi" onclick="window.location.href='<%= userEditPath(currentUser.id) %>'">Edit my profile</button>
             <% } %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div id="user-summary" class="col-4">
-    <h2>Summary</h2>
-    <div class="row content">
-      <div class="col-12">
-        <h3>Comments</h3>
-      </div>
-      <div class="col-12">
-        <span class="badge primary">#N</span> Unanswered questions
-      </div>
-      <div class="col-12">
-        <h3>Trades</h3>
-      </div>
-      <div class="col-12">
-        <span class="badge primary"><%= statics.exchange.active %></span> Active
-      </div>
-      <div class="col-12">
-        <span class="badge primary"><%= statics.exchange.ended %></span> Ended
-      </div>
-      <div class="col-12">
-          <h3>Gifts</h3>
-      </div>
-      <div class="col-12">
-        <span class="badge primary"><%= statics.gift.active %></span> Active
-      </div>
-      <div class="col-12">
-        <span class="badge primary"><%= statics.gift.ended %></span> Ended
+  <div id="right" class="col-7">
+
+    <div class="user-context">
+      <h1> Publications </h1>
+      <div class="content">
+
+
+        <div class="row card-group slider">
+
+          <% info['publications'].forEach(publication => { %>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-context">
+              <a href="<%-showPublicationPath(publication)%>">
+                <h4 class="card-header"><%= publication.title %></h4>
+                <div class="card-content">
+                    <%= publication.description %>
+                </div>
+                <div class="card-footer">
+                  <div class="row">
+                  <span>State:</span> <%= publication.state %>
+                  </div>
+              </a>
+                  <div class="row centered">
+
+                        <% if (state.id === currentUser.id) { %>
+                          <ul>
+                          <% if (publication.state !== 'pendent') { %>
+                            <li>
+                              <button class="button-publi" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
+                            </li>
+                            <%}%>
+                            <li>
+                              <form class="form-inline" action="<%= getDestroyPublicationPath(publication) %>" method="post">
+                                <input type="hidden" name="_method" value="delete" />
+                                <button  class="button-publi" type="submit">Delete</button>
+                              </form>
+                            </li>
+                          </ul>
+                        <% } %>
+
+                    </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <% }) %>
+            <div class="col-6">
+            <a href="<%=(currentUser.id==user_id)?newPublicationPath:''%>">
+              <div class="card">
+                <% if (currentUser.id !== user.id) {%>
+                  <div class="card-context empty centered-mid">
+                      <p style="font-size: 30px"> Nothing to show </p>
+                  <%} else {%>
+                  <div class="card-context empty centered">
+                    <p style="font-size: 30px" class="centered"> Create a Publication!</p>
+                    <i class="fas fa-plus fa-w-14 fa-3x"></i>
+                  <%}%>
+                </div>
+              </div>
+              </a>
+            </div>
+
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-2"></div>
-</div>
-<div class="row">
-  <div class="col-1"></div>
-  <div class="col-10">
-    <h1> Publications </h1>
-    <div class="content">
+    <% if (currentUser.id === user_id) {%>
 
-      <p>You have <%= publications.length %> publications.</p>
-      <% if (state.id === currentUser.id) { %>
-        <button class="button primary" onclick="window.location.href='<%=newPublicationPath%>'">Create a new publication</button>
-        <button class="button primary" onclick="window.location.href='<%-showMineRequestsPath%>'">See my offers</button>
-        <button class="button primary" onclick="window.location.href='<%-showMineTradesPath%>'">See my trades</button>
-      <% } %>
 
-      <div class="row card-group">
-        <% publications.forEach(publication => { %>
-        <div class="col-6">
-          <div class="card">
-            <div class="card-contex">
-              <h4 class="card-header"><%= publication.title %></h4>
-              <div class="card-content">
-                  <%= publication.description %>
+    <% if (info['inventory'].length > 0) { %>
+    <div class="user-context">
+      <h1>Inventory</h1>
+      <div class="content">
+        <div class="row card-group slider">
+          <% info['inventory'].forEach(inventorie => { %>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-context">
+              <a href="<%-showPublicationPath(inventorie)%>">
+                <h4 class="card-header"><%= inventorie.title %></h4>
+                <div class="card-content">
+                    <%= inventorie.description %>
+                </div>
+                <div class="card-footer">
+                    <div class="row centered">
+                        <p>
+                          <span>State:</span> <%= inventorie.state %>
+                        </p>
+                    </div>
+              </a>
+                    <div class="row centered">
+                        <% if (state.id === currentUser.id) { %>
+                          <ul>
+                            <li>
+                              <button class="button-publi" onclick="window.location.href='<%-showRequestsPath(inventorie)%>'"><%= inventorie.state=='gift' ? 'See petitions' : 'See offers' %></button>
+                            </li>
+                            <li>
+                              <form class="form-inline" action="<%= getDestroyPublicationPath(inventorie) %>" method="post">
+                                <input type="hidden" name="_method" value="delete" />
+                                <button  class="button-publi" type="submit">Delete</button>
+                              </form>
+                            </li>
+                          </ul>
+                        <% } %>
+                    </div>
+                </div>
               </div>
+
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    <%}%>
+
+    <div class="user-context">
+      <h1>All your Items</h1>
+      <div class="content">
+        <div class="row card-group slider">
+          <% info['items'].forEach(item => { %>
+            <div class="col-6">
+              <div class="card">
+              <a href="<%=getItemShowPath(item.id)%>">
+              <div class="card-context">
+              <img class="imgcard" id="img-display" src="<%= getItemImagePath(item.id) %>" alt="Photo of the item"/>
+                <div class="card-content">
+                <h4 class="centered"><%= item.model %></h4>
+                <p class="centered">
+                Brand: <%= item.brand %> <br/>
+                Current state: <%= item.state %> <br/>
+                Category: <%= item.category %>
+                </p>
+                </div>
+                </div>
+                </a>
+              </div>
+            </div>
+          <%});%>
+
+          <div class="col-6">
+          <a href="<%=(currentUser.id==user_id)?newPublicationPath:''%>">
+            <div class="card">
+              <% if (currentUser.id !== user.id) {%>
+                <div class="card-context empty centered-mid">
+                    <p style="font-size: 30px" > Nothing to show </p>
+                <%} else {%>
+                <div class="card-context empty centered">
+                  <p style="font-size: 30px" class="centered"> Create a Publication!</p>
+                  <i class="fas fa-plus fa-w-14 fa-3x"></i>
+                <%}%>
+              </div>
+            </div>
+            </a>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="user-context">
+      <h1>Last Offers</h1>
+      <div class="content">
+        <div class="row card-group slider">
+          <% info['offered_requests'].forEach(ureq => { %>
+            <% if (!ureq['pub_offered']) { %>
+              <div class="col-6">
+                <div class="card">
+                  <a href="<%=showUserPath(ureq['req_user'])%>">
+                    <h4 class="card-header"> Petition from <%=ureq['req_user'].name%></h4>
+                  </a>
+                  <a href="<%=showPublicationPath(ureq['pub_offered'])%>">
+                  <div class="card-content">
+                    <%= ureq['request'].message %>
+                  </div>
+                  </a>
+                </div>
+              </div>
+
+            <%} else if (ureq['pub_offered'] && ureq['pub_offered'].state!=='pendent') { %>
+          <div class="col-6">
+            <div class="card">
+              <a href="<%=showUserPath(ureq['req_user'])%>">
+              <h4 class="card-header">Offer from <%= ureq['req_user'].name %></h4>
+              </a>
+              <a href="<%=showPublicationPath(ureq['pub_offered'])%>">
+              <div class="card-content">
+                <%= ureq['request'].message %>
+              </div>
+              </a>
               <div class="card-footer">
+                <ul>
+                  <li>
+                    <form class= "form-inline" action="<%= postNewTradePath(ureq['request']) %>" method="get">
+                      <input type="hidden" name="id_request" value="<%=ureq['request'].id%>" />
+                      <input type="hidden" name="state" value="pendent" />
+                      <li><button class="button-publi" type="submit" formmethod="post">Accept offer</button></li>
+                    </form>
+                  </li>
+                  <li>
+                    <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
+                      <input type="hidden" name="_method" value="delete" />
+                      <button class="button-publi" type="submit">Delete</button>
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <%}%>
+          <%})%>
+
+          <div class="col-6">
+            <div class="card">
+              <div class="card-context empty centered-mid">
+                    <p style="font-size: 30px"> Nothing else to show </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="user-context">
+      <h1>Your Last Offers</h1>
+      <div class="content">
+      <button class="button-publi" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
+        <div class="row card-group slider">
+          <% info['mine_requests'].forEach(ureq => { %>
+          <div class="col-6">
+            <div class="card">
+              <a href="<%=showUserPath(ureq['user'])%>">
+                <div class="card-header">
+                  <h3>You said to <%=ureq['user'].name%></h3>
+                </div>
+              </a>
+              <a href="<%=showPublicationPath(ureq['publication'])%>">
+              <div class="card-content">
+                <p> <%=ureq['request'].message %> </p>
+                <% if (ureq['item']) { %>
+                <span>You offered</span> <%=ureq['item'].model %>
+                <% } %>
+              </div>
+              </a>
+                <div class="card-footer">
                 <div class="row">
-                  <div class="col-4">
-                      <p>
-                        <span>State:</span> <%= publication.state %>
-                      </p>
-                  </div>
-                  <div class="col-8">
-                      <% if (state.id === currentUser.id) { %>
-                        <ul>
-                          <li>
-                            <button class="button primary" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
-                          </li>
-                          <li>
-                            <button class="button" onclick="window.location.href='<%-showPublicationPath(publication)%>'">See publication</button>
-                          </li>
-                          <li>
-                            <form class="form-inline" action="<%= getDestroyPublicationPath(publication) %>" method="post">
-                              <input type="hidden" name="_method" value="delete" />
-                              <button  class="button primary" type="submit">Delete</button>
-                            </form>
-                          </li>
-                        </ul>
-                      <% } %>
-                  </div>
+                  <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button class="button-publi" type="submit">Delete</button>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
+          <%})%>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-context empty centered-mid">
+                    <p style="font-size: 30px"> Nothing else to show </p>
+              </div>
+            </div>
+          </div>
+
+
         </div>
-        <% }) %>
+        </div>
+
+        <div class="user-context">
+          <h1>Active Trades</h1>
+          <div class="content">
+          <button class="button-publi" onclick="window.location.href='<%-showMineTradesPath%>'">See all my trades</button>
+            <div class="row card-group slider">
+              <% info['trades'].forEach(trade => { %>
+                <% if (trade.state === 'pendent') {%>
+                <div class="col-6">
+                  <% if (trade.is_gift) {%>
+                    <a href="<%=ShowTradePath(trade)%>">
+                    <div class="card invisible-img-gift">
+                      <div class="card-header centered">
+                        <h4> <%=(trade.my_publication)?"Gift to "+trade.other_user.name:"Gift from "+trade.other_user.name%> </h4>
+                      </div>
+                      <div class="card-content mini-gift centered">
+                        <h3> <%=(trade.my_publication)?"What you're giving":"What you're receiving"%></h3>
+                        <p> <%=(trade.my_publication)?trade.my_publication.title:trade.other_publication.title%> </p>
+                      </div>
+                    </div>
+                    </a>
+                  <%} else {%>
+                    <a href="<%=ShowTradePath(trade)%>">
+                    <div class="card invisible-img-trade">
+                        <div class="card-header centered">
+                          <h3>Trade with <%=trade.other_user.name %></h3>
+                        </div>
+                        <div class="row card-content mini-trade">
+                          <div class="col-6 centered">
+                            <h4><%=(trade.my_publication)?'Offered':'What You Offered'%></h4>
+                            <p>
+                              <%=trade.item.model %>
+                            </p>
+                          </div>
+                        <% if (trade.my_publication) { %>
+                            <div class="col-6 centered">
+                                <h4> For your publication </h4>
+                                <p>
+                                <%=trade.my_publication.title %>
+                                </p>
+                            </div>
+                        <%} else {%>
+                            <div class="col-6 centered">
+                                <h4> For the publication </h4>
+                                <p>
+                                <%=trade.other_publication.title %>
+                                </p>
+                            </div>
+                          <%}%>
+                        </div>
+
+                    </div>
+                  <%}%>
+                </div>
+                </a>
+                <%};%>
+              <%});%>
+
+              <div class="col-6">
+                <div class="card">
+                  <div class="card-context empty centered-mid">
+                        <p style="font-size: 30px"> Nothing else to show</p>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+
   </div>
+  <%}%>
+
+
 </div>

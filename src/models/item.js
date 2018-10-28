@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     category: DataTypes.STRING,
     screenSize: DataTypes.FLOAT,
     publication_id: DataTypes.INTEGER,
+    image: DataTypes.STRING,
   }, {});
   item.associate = function (models) {
     // associations can be defined here

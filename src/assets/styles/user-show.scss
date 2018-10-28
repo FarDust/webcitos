@@ -1,0 +1,118 @@
+#user-profile {
+  display: flex;
+  height: auto;
+  position: fixed;
+  text-align: center;
+  justify-content: center;
+}
+
+#right {
+  float: right;
+}
+
+.infotag {
+  text-align: left;
+  padding: 5px;
+  font-weight: bold;
+}
+
+
+.slider {
+  display: flex;
+
+  /* allow for scrolling */
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /* make it smooth on iOS */
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-points-x: repeat(300px);
+  scroll-snap-type: mandatory;
+
+}
+.slider > div {
+  flex-shrink: 0;
+  width: 300px;
+  height: 300px;
+}
+
+.card-context #img-display {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  max-height: 50%;
+  max-width: 50%;
+}
+
+.rounded {
+  border-radius: 50%;
+}
+
+.centered {
+  text-align: center;
+}
+
+.centered-mid {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+.invisible-img-trade{
+  background-position: center;
+  background-repeat: no-repeat;
+  max-width: 100%;
+  max-height: 100%;
+  background-size: 60%;
+  background-image: url('../images/exchange_transparent.png');
+}
+.invisible-img-gift {
+  background-image: url('../images/gift_transparent.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 110%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.card-contex a {
+  text-decoration: none;
+}
+
+.empty {
+  background-color: #e0e0e0;
+  height: 100%;
+  width: 100%;
+}
+
+.fa-plus {
+  color: #2c3e50;
+}
+
+.mini-trade {
+  background-color: rgba(219, 84, 73, 0.6);
+  border-radius: 4px;
+  height: 60%;
+  max-width: 100%;
+  h4, h3 {
+    color: #FFF;
+  }
+  p {
+    color: #FFF;
+  }
+}
+
+.mini-gift {
+  background-color: rgba(219, 84, 73, 0.6);
+  border-radius: 4px;
+  padding: 2px;
+  height: 60%;
+  max-width: 100%;
+  h4, h3 {
+    color: #FFF;
+  }
+  p {
+    color: #FFF;
+  }
+}

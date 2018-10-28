@@ -43,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
     },
+    image: DataTypes.STRING,
   }, {});
   user.associate = function (models) {
     // associations can be defined here

@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const Sequelize = require('sequelize');
 const pkg = require('../../package.json');
 
 const router = new KoaRouter();

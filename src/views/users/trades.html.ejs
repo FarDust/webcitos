@@ -1,22 +1,27 @@
-<h1>All your trades</h1>
 
-<p>You have <%= trades.length %> trades.</p>
+
+<% if (trades.length == 0) { %>
+<p>You don't have any trades yet.</p>
+<% } %>
 
 <% if (trades.length > 0) { %>
-<% let i = -1 %>
-<div class="row">
+<div class="row" style="color: #2c3e50">
+  <h1>Trades history</h1>
   <% trades.forEach(trade => { %>
-  <% i += 1 %>
   <div class="col-3">
     <div class="card">
       <div class="card-context">
-          <h4 class="card-header"> Trade <%= trade.id %></h4>
+          <h4 class="card-header"> Trade for <%= trade.publication.title %></h4>
           <div class="card-content">
             Current state: <%= trade.state %> <br>
             <% if (trade.id_request !== null ) { %>
-              Assigned request: 
+              Assigned request:
               <a href="<%= requestsUrl + trade.id_request.toString() %>">
-                Request <%= trade.id_request %>
+                <% if (trade.receptor.item ) { %>
+                  <%= trade.receptor.item.model %>
+                <% } else { %>
+                  See request
+                <% } %>
               </a>
             <% } %>
           </div>
@@ -26,15 +31,15 @@
               See trade
             </button>
             <% let edit_string = '/edit' %>
-            <% if (trade.state == 'pendent') { %>
+            <% if (trade.state == 'pendent' && trade.receptor.id == currentUser.id) { %>
               <button class="button primary" onclick="window.location.href='<%= tradesUrl + trade.id.toString() + edit_string %>'">
                 Finish trade
               </button>
-            <% } else if (trade.state == 'concreted' && reviews[i]) {%>
-              <button class="button primary" onclick="window.location.href='<%= reviewsUrl + reviews[i].id.toString() %>'">
+            <% } else if (trade.state == 'concreted' && reviews[trade.id]) { %>
+              <button class="button primary" onclick="window.location.href='<%= tradesUrl + trade.id.toString() %>'">
                 See review
               </button>
-            <% } else if (trade.state == 'concreted' && own_requests_id.includes(trade.id_request)) {%>
+            <% } else if (trade.state == 'concreted' && trade.receptor.id === currentUser.id) { %>
                 <button class="button primary" onclick="window.location.href='<%= reviewNewUrl + trade.id.toString() %>'">
                   Add review
                 </button>

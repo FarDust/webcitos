@@ -1,1 +1,18 @@
-<%- include('../layouts/_show') %>
+<div class="products">
+	<div class="pcard_show">
+		<div class="box_show_1">
+		  <img class="imgcard_show" src="<%= getItemImagePath(item) %>" alt="Photo of the item"/>
+		</div>
+		<div class="box_show_2">
+		  <h1><%= item.model %></h1>
+		  <p id="features">
+		  	Brand: <%= item.brand %> <br>
+		  	Screen size: <%= item.screenSize %> inches <br>
+		  	Current state: <%= item.state %> <br>
+		  	Aditional: <%= item.aditional %> <br>
+		  	Category: <%= item.category %> <br>
+		  </p>
+		  <button class="button-publi" onclick="window.location.href='<%= getPublicationPath(item.publication_id) %>'">See publication</button>
+		</div>
+    </div>
+</div>

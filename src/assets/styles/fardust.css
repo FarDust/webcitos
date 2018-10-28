@@ -5,7 +5,7 @@ body {
   font-size: 100%;
   background-color: white;
   font-family: 'Roboto', sans-serif;
-  background-color: #d8d8d8;
+  background-color: #eeeeee;
 }
 
 /*info*/
@@ -139,6 +139,11 @@ input, select {
 
 .center input.form-centered{
   width: 100%;
+}
+
+#button-form {
+  color: white;
+  font-weight: bold;
 }
 
 input[type=hidden] {
