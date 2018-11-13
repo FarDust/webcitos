@@ -8,10 +8,7 @@ export default function Field(props) {
     onChange,
   } = props;
   return (
-    <label htmlFor={name}>
-      <span>{labelText}</span>
-      <input type="text" name={name} id={name} value={value} onChange={onChange} />
-    </label>
+      <input type="text" name={name} id="query" value={value} onChange={onChange} />
   );
 }
 

@@ -36,19 +36,17 @@ export default class SearchForm extends Component {
     const {
       search,
     } = this.state;
+    console.log(search);
     /* The form needs to call search url '/search/' with GET method */
     return (
-      <form action='/search/api' onSubmit={this.handleSubmit} className="single-form" method="GET" >
-        <p>Completa tus datos:</p>
+      <form className="form-inline" id="search" action='/search/api' onSubmit={this.handleSubmit} className="single-form" method="GET" >
         <Field name="query" labelText="Busqueda" value={search} onChange={this.handleSearchChange} />
-        <div className="actions">
-          <input type="submit" value="¡Buscar!" />
-        </div>
+        <button className="icon-container" type="submit"><i className="fas fa-search"></i></button>
       </form>
     );
   }
 }
 
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+// SearchForm.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+// };

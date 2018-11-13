@@ -1,28 +1,30 @@
-<div class="main" style="color: #2c3e50">
-  <div class="center">
-    <div>
+<div id="react-main" data-publications="<%= publications %>">
+  <div class="main" style="color: #2c3e50">
+    <div class="center">
+      <div>
+        <p class="slogan">
+          Get new stuff <br/>
+          With your old stuff!
+        </p>
+      </div>
+      <div id="logo" class="center">
+        <img src="<%= assetPath('logo.svg') %>">
+      </div>
+      <div id="main-buttons">
+      <% if (locals.currentUser) { %>
       <p class="slogan">
-        Get new stuff <br/>
-        With your old stuff!
+          Welcome back, <br/>
+          <%= currentUser.name %>
       </p>
-    </div>
-    <div id="logo" class="center">
-      <img src="<%= assetPath('logo.svg') %>">
-    </div>
-    <div id="main-buttons">
-    <% if (locals.currentUser) { %>
-    <p class="slogan">
-        Welcome back, <br/>
-        <%= currentUser.name %>
-    </p>
-      <form class="form-button-publi" action="<%= destroySessionPath %>" method="post" style="background-color: transparent">
-        <input type="hidden" name="_method" value="delete" />
-        <input type="submit" value="Log out" />
-      </form>
-    <% } else { %>
-        <button class="button primary" onclick="window.location.href='/users/new'">Sign Up</button>
-        <button class="button" onclick="window.location.href='<%= newSessionPath %>'">Sign In</button>
-    <% } %>
+        <form class="form-button-publi" action="<%= destroySessionPath %>" method="post" style="background-color: transparent">
+          <input type="hidden" name="_method" value="delete" />
+          <input type="submit" value="Log out" />
+        </form>
+      <% } else { %>
+          <button class="button primary" onclick="window.location.href='/users/new'">Sign Up</button>
+          <button class="button" onclick="window.location.href='<%= newSessionPath %>'">Sign In</button>
+      <% } %>
+      </div>
     </div>
   </div>
 </div>
