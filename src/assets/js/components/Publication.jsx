@@ -11,7 +11,7 @@ class Publication extends React.Component{
   render() {
     let publication = this.props.publication
     return (
-        <a className="box" style={{"textDecoration": "none"}} hrefLang={ getShowPath(publication) }>
+        <a className="box" style={{"textDecoration": "none"}} href={ getShowPath(publication) }>
           <h4>{publication.title}</h4>
           <img className="imgcard" src={ getItemImagePath(this.props.itemsIds[publication.id]) } alt="Photo of the item"/>
           <p style={{"textAlign": "justify"}}>{ publication.description }</p><br />
