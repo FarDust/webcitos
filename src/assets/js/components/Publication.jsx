@@ -43,7 +43,7 @@ class Publications extends React.Component {
     const publications = this.state.publications;
     return (
       <div className="products">
-        <SearchForm handleResponce={this.adquirePublications} ></SearchForm>
+        <SearchForm handleResponse={this.adquirePublications} ></SearchForm>
         <div className="pcard">
           {this.state.publications.map(publication => {
             return <Publication

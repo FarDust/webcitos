@@ -14,8 +14,8 @@ export default class SearchForm extends Component {
   }
 
   handleSearchChange(event) {
-    const name = event.target.value;
-    this.setState(name);
+    const search = event.target.value;
+    this.setState({search});
   }
 
   async handleSubmit(event) {
@@ -25,7 +25,7 @@ export default class SearchForm extends Component {
     this.setState({ submitted: true });
     const { onSubmit } = this.props;
     const { publications } = await onSubmit(search);
-    this.props.handleResponce(publications) /* This function is defined in Publication.jsx*/
+    this.props.handleResponse(publications) /* This function is defined in Publication.jsx*/
     this.setState({
       search: '',
       submitted: false,
@@ -36,7 +36,6 @@ export default class SearchForm extends Component {
     const {
       search,
     } = this.state;
-    console.log(search);
     /* The form needs to call search url '/search/' with GET method */
     return (
       <form className="form-inline" id="search" action='/search/api' onSubmit={this.handleSubmit} className="single-form" method="GET" >
