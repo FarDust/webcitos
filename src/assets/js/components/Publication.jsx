@@ -1,57 +1,55 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import SearchForm from './SearchForm';
+import {getShowPath, getItemImagePath} from './services.js';
 
-class Publication extends React.Component{ 
-  constructor() {
-    super();
+class Publication extends React.Component{
+  constructor(props) {
+    super(props);
   }
 
-  render() { 
+  render() {
     let publication = this.props.publication
     return (
-      <div>
-        <a className="box" hrefLang={ this.props.getShowPath(publication) } style="text-decoration:none;">
+        <a className="box" style={{"textDecoration": "none"}} hrefLang={ getShowPath(publication) }>
           <h4>{publication.title}</h4>
-          <img className="imgcard" src={ this.props.getItemImagePath(this.props.itemsIds[publication.id]) } alt="Photo of the item"/>
-          <p style="text-align: justify;">{ publication.description }</p><br />
-          <span style="font-weight: bold;">State:</span> { publication.state } <br />
-          <span style="font-weight: bold;">Added by:</span> { this.props.usersNames[publication.id] } <br />
+          <img className="imgcard" src={ getItemImagePath(this.props.itemsIds[publication.id]) } alt="Photo of the item"/>
+          <p style={{"textAlign": "justify"}}>{ publication.description }</p><br />
+          <span style={{"fontWeight": "bold"}}>State:</span> { publication.state } <br />
+          <span style={{"fontWeight": "bold"}}>Added by:</span> { this.props.usersNames[publication.id] } <br />
         </a>
-      </div>
     )
   }
 }
 
-class Publications extends React.Component { 
-  constructor(props) { 
+class Publications extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-      publications: {},
+      publications: props.publications,
     }
   }
 
-  adquirePublications(publications) { 
+  adquirePublications(publications) {
     this.setState({ publications });
   }
 
-  /* 
-  values userNames, getShowPath getItemPath itemsIds must be passed 
+  /*
+  values userNames, getShowPath getItemPath itemsIds must be passed
   at the initialize of the react component
   */
 
-  render() { 
+  render() {
+    const publications = this.state.publications;
     return (
-      <div>
+      <div className="products">
         <SearchForm handleResponce={this.adquirePublications} ></SearchForm>
         <div className="pcard">
-          {this.state.publications.map(publication => { 
+          {this.state.publications.map(publication => {
             return <Publication
               publication={publication}
-              usersNames={userNames}
-              getShowPath={getShowPath}
-              getItemImagePath={getItemImagePath}
-              itemsIds={itemsIds}
+              usersNames={this.props.userNames}
+              itemsIds={this.props.itemsIds}
             />
             }
           )}

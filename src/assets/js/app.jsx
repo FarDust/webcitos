@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
-import PublicationApp from './publicationsApp/publicationApp';
+import PublicationApp from './components/publicationApp';
 
 const reactAppContainer = document.getElementById('react-app');
 

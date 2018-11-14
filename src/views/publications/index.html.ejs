@@ -1,4 +1,4 @@
-<div id="Publications" class="products">
+<div id="react-main" data-publications="<%= JSON.stringify(publications) %>" data-userNames="<%=JSON.stringify(users_names)%>" data-itemsIds="<%=JSON.stringify(items_ids)%>">
     <div class="pcard">
         <% publications.forEach((publication) => { %>
           <a class="box" href="<%= getShowPath(publication) %>" style="text-decoration:none;">
