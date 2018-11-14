@@ -41,4 +41,20 @@ router.get('search', '/', async (ctx) => {
   });
 });
 
+router.get('search', '/api', async (ctx) => {
+  const search = ctx.request.query.query;
+  const publications = await ctx.orm.publication.findAll(
+    {
+      where: {
+        [Sequelize.Op.or]: [
+          { title: { [Sequelize.Op.iLike]: `%${search}%` } },
+          { description: { [Sequelize.Op.iLike]: `%${search}%` } },
+        ],
+      },
+    },
+  );
+  ctx.body = publications;
+});
+
+
 module.exports = router;
