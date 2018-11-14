@@ -5,44 +5,66 @@ import Field from './Field';
 export default class SearchForm extends Component {
   constructor(props) {
     super(props);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.getInfo = this.getInfo.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleEnterPress = this.handleEnterPress.bind(this);
+
     this.state = {
-      search: '',
+      query: '',
       submitted: false,
+      results: [],
+      publications: props.publications,
     };
   }
 
-  handleSearchChange(event) {
-    const name = event.target.value;
-    this.setState(name);
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault();
-    const { search } = this.state;
-
-    this.setState({ submitted: true });
-    const { onSubmit } = this.props;
-    const { publications } = await onSubmit(search);
-    this.props.handleResponce(publications) /* This function is defined in Publication.jsx*/
-    this.setState({
-      search: '',
-      submitted: false,
+  getInfo() {
+    const result = this.state.publications.filter(publication => {
+      if (publication.title.toLowerCase().includes(this.state.query.toLowerCase())) {
+        return publication;
+      }
     });
+
+    if (result.length === 0) {
+      alert('There are no publications that match your search :c');
+    } else {
+      this.state.results = result;
+      this.props.handleResponse(result);
+    }
   }
+
+  handleEnterPress (target) {
+    if (target.charCode === 13) {
+      this.handleInputChange();
+    }
+  }
+
+
+  handleInputChange () {
+
+    this.setState({
+      query: this.search.value
+    }, () => {
+      if (this.state.query && this.state.query.length > 0) {
+          this.getInfo();
+      }
+      else {
+        alert('You have to enter something! :o');
+      }
+    })
+  }
+
 
   render() {
-    const {
-      search,
-    } = this.state;
-    console.log(search);
-    /* The form needs to call search url '/search/' with GET method */
+
     return (
-      <form className="form-inline" id="search" action='/search/api' onSubmit={this.handleSubmit} className="single-form" method="GET" >
-        <Field name="query" labelText="Busqueda" value={search} onChange={this.handleSearchChange} />
-        <button className="icon-container" type="submit"><i className="fas fa-search"></i></button>
-      </form>
+      <div className="single-form" id="search"  >
+      <input
+        placeholder="Search for..."
+        ref={input => this.search = input}
+        onKeyPress={this.handleEnterPress}
+      />
+        <button className="icon-container" onClick={this.handleInputChange} ><i className="fas fa-search"></i></button>
+      </div>
     );
   }
 }

@@ -25,13 +25,14 @@ class Publication extends React.Component{
 class Publications extends React.Component {
   constructor(props) {
     super(props);
+    this.adquirePublications = this.adquirePublications.bind(this);
     this.state = {
       publications: props.publications,
     }
   }
 
   adquirePublications(publications) {
-    this.setState({ publications });
+    this.setState({publications: publications});
   }
 
   /*
@@ -43,7 +44,7 @@ class Publications extends React.Component {
     const publications = this.state.publications;
     return (
       <div className="products">
-        <SearchForm handleResponce={this.adquirePublications} ></SearchForm>
+        <SearchForm handleResponse={this.adquirePublications} publications={publications}></SearchForm>
         <div className="pcard">
           {this.state.publications.map(publication => {
             return <Publication
