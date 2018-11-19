@@ -2,6 +2,7 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 import SearchForm from './SearchForm';
 import {getShowPath, getItemImagePath} from './services.js';
+import ItemFilter from './ItemFilter';
 
 class Publication extends React.Component{
   constructor(props) {
@@ -28,11 +29,17 @@ class Publications extends React.Component {
     this.adquirePublications = this.adquirePublications.bind(this);
     this.state = {
       publications: props.publications,
+      all_new: props.publications,
     }
   }
 
   adquirePublications(publications) {
-    this.setState({publications: publications});
+    if (publications === 'clear') {
+      this.setState({publications: this.state.all_new})
+
+    } else {
+      this.setState({publications: publications});
+    }
   }
 
   /*
@@ -44,10 +51,13 @@ class Publications extends React.Component {
     const publications = this.state.publications;
     return (
       <div className="products">
-        <SearchForm handleResponse={this.adquirePublications} publications={publications}></SearchForm>
+        <SearchForm handleResponse={this.adquirePublications} publications={this.state.publications}></SearchForm>
         <div className="row">
-          <div className="col-2">
-          Aquí van los filtros
+          <div className="col-3">
+             <ItemFilter
+              publications={this.state.publications}
+              handleResponse={this.adquirePublications}
+            />
           </div>
           <div className="col-8 pcard">
             {this.state.publications.map(publication => {
