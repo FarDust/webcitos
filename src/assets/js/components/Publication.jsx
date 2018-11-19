@@ -45,15 +45,20 @@ class Publications extends React.Component {
     return (
       <div className="products">
         <SearchForm handleResponse={this.adquirePublications} publications={publications}></SearchForm>
-        <div className="pcard">
-          {this.state.publications.map(publication => {
-            return <Publication
-              publication={publication}
-              usersNames={this.props.userNames}
-              itemsIds={this.props.itemsIds}
-            />
-            }
-          )}
+        <div className="row">
+          <div className="col-2">
+          Aquí van los filtros
+          </div>
+          <div className="col-8 pcard">
+            {this.state.publications.map(publication => {
+              return <Publication
+                publication={publication}
+                usersNames={this.props.userNames}
+                itemsIds={this.props.itemsIds}
+              />
+              }
+            )}
+          </div>
         </div>
       </div>
     )
