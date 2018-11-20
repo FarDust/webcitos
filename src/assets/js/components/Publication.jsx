@@ -5,26 +5,6 @@ import {getShowPath, getItemImagePath} from './services.js';
 import ItemFilter from './ItemFilter';
 import ImageLoader from '../../images/loading.gif';
 
-// class Image extends React.Component{
-//   constructor(props) {
-//     super(props);
-//     this.handleLoad = this.handleLoad.bind(this);
-//     this.state = {
-//       loaded: false,
-//     }
-//   }
-//
-//   handleLoad(){
-//     this.setState({loaded: true})
-//   }
-//
-//   render() {
-//     return (
-//
-//     )
-//   }
-// }
-
 
 class Publication extends React.Component{
   constructor(props) {
@@ -82,6 +62,7 @@ class Publications extends React.Component {
   constructor(props) {
     super(props);
     this.adquirePublications = this.adquirePublications.bind(this);
+    this.clearForm = this.clearForm.bind(this);
     const publicationViews = {};
     props.publications.forEach(publication => {
        publicationViews[publication.id] = <Publication
@@ -101,10 +82,14 @@ class Publications extends React.Component {
   adquirePublications(publications) {
     if (publications === 'clear') {
       this.setState({publications: this.state.all_new,
-                    query: ''})
+                    query: '/empty/'})
     } else {
       this.setState({publications: publications});
     }
+  }
+
+  clearForm(){
+    this.setState({query: ''})
   }
 
   render() {
@@ -112,19 +97,24 @@ class Publications extends React.Component {
     return (
       <div className="products">
         <SearchForm
+          key={1}
           handleResponse={this.adquirePublications}
           publications={this.state.publications}
-          query={this.state.query} />
+          query={this.state.query}
+          clearForm={this.clearForm} />
         <div className="row">
           <div className="col-2">
              <ItemFilter
+              key={2}
               publications={this.state.publications}
               handleResponse={this.adquirePublications}
+              query={this.state.query}
             />
           </div>
           <div className="col-8 pcard">
-            {this.state.publications.map(publication => {
+            {this.state.publications.map((publication, index) => {
               return <Publication
+               key={index}
                publication={publication}
                usersNames={this.props.userNames}
                itemsIds={this.props.itemsIds}

@@ -17,18 +17,23 @@ export class CategoryFilter extends React.Component{
     this.handleOption = this.handleOption.bind(this);
     this.state = {
       items: props.items,
+      category: 'all',
     }
   }
 
   handleOption(event){
     this.props.handleResponse(event.target.value, 'category');
+    this.setState({category: event.target.value});
   }
 
   render() {
     const categories = getData(this.props.items, 'category');
+    if (this.props.query === '/empty/') {
+      this.setState({category: 'all'});
+    }
     return [
       <h3>Category:</h3>,
-      <select onChange={this.handleOption}>
+      <select key={0} value={this.state.category} onChange={this.handleOption}>
         <option key={-1} value={'all'}> All Categories </option>
         {categories.map((item, index) => {
           return <option key={index} value={item}> {item} </option>
@@ -45,19 +50,24 @@ export class BrandFilter extends React.Component{
     this.handleOption = this.handleOption.bind(this);
     this.state = {
       items: props.items,
+      brand: 'all',
     }
   }
 
   handleOption (event) {
     this.props.handleResponse(event.target.value, 'brand');
+    this.setState({brand: event.target.value})
   }
 
   render() {
     const categories = getData(this.props.items, 'brand');
+    if (this.props.query === '/empty/') {
+      this.setState({brand: 'all'});
+    }
     return [
       <h3> Brand: </h3>,
-      <select onChange={this.handleOption}>
-        <option key={-1} value={'all'}> All Brands </option>
+      <select value={this.state.brand} onChange={this.handleOption}>
+        <option key={-1} value={'all'} > All Brands </option>
         {categories.map((item, index) => {
           return <option key={index} value={item}> {item} </option>
         }

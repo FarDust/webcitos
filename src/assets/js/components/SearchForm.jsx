@@ -53,8 +53,12 @@ export default class SearchForm extends Component {
     })
   }
 
-
   render() {
+
+    if (this.props.query === '/empty/') {
+      this.search.value = '';
+      this.props.clearForm();
+    }
 
     return (
       <div className="single-form" id="search"  >
