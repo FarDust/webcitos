@@ -1,12 +1,31 @@
+<!--
 <div id="react-main" data-publications="<%= JSON.stringify(publications) %>" data-userNames="<%=JSON.stringify(users_names)%>" data-itemsIds="<%=JSON.stringify(items_ids)%>">
+-->
+<div class="products">
     <div class="pcard">
         <% publications.forEach((publication) => { %>
           <a class="box" href="<%= getShowPath(publication) %>">
-            <h4><%= publication.title %></h4>
+            <div class="header_card">
+              <div class="title_header">
+                <h4><%= publication.title %></h4>
+              </div>
+              <div>
+                <% if(publication.state == 'exchange') { %>
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/exchange.png" alt="State"/>
+                <% } else if (publication.state == 'gift') {%>
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
+                <% } else if (publication.state == 'pendent') { %>
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
+                <% } else { %>
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
+                <% } %>
+              </div>
+            </div>
             <img class="imgcard" src="<%= getItemImagePath(items_ids[publication.id]) %>" alt="Photo of the item"/>
-            <p><%= publication.description %></p><br>
-            <span>State:</span> <%= publication.state %> <br>
-            <span>Added by:</span> <%= users_names[publication.id] %> <br>
+            <p><%= publication.description %></p>
+            <p>
+              <span>Added by:</span> <%= users_names[publication.id] %> <br>
+            </p>
           </a>
           <% }) %>
     </div>
