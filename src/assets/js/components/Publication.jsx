@@ -62,10 +62,9 @@ class Publication extends React.Component{
 
   render() {
     let publication = this.props.publication
-    if (this.props.publication !== this.state.publication) {
+    if (publication !== this.state.publication) {
       this.handleChange();
     }
-
 
     return (
         <a className="box" style={{"textDecoration": "none"}} href={ getShowPath(publication) }>
