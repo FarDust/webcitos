@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader';
 import SearchForm from './SearchForm';
 import {getShowPath, getItemImagePath} from './services.js';
 import ItemFilter from './ItemFilter';
+import ImageLoader from '../../images/loading.gif';
 
 // class Image extends React.Component{
 //   constructor(props) {
@@ -28,27 +29,48 @@ import ItemFilter from './ItemFilter';
 class Publication extends React.Component{
   constructor(props) {
     super(props);
-    this.handleLoad = this.handleLoad.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    const myImage = new Image();
+    myImage.src = ImageLoader;
+
     this.state = {
       loaded: false,
+      real_image: myImage,
+      publication: props.publication,
     }
   }
 
-  handleLoad(){
-    this.setState(() => ({loaded: true}));
+  componentDidMount() {
+    const src_real = getItemImagePath(this.props.itemsIds[this.state.publication.id]);
+    const finalImage = new Image()
+    finalImage.onload = () => {
+      this.setState({real_image: finalImage})
+    }
+    finalImage.src = src_real;
+  }
+
+  handleChange(){
+    this.state.publication = this.props.publication;
+    this.state.real_image.src = ImageLoader;
+    const src_real = getItemImagePath(this.props.itemsIds[this.state.publication.id]);
+    const finalImage = new Image()
+    finalImage.onload = () => {
+      this.setState({real_image: finalImage})
+    }
+    finalImage.src = src_real;
   }
 
   render() {
     let publication = this.props.publication
-    const publicationImg = (<img className="imgcard" onLoad={this.handleLoad} src={ getItemImagePath(this.props.itemsIds[publication.id]) } alt="image not loaded :c"/>)
+    if (this.props.publication !== this.state.publication) {
+      this.handleChange();
+    }
+
 
     return (
         <a className="box" style={{"textDecoration": "none"}} href={ getShowPath(publication) }>
           <h4>{publication.title}</h4>
-          {!this.state.loaded ? (
-            <img className="imgcard" src={require("../../images/loading.gif")}/>
-          ) : null}
-          {publicationImg}
+          <img className="imgcard" src={this.state.real_image.src}/>
           <p style={{"textAlign": "justify"}}>{ publication.description }</p><br />
           <span style={{"fontWeight": "bold"}}>State:</span> { publication.state } <br />
           <span style={{"fontWeight": "bold"}}>Added by:</span> { this.props.usersNames[publication.id] } <br />
@@ -79,7 +101,8 @@ class Publications extends React.Component {
 
   adquirePublications(publications) {
     if (publications === 'clear') {
-      this.setState({publications: this.state.all_new})
+      this.setState({publications: this.state.all_new,
+                    query: ''})
     } else {
       this.setState({publications: publications});
     }
@@ -91,7 +114,8 @@ class Publications extends React.Component {
       <div className="products">
         <SearchForm
           handleResponse={this.adquirePublications}
-          publications={this.state.publications} />
+          publications={this.state.publications}
+          query={this.state.query} />
         <div className="row">
           <div className="col-2">
              <ItemFilter
@@ -101,7 +125,11 @@ class Publications extends React.Component {
           </div>
           <div className="col-8 pcard">
             {this.state.publications.map(publication => {
-              return this.state.publicationViews[publication.id]
+              return <Publication
+               publication={publication}
+               usersNames={this.props.userNames}
+               itemsIds={this.props.itemsIds}
+             />
               }
             )}
           </div>
