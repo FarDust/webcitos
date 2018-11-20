@@ -25,7 +25,7 @@ export class CategoryFilter extends React.Component{
   }
 
   render() {
-    const categories = getData(this.state.items, 'category');
+    const categories = getData(this.props.items, 'category');
     return [
       <h3>Category:</h3>,
       <select onChange={this.handleOption}>
@@ -52,7 +52,7 @@ export class BrandFilter extends React.Component{
   }
 
   render() {
-    const categories = getData(this.state.items, 'brand');
+    const categories = getData(this.props.items, 'brand');
     return [
       <h3> Brand: </h3>,
       <select onChange={this.handleOption}>

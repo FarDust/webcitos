@@ -22,7 +22,7 @@ export default class ItemFilter extends React.Component{
   }
 
   handleSelection(selector, category) {
-    const new_publications = this.state.publications.filter(pub => {
+    const new_publications = this.props.publications.filter(pub => {
       return pub.item[category] === selector
     });
     this.props.handleResponse(new_publications);
@@ -34,7 +34,7 @@ export default class ItemFilter extends React.Component{
 
 
   render() {
-    const items = this.getItems(this.state.publications);
+    const items = this.getItems(this.props.publications);
     return [
         <h2> Filter by: </h2>,
           // <ScreenFilter
@@ -49,7 +49,9 @@ export default class ItemFilter extends React.Component{
           handleResponse={this.handleSelection}
           items={items}
         />,
-        <button onClick={this.handleClear}> Clear All! </button>
+        <div>
+          <button onClick={this.handleClear}> Clear All! </button>
+        </div>
     ]
   }
 
