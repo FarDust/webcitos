@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
 import PublicationApp from './components/publicationApp';
+import PublicationForm from './components/PublicationForm';
 
-const reactAppContainer = document.getElementById('react-app');
+const PublicationFormContainer = document.getElementById('PublicationForm');
 
-if (reactAppContainer) {
-  ReactDOM.render(<App />, reactAppContainer);
+if (PublicationFormContainer) { 
+  ReactDOM.render(<PublicationForm
+    googleApiLink={PublicationFormContainer.getAttribute('data-googleApiLink')}
+    submitPath={PublicationFormContainer.getAttribute('data-submitPath')}
+  />, PublicationFormContainer);
 }
 
 const reactPublicationSearch = document.getElementById('react-main');
