@@ -57,22 +57,15 @@ router.get('search-api', '/api', async (ctx) => {
   ctx.body = publications;
 });
 
-router.get('search-vision', '/test', async (ctx) => {
+router.post('search-vision', '/test', async (ctx) => {
   const client = new vision.ImageAnnotatorClient({
     keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   });
-  client
-  .labelDetection('https://target.scene7.com/is/image/Target/GUEST_869df002-c5e0-4b9f-9636-56332268c6cf?wid=488&hei=488&fmt=pjpeg')
-  .then(results => {
-    const labels = results[0].labelAnnotations;
-
-    console.log('Labels:');
-    labels.forEach(label => console.log(label.description));
-    ctx.body = labels;
-  })
-  .catch(err => {
-    console.error('ERROR:', err);
-    });
+  let dataUriToBuffer = require('data-uri-to-buffer');
+  decoded = dataUriToBuffer(ctx.request.body.image);
+  const results = await client.labelDetection(decoded);
+  console.log(results[0].labelAnnotations);
+  ctx.body = results[0].labelAnnotations;
 })
 
 module.exports = router;
