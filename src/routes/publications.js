@@ -16,7 +16,6 @@ router.param('id', async (id, ctx, next) => {
 });
 
 router.get('publications', '/', async (ctx) => {
-  if (ctx.state.currentUser) {
     const publications = await ctx.orm.publication.findAll();
     let users_names = {};
     let items_ids = {};
@@ -27,6 +26,7 @@ router.get('publications', '/', async (ctx) => {
     await forEach(publications, async (pub) => {
       const item = await pub.getItem();
       items_ids[pub.id] = item.id;
+      pub.dataValues['item'] = item;
     });
     return ctx.render('publications/index', {
       publications,
@@ -38,9 +38,7 @@ router.get('publications', '/', async (ctx) => {
       getEditPath: publication => ctx.router.url('publications-edit', publication.id),
       getDestroyPath: publication => ctx.router.url('publications-destroy', publication.id),
     });
-  }
-  ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');
+
 });
 
 router.get('publications-new', '/new', (ctx) => {
