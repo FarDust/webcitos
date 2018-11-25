@@ -47,12 +47,28 @@ class Publication extends React.Component{
     }
 
     return (
-        <a className="box" style={{"textDecoration": "none"}} href={ getShowPath(publication) }>
-          <h4>{publication.title}</h4>
-          <img className="imgcard" src={this.state.real_image.src}/>
-          <p style={{"textAlign": "justify"}}>{ publication.description }</p><br />
-          <span style={{"fontWeight": "bold"}}>State:</span> { publication.state } <br />
-          <span style={{"fontWeight": "bold"}}>Added by:</span> { this.props.usersNames[publication.id] } <br />
+        <a className="box" href={ getShowPath(publication) }>
+          <div class="header_card">
+            <div class="title_header">
+              <h4>{publication.title}</h4>
+            </div>
+            <div>
+              { if(publication.state == 'exchange') { }
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/exchange.png" alt="State"/>
+              { } else if (publication.state == 'gift') { }
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
+              { } else if (publication.state == 'pendent'){ }
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
+              { } else { }
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
+              { } }
+            </div>
+          </div>
+          <img style={{"textAlign": "center"}} className="imgcard" src={this.state.real_image.src}/>
+          <p>{ publication.description }</p>
+          <p>
+            <span>Added by:</span> { this.props.usersNames[publication.id] } <br />
+          </p>
         </a>
     )
   }
