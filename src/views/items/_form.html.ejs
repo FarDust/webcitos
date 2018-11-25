@@ -1,10 +1,10 @@
 <form class="crud" action="<%= submitPath %>" method="post" enctype="multipart/form-data">
-    <% if (!item.isNewRecord) { %>
-      <input type="hidden" name="_method" value="patch" />
-    <% } %>
+  <% if (!item.isNewRecord) { %>
+    <input type="hidden" name="_method" value="patch" />
+  <% } %>
   <div class="center">
     <label for=model>
-      <span>Model</span>
+      <span>Model of the item</span>
       <input class="form-centered" type="text" name="model" id="model" value="<%= item.model %>" />
     </label>
   </div>
@@ -15,39 +15,45 @@
     </label>
   </div>
   <div class="center">
-    <label for="aditional">
-      <span>Aditional Information</span>
-      <input class="form-centered" type="text" name="aditional" id="aditional" value="<%= item.aditional %>"/>
-    </label>
-  </div>
-  <div class="center">
-    <label for="state">
-      <span>State</span>
-      <input class="form-centered" type="text" name="state" id="state" value="<%= item.state %>"/>
+    <label for="screenSize">
+      <span>Screen size (inches)</span>
+      <input class="form-centered" type="number" step="0.1" name="screenSize" id="screenSize" value="<%= item.screenSize %>"/>
     </label>
   </div>
   <div class="center">
     <label for="category">
-      <span>Category</span>
-      <input class="form-centered" type="text" name="category" id="category" value="<%= item.category %>"/>
+      <span>Choose a category for your item</span>
+      <select class="form-centered" name="category" id="category" value="<%= item.category %>">
+        <option value="Cellphone">Cellphone</option>
+        <option value="Smartwatch">Smartwatch</option>
+        <option value="Video Game Console">Video Game Console</option>
+        <option value="Music Player">Music Player</option>
+        <option value="Gadget">Gadget</option>
+      </select>
     </label>
   </div>
   <div class="center">
-    <label for="screenSize">
-      <span>Screen Size (inches)</span>
-      <input class="form-centered" type="number" step="0.1" name="screenSize" id="screenSize" value="<%= item.screenSize %>"/>
+    <label for="state">
+      <span>In what state is your item?</span>
+      <input class="form-centered" type="text" name="state" id="state" value="<%= item.state %>"/>
     </label>
-    </div>
-    <div class="center">
+  </div>
+  <div class="center">
+    <label for="aditional">
+      <span>Is there any other information you may want to add about it?</span>
+      <input class="form-centered" type="text" name="aditional" id="aditional" value="<%= item.aditional %>"/>
+    </label>
+  </div>
+  <div class="center">
     <label for="image">
-       <span>Image</span>
-       <input type="file" name="image" id="image" value="<%= item.image %>" />
-     </label>
-    </div>
-    <% if (item.isNewRecord) { %>
-      <input type="hidden" name="publication_id" id="publication_id" value="<%=publication_id %>"/>
-    <% } %>
-    <div class="actions center">
-      <input class="form-centered" id="button-form" type="submit" value="<%= item.isNewRecord ? 'Create' : 'Edit' %>" />
-    </div>
-  </form>
+      <span>Post an image of your item for people to see it</span>
+      <input type="file" name="image" id="image" value="<%= item.image %>" />
+    </label>
+  </div>
+  <% if (item.isNewRecord) { %>
+    <input type="hidden" name="publication_id" id="publication_id" value="<%=publication_id %>"/>
+  <% } %>
+  <div class="actions center">
+    <input class="form-centered" id="button-form" type="submit" value="<%= item.isNewRecord ? 'Create item' : 'Edit item' %>" />
+  </div>
+</form>

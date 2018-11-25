@@ -1,4 +1,4 @@
-  <form class="crud" action="<%= submitPath %>" method="post">
+  <form class="crud" action="<%= submitPath %>" method="post" enctype="multipart/form-data">
       <% if (locals.errors) { %>
         <p class="errors">You must correct the following errors to continue:</p>
         <ul>
@@ -12,7 +12,7 @@
       <% } %>
     <div class="center">
       <label for="title">
-        <span>Title</span>
+        <span>Add a descriptive title to your post</span>
         <input class="form-centered" type="text" name="title" id="title" value="<%= publication.title %>" />
         <% if (locals.errors && errors.name) { %>
          <span class="error"><%= errors.title.message %></span>
@@ -21,7 +21,7 @@
     </div>
     <div class="center">
       <label for="description">
-        <span>Description</span>
+        <span>What is this post about?</span>
          <input class="form-centered" type="text" name="description" id="description" value="<%= publication.description %>" />
          <% if (locals.errors && errors.description) { %>
          <span class="error"><%= errors.description.message %></span>
@@ -30,7 +30,7 @@
     </div>
     <div class="center">
       <label for="state">
-        <span>State</span> <br/>
+        <span>Do you want to exchange it for something else or gift it?</span> <br/>
         <select class="form-centered" name="state" id="state" value="<%= publication.state %>">
           <option value="exchange">Exchange</option>
           <option value="gift">Gift</option>
@@ -39,8 +39,9 @@
     </div>
     <% if (publication.isNewRecord) { %>
           <input class="form-centered" type="hidden" name="userID" id="userID" value="<%= currentUser.id %>"/>
+          <%- include('_form_item') %>
     <% } %>
       <div class="actions center">
-        <input class="form-centered" id="button-form" type="submit" value="<%= publication.isNewRecord ? 'Create' : 'Edit' %>" />
+        <input class="form-centered" id="button-form" type="submit" value="<%= publication.isNewRecord ? 'Create publication' : 'Edit publication' %>" />
       </div>
   </form>

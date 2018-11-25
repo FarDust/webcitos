@@ -36,7 +36,7 @@ class PublicationForm extends Component {
     console.log(labeled_with);
     if (this.state.image !== '' && labeled_with.includes('electronic device')) {
       return (
-        <div className="center">
+        <div>
           <img src={this.state.image} alt="pre-uploaded" />
           <button onClick={this.removeImage}>Clean Image</button>
           <form className="crud" action={this.props.submitPath} method="post">
@@ -67,7 +67,7 @@ class PublicationForm extends Component {
       )
     } else {
       return (
-        <div className="center">
+        <div>
           <span>Image</span><br/>
           <input type="file" name="image" id="image" onChange={this.handleImage} />
           <img src={this.state.image} alt="" />

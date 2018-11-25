@@ -10,7 +10,9 @@
       Phone: <%=user.phone%> <br>
       E-mail: <%=user.email%> <br> <br>
       <% if (publication.userID === currentUser.id) { %>
-        <button class="button-publi" onclick="window.location.href='<%= editPublicationPath(publication) %>'">Edit publication</button>
+        <form class="form-button-publi" action="<%=editPublicationPath(publication)%>">
+          <input type="submit" value="Edit publication" />
+        </form>
       <% } else if (publication.state == 'gift' || publication.state == 'exchange'){ %>
         <form class="form-button-publi" action="<%=createRequestPath(publication)%>">
           <input type="submit" value="Create a new offer" />

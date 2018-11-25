@@ -2,6 +2,7 @@ const KoaRouter = require('koa-router');
 const { forEach } = require('p-iteration');
 const Sequelize = require('sequelize');
 const { getTradeInfo } = require('./general_info');
+const cloudStorage = require('../lib/cloud-storage');
 
 
 const router = new KoaRouter();
@@ -47,6 +48,7 @@ router.get('publications-new', '/new', (ctx) => {
     return ctx.render('publications/new',
       {
         publication: ctx.orm.publication.build(),
+        item: ctx.orm.item.build(),
         submitPath: ctx.router.url('publications-create'),
       });
   }
@@ -55,14 +57,51 @@ router.get('publications-new', '/new', (ctx) => {
 });
 
 router.post('publications-create', '/', async (ctx) => {
-  const publication = ctx.orm.publication.build(ctx.request.body);
+  const publication = ctx.orm.publication.build({
+    title: ctx.request.body.title,
+    description: ctx.request.body.description,
+    state: ctx.request.body.state,
+    userID: ctx.request.body.userID,
+  });
   try {
-    await publication.save(ctx.request.body);
-    ctx.redirect(ctx.router.url('items-new', { pid: publication.id }));
+    await publication.save({
+      title: ctx.request.body.title,
+      description: ctx.request.body.description,
+      state: ctx.request.body.state,
+      userID: ctx.request.body.userID,
+    });
+    const item = ctx.orm.item.build({
+      model: ctx.request.body.model,
+      brand: ctx.request.body.brand,
+      screenSize: ctx.request.body.screenSize,
+      category: ctx.request.body.category,
+      state: ctx.request.body.item_state,
+      aditional: ctx.request.body.aditional,
+      publication_id: publication.id,
+    });
+    await item.save({
+      model: ctx.request.body.model,
+      brand: ctx.request.body.brand,
+      screenSize: ctx.request.body.screenSize,
+      category: ctx.request.body.category,
+      state: ctx.request.body.item_state,
+      aditional: ctx.request.body.aditional,
+      publication_id: publication.id,
+    });
+    if (ctx.request.files.image.name) {
+      const { path: localImagePath, name: localImageName } = ctx.request.files.image;
+      const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'items/images', namePrefix: item.id });
+      await cloudStorage.upload(localImagePath, remoteImagePath);
+      await item.update({ image: remoteImagePath });
+    } else {
+      await item.update({ image: 'items/images/item-placeholder.png' });
+    }
+    ctx.redirect(ctx.router.url('publications-show', item.publication_id));
   } catch (error) {
     if (!isValidationError(error)) throw error;
     await ctx.render('publications/new', {
       publication,
+      item,
       errors: getFirstErrors(error),
       submitPath: ctx.router.url('publications-create'),
     });
