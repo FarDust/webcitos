@@ -62,10 +62,19 @@ router.post('search-vision', '/test', async (ctx) => {
     keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
   });
   let dataUriToBuffer = require('data-uri-to-buffer');
-  decoded = dataUriToBuffer(ctx.request.body.image);
+  const decoded = dataUriToBuffer(ctx.request.body.image);
   const results = await client.labelDetection(decoded);
-  console.log(results[0].labelAnnotations);
-  ctx.body = results[0].labelAnnotations;
+  const webResults = await client.webDetection(decoded);
+  const logoResults = await client.logoDetection(decoded);
+  ctx.body = {
+    labels: results[0].labelAnnotations,
+  };
+  if (webResults[0].webDetection.webEntities.length) {
+    ctx.body.webDetection = webResults[0].webDetection.webEntities[0];
+  }
+  if (logoResults[0].logoAnnotations.length) {
+    ctx.body.logoDetection = logoResults[0].logoAnnotations[0];
+  }
 })
 
 module.exports = router;

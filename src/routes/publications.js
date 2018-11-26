@@ -61,14 +61,14 @@ router.post('publications-create', '/', async (ctx) => {
     title: ctx.request.body.title,
     description: ctx.request.body.description,
     state: ctx.request.body.state,
-    userID: ctx.request.body.userID,
+    userID: ctx.state.currentUser.id,
   });
   try {
     await publication.save({
       title: ctx.request.body.title,
       description: ctx.request.body.description,
       state: ctx.request.body.state,
-      userID: ctx.request.body.userID,
+      userID: ctx.state.currentUser.id,
     });
     const item = ctx.orm.item.build({
       model: ctx.request.body.model,
