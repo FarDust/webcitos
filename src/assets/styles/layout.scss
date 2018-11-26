@@ -1,6 +1,5 @@
 .form-button{
   /* CSS code for topbar form */
-  background-color: transparent;
   padding: 0px;
   align-items: unset;
 }
@@ -9,16 +8,18 @@
   padding: 14px 16px;
   width: 100%;
   margin: 0px;
-  text-transform: capitalize;
+  background-color: white;
+  font-family: 'Roboto', sans-serif;
+  color: #2c3e50;
+  font-weight: bold;
+  font-size: 100%;
 }
 
 ul li .form-button input[type=submit]:hover{
   padding: 14px 16px;
   width: unset;
   margin: 0px;
-  text-transform: capitalize;
-  background-color: #ff8575;
-  color: black;
+  border-bottom: 2px solid #db5449; 
 }
 
 ul li.functional{
@@ -83,5 +84,5 @@ ul li .form-inline{
 }
 
 .logo-navbar a.logo-a:hover:not(.active) {
-  background-color: transparent;
+  border-bottom: 0px solid white; 
 }

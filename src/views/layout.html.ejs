@@ -22,6 +22,8 @@
     -->
     <!--topbar-->
     <ul class="topbar">
+      <li class="logo-navbar"><a class="logo-a" href="/" title="TradeAway App"></a></li>
+      <li><a href="/publications">Publications</a></li>
       <% if (locals.currentUser) { %>
         <!--searh-bar
         <li id="react-search">
@@ -31,9 +33,8 @@
           </form>
         </li>
         -->
-      <li class="logo-navbar"><a class="logo-a" href="/" title="TradeAway App"></a></li>
-      <li><a href="/publications">Publications</a></li>
       <li><a href="/items">Items</a></li>
+
       <li class="functional">
         <form class="form-button" action="<%= destroySessionPath %>" method="post">
           <input type="hidden" name="_method" value="delete" />
@@ -41,7 +42,7 @@
         </form>
       </li>
 
-      <li class="functional"><a class="icon-container" title="Create a new publication" href="<%= newPublicationPath %>"><i class="far fa-clipboard"></i></a></li>
+      <li class="functional"><a href="<%= newPublicationPath %>"> New publication </a></li>
       <li class="functional"><a href="/users/<%=currentUser.id%>">Profile</a></li>
       <% } else { %>
       <li class="functional"><a href="<%= newSessionPath %>">Sign in</a></li>

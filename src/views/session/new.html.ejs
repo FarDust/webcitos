@@ -2,39 +2,25 @@
   <div class="error"><%= error %></div>
 <% } %>
 
-<div class="row">
-  <div class="col-2"></div>
+<div class="col-2"></div>
   <div class="col-8">
-    <div class="card">
-      <div class="card-context">
-          <h1 class="card-header center">Welcome Back!</h1>
-          <div class="card-content">
-            <form class="center" action="<%= submitPath %>" method="post">
-              <input type="hidden" name="_method" value="put" />
-              <label for="email">
-                <span>E-mail</span><br/>
-                <input class="form-centered" type="email" name="email" id="email" value="<%= locals.email %>" />
-              </label> <br/>
-              <label for="password">
-                <span>Password</span><br/>
-                <input class="form-centered" type="password" name="password" id="password" />
-              </label>
-              <div class="actions">
-                <input class="form-centered" type="submit" value="Sign in" />
-              </div>
-            </form>
+      <div class="row">
+        <h2><p class="center">Welcome back!</p></h2>
+        <form class="center" action="<%= submitPath %>" method="post">
+          <input type="hidden" name="_method" value="put" />
+          <label for="email">
+            <span>E-mail</span><br/>
+            <input class="form-centered" type="email" name="email" id="email" value="<%= locals.email %>" />
+          </label> <br/>
+          <label for="password">
+            <span>Password</span><br/>
+            <input class="form-centered" type="password" name="password" id="password" />
+          </label>
+          <div class="actions">
+            <input class="form-centered" id="button-form" type="submit" value="Sign in" />
           </div>
-          <div class="card-footer">
-            <div class="row">
-              <div class="col-2"></div>
-              <div id="logo" class="col-8">
-                <p>New here? <a href="/users/new">Sign Up</a></p>
-              </div>
-              <div class="col-2"></div>
-            </div>
-          </div>
+        </form>
+        <p class="center">New here? <a href="/users/new">Sign Up</a></p>
       </div>
-    </div>
   </div>
-  <div class="col-2"></div>
-</div>
+<div class="col-2"></div>
