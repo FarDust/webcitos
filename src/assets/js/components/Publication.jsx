@@ -53,15 +53,18 @@ class Publication extends React.Component{
               <h4>{publication.title}</h4>
             </div>
             <div>
-              { if(publication.state == 'exchange') { }
+              { publication.state === 'exchange' && (
                 <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/exchange.png" alt="State"/>
-              { } else if (publication.state == 'gift') { }
+              )}
+              { publication.state === 'gift' && (
                 <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
-              { } else if (publication.state == 'pendent'){ }
-                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
-              { } else { }
-                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
-              { } }
+              )}
+              { publication.state === 'pendent' && (
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/sand-clock.png" alt="State"/>
+              )}
+              { publication.state === 'inventory' && (
+                <img class="stateimg" src="https://storage.googleapis.com/webcitos_images/box.png" alt="State"/>
+              )}
             </div>
           </div>
           <img style={{"textAlign": "center"}} className="imgcard" src={this.state.real_image.src}/>
