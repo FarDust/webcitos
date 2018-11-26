@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  margin-top: 120px;
+  margin-top: 64px;
   padding: 0px;
   font-size: 100%;
   background-color: white;
@@ -87,7 +87,7 @@ iframe{
 /* Menu */
 ul.topbar {
     list-style-type: none;
-    margin-top: 56px;
+    margin-top: 0px;
     padding: 0;
     overflow: hidden;
     background-color: #db5449;

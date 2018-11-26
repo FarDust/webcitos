@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="utf-8">
-    <title>IIC2513 - TradeAway</title>
+    <title>TradeAway</title>
     <% if (env !== 'development') { %>
       <link rel="stylesheet" href="<%= assetPath('app.css') %>">
     <% } %>
@@ -13,28 +13,25 @@
   </head>
 
   <body>
-    <!--logo-->
+    <!--logo
     <div class="logo-container top" id="home">
       <a href="/" class="logo">
         Trade<span class="Music">Away</span>
       </a>
     </div>
+    -->
     <!--topbar-->
     <ul class="topbar">
-      <!--topbar
-      <li>
-        <span id="side-open" onclick="openNav()">
-          <img class="side-menu center" src="<%= assetPath('side.png') %>" >
-        </span>
-      </li>
-      -->
       <% if (locals.currentUser) { %>
+        <!--searh-bar
         <li id="react-search">
           <form id="search" class="form-inline" action="<%= searchPath  %>" method="get">
             <input type="text" id="query" name="query" placeholder="Publications... "/>
             <button class="icon-container" type="submit"><i class="fas fa-search"></i></button>
           </form>
         </li>
+        -->
+      <li class="logo-navbar"><a class="logo-a" href="/" title="TradeAway App"></a></li>
       <li><a href="/publications">Publications</a></li>
       <li><a href="/items">Items</a></li>
       <li class="functional">
