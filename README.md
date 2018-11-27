@@ -75,3 +75,55 @@ Found us [here!](https://webcitos.herokuapp.com)
   ```
 
   Now go to http://localhost:3000 and start browsing :)
+
+## Rutas
+
+### INDEX
+* GET ```/``` : Ruta principal
+
+### USUARIOS
+* GET ```/users/``` : Lista todos los usuarios (no usado)
+* GET ```/users/new``` : Crea un nuevo modelo de usuario
+* GET ```/users/:id/edit``` : Permite la edición de un usuario
+* GET ```/users/:id``` : Obtiene la información de un usuario
+* POST ```/users/``` : Crea un nuevo usuario
+* PATCH ```/users/:id``` : Modifica un usuario existente
+
+## API
+
+La aplicación ofrece diversas funcionalidades a través de una API. Las funcionalidades son las siguientes:
+
+### PUBLICACIONES:
+
+#### Descripción: Mostrar todas las publicaciones.
+* Ruta: ```/api/publications```
+* Método: GET
+* Parámetros: -
+* Respuesta: Se retorna un json con todas las publicaciones, mostrando los detalles más básicos.
+
+#### Descripción: Mostrar una publicación.
+* Ruta: ```/api/publications/:id```
+* Método: GET
+* Parámetros: -
+* Respuesta: Se retorna un json con información detallada sobre una publicación en particular.
+
+
+### ITEMS:
+
+#### Descripción: Mostrar todos los items.
+* Ruta: ```/api/items```
+* Método: GET
+* Parámetros: -
+* Respuesta: Se retorna un json con información básica sobre todos los items.
+
+#### Descripción: Mostrar un item.
+* Ruta: ```/api/items/:id```
+* Método: GET
+* Parámetros: -
+* Respuesta: Se retorna un json con información detallada sobre un item en particular.
+
+## Diagrama ER
+
+*falta foto del diagrama*
+
+Alguna descripción
