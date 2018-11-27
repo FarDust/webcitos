@@ -17,3 +17,10 @@ const reactPublicationSearch = document.getElementById('react-main');
 if (reactPublicationSearch) {
   ReactDOM.render(<PublicationApp serverData={reactPublicationSearch.dataset} />, reactPublicationSearch);
 }
+
+function closeNotice() { 
+  let notice = document.getElementsByClassName('alert_notice')[0]
+  notice.parentNode.removeChild(notice);
+}
+
+document.getElementsByClassName('fa-times-circle')[0].addEventListener('click', () => closeNotice());

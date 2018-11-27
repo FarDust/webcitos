@@ -5,3 +5,5 @@ import '../images/example.svg';
 import '../images/avatar.svg';
 import '../images/exchange.png';
 import '../images/favicon.png';
+import './helpers/notice.js';
+import(/* webpackChunkName: "notice-module" */ "./helpers/notice");

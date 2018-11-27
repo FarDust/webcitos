@@ -1,5 +1,7 @@
 import './assets';
 import '../styles/index.scss';
+import './sidenav'
+import './helpers/notice'
 
 require('./sidenav.js');
 
