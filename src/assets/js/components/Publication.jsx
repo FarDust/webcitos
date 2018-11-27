@@ -126,6 +126,7 @@ class Publications extends React.Component {
              <ItemFilter
               key={2}
               publications={this.state.publications}
+              fixedPublications={this.props.publications}
               handleResponse={this.adquirePublications}
               query={this.state.query}
             />
