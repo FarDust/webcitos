@@ -10,6 +10,7 @@ const override = require('koa-override-method');
 const assets = require('./assets');
 const mailer = require('./mailers');
 const routes = require('./routes');
+const apiRoutes = require('./routes/api');
 const orm = require('./models');
 const slick = require('react-slick');
 
@@ -81,6 +82,9 @@ render(app, {
 });
 
 mailer(app);
+
+// Routing middleware
+app.use(apiRoutes.routes());
 
 // Routing middleware
 app.use(routes.routes());

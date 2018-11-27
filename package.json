@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "jsonapi-serializer": "^3.6.4",
     "faker": "^4.1.0",
     "koa": "^2.3.0",
     "koa-body": "^4.0.4",
@@ -49,6 +50,7 @@
     "koa-router": "^7.2.1",
     "koa-session": "^5.5.0",
     "koa-static": "^5.0.0",
+    "lodash": "^4.17.11",
     "nodemailer": "^4.1.1",
     "p-iteration": "^1.1.7",
     "package.json": "^2.0.1",
