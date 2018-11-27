@@ -23,7 +23,7 @@ export default class ItemFilter extends React.Component{
 
   handleSelection(selector, category) {
     const new_publications = this.props.publications.filter(pub => {
-      return selector === 'all' || pub.item[category] === selector
+      return pub.item[category] === selector
     });
     this.props.handleResponse(new_publications);
   }

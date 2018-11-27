@@ -125,7 +125,7 @@ class Publications extends React.Component {
           <div className="col-2">
              <ItemFilter
               key={2}
-              publications={this.props.publications}
+              publications={this.state.publications}
               handleResponse={this.adquirePublications}
               query={this.state.query}
             />
