@@ -33,7 +33,7 @@ export class CategoryFilter extends React.Component{
     }
     return [
       <h3>Category:</h3>,
-      <select key={0} value={this.state.category} onChange={this.handleOption}>
+      <select className="col-12" key={0} value={this.state.category} onChange={this.handleOption}>
         <option key={-1} value={'all'}> All Categories </option>
         {categories.map((item, index) => {
           return <option key={index} value={item}> {item} </option>
@@ -66,7 +66,7 @@ export class BrandFilter extends React.Component{
     }
     return [
       <h3> Brand: </h3>,
-      <select value={this.state.brand} onChange={this.handleOption}>
+      <select className="col-12" value={this.state.brand} onChange={this.handleOption}>
         <option key={-1} value={'all'} > All Brands </option>
         {categories.map((item, index) => {
           return <option key={index} value={item}> {item} </option>

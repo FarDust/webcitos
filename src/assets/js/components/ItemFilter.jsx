@@ -46,15 +46,17 @@ export default class ItemFilter extends React.Component{
           handleResponse={this.handleSelection}
           items={items}
           query={this.props.query}
+          className="col-12"
         />,
         <CategoryFilter
           key={1}
           handleResponse={this.handleSelection}
           items={items}
           query={this.props.query}
+          className="col-12"
         />,
         <div>
-          <button onClick={this.handleClear}> Clear All! </button>
+          <button className="button primary" onClick={this.handleClear}> Clear All! </button>
         </div>
     ]
   }

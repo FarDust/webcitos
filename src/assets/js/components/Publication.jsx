@@ -67,7 +67,7 @@ class Publication extends React.Component{
               )}
             </div>
           </div>
-          <img style={{"textAlign": "center"}} className="imgcard" src={this.state.real_image.src}/>
+          <img className="imgcard" src={this.state.real_image.src}/>
           <p>{ publication.description }</p>
           <p>
             <span>Added by:</span> { this.props.usersNames[publication.id] } <br />
