@@ -63,7 +63,14 @@
       <a class="side" href="../index.html">Home</a>
     </div>
     <% if (notice = flashMessage.notice) { %>
-      <div><%= notice %></div>
+      <div class="alert_notice" >
+        <div class="alert_i">
+          <img class="infoimg" src="https://storage.googleapis.com/webcitos_images/information.png"/>
+        </div>
+        <div>
+          <p><%= notice %></p>
+        </div>
+      </div>
     <% } %>
     <%- body %>
     <script src="<%= assetPath('app.js') %>"></script>

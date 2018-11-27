@@ -25,7 +25,7 @@ export default class SearchForm extends Component {
     });
 
     if (result.length === 0) {
-      alert('There are no publications that match your search :c');
+      alert('There are no publications that match your search :(');
     } else {
       this.state.results = result;
       this.props.handleResponse(result);
@@ -48,7 +48,7 @@ export default class SearchForm extends Component {
           this.getInfo();
       }
       else {
-        alert('You have to enter something! :o');
+        alert('You have to enter something!');
       }
     })
   }

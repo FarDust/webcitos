@@ -46,8 +46,8 @@
 }
 
 .stateimg {
-  max-height: 13vh;
-  max-width: 3vw;
+  max-height: 12vh;
+  max-width: 2vw;
 }
 
 /*show*/
@@ -64,6 +64,18 @@
   padding: 10px;
   background-color: rgba(255,255,255,0.8);
   margin: 15px;
+}
+
+.box_show_1 h2 {
+  text-align: left;
+}
+
+.box_show_1 h3 {
+  text-align: left; 
+}
+
+.box_show_1 p {
+  text-align: left; 
 }
 
 .box_show_2 {

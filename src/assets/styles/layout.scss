@@ -86,3 +86,23 @@ ul li .form-inline{
 .logo-navbar a.logo-a:hover:not(.active) {
   border-bottom: 0px solid white; 
 }
+
+.alert_notice {
+  margin: 30px 20px;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  background: white;
+  width: 20%;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+ }
+
+ .alert_i{
+  width: 20%;
+ }
+
+ .infoimg {
+  max-height: 12vh;
+  max-width: 2vw;
+  margin: 10px;
+ }
