@@ -95,14 +95,36 @@ ul li .form-inline{
   width: 25%;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
   display: flex;
- }
+}
 
- .alert_i{
+.error_notice {
+  margin: 30px 20px;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  background: white;
+  width: 40%;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+}
+
+.alert_i{
   width: 20%;
- }
+}
 
- .infoimg {
+.alert_info{
+  width: 75%;
+}
+
+.alert_x{
+  width: 5%;
+}
+
+.infoimg {
   max-height: 12vh;
   max-width: 2vw;
   margin: 10px;
- }
+}
+
+.far.fa-times-circle{
+  top: 15%;
+}

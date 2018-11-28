@@ -1,5 +1,15 @@
 <% if (locals.error) { %>
-  <div class="error"><%= error %></div>
+  <div class="alert_notice" >
+    <div class="alert_i">
+      <img class="infoimg" src="https://storage.googleapis.com/webcitos_images/information.png"/>
+    </div>
+    <div class="alert_info">
+      <p><%= error %></p>
+    </div>
+    <div class="alert_x">
+      <i class="far fa-times-circle"></i>
+    </div>
+  </div>
 <% } %>
 
 <div class="col-2"></div>

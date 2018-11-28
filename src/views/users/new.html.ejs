@@ -1,3 +1,17 @@
+<% if (locals.errors) { %>
+  <div class="error_notice" >
+    <div class="alert_i">
+      <img class="infoimg" src="https://storage.googleapis.com/webcitos_images/information.png"/>
+    </div>
+    <div>
+      <p>You must correct the following errors to continue:</p>
+      <% Object.keys(errors).forEach(prop => { %>
+        <p><%= prop %>: <%= errors[prop].message %></p>
+      <% }) %>
+    </div>
+  </div>
+<% } %>
+
 <div class="col-2"></div>
   <div class="col-8">
       <div class="row">

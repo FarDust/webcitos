@@ -22,10 +22,15 @@ export default class ItemFilter extends React.Component{
   }
 
   handleSelection(selector, category) {
-    const new_publications = this.props.publications.filter(pub => {
-      return pub.item[category] === selector
-    });
-    this.props.handleResponse(new_publications);
+    if (selector === 'all') {
+      this.handleClear();
+      this.props.handleResponse(this.props.fixedPublications);
+    } else {
+      const new_publications = this.props.publications.filter(pub => {
+        return pub.item[category] === selector
+      });
+      this.props.handleResponse(new_publications);
+    }
   }
 
   handleClear() {
@@ -46,15 +51,17 @@ export default class ItemFilter extends React.Component{
           handleResponse={this.handleSelection}
           items={items}
           query={this.props.query}
+          className="col-12"
         />,
         <CategoryFilter
           key={1}
           handleResponse={this.handleSelection}
           items={items}
           query={this.props.query}
+          className="col-12"
         />,
         <div>
-          <button onClick={this.handleClear}> Clear All! </button>
+          <button className="button primary" onClick={this.handleClear}> Clear All! </button>
         </div>
     ]
   }

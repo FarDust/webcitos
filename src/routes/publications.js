@@ -59,14 +59,23 @@ router.post('publications-create', '/', async (ctx) => {
     title: ctx.request.body.title,
     description: ctx.request.body.description,
     state: ctx.request.body.state,
-    userID: ctx.request.body.userID,
+    userID: ctx.state.currentUser.id,
   });
+  const item = ctx.orm.item.build({
+      model: ctx.request.body.model,
+      brand: ctx.request.body.brand,
+      screenSize: ctx.request.body.screenSize,
+      category: ctx.request.body.category,
+      state: ctx.request.body.item_state,
+      aditional: ctx.request.body.aditional,
+      publication_id: 0,
+    });
   try {
     await publication.save({
       title: ctx.request.body.title,
       description: ctx.request.body.description,
       state: ctx.request.body.state,
-      userID: ctx.request.body.userID,
+      userID: ctx.state.currentUser.id,
     });
     const item = ctx.orm.item.build({
       model: ctx.request.body.model,
@@ -96,15 +105,12 @@ router.post('publications-create', '/', async (ctx) => {
     }
     ctx.redirect(ctx.router.url('publications-show', item.publication_id));
   } catch (error) {
+    ctx.flashMessage.notice = 'Title required has to be at least 5 characters long';
     if (!isValidationError(error)) throw error;
-    await ctx.render('publications/new', {
-      publication,
-      item,
-      errors: getFirstErrors(error),
-      submitPath: ctx.router.url('publications-create'),
-    });
+    ctx.redirect('/');
   }
 });
+
 
 router.get('publications-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {

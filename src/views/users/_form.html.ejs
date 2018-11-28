@@ -1,12 +1,4 @@
 <form class="crud" action="<%= submitPath %>" method="post" enctype="multipart/form-data">
-    <% if (locals.errors) { %>
-      <p class="errors">You must correct the following errors to continue:</p>
-      <ul>
-        <% Object.keys(errors).forEach(prop => { %>
-          <li><%= prop %>: <%= errors[prop].message %></li>
-        <% }) %>
-      </ul>
-    <% } %>
     <% if (!user.isNewRecord) { %>
       <input type="hidden" name="_method" value="patch" />
     <% } %>

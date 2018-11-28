@@ -67,7 +67,7 @@ class Publication extends React.Component{
               )}
             </div>
           </div>
-          <img style={{"textAlign": "center"}} className="imgcard" src={this.state.real_image.src}/>
+          <img className="imgcard" src={this.state.real_image.src}/>
           <p>{ publication.description }</p>
           <p>
             <span>Added by:</span> { this.props.usersNames[publication.id] } <br />
@@ -126,6 +126,7 @@ class Publications extends React.Component {
              <ItemFilter
               key={2}
               publications={this.state.publications}
+              fixedPublications={this.props.publications}
               handleResponse={this.adquirePublications}
               query={this.state.query}
             />

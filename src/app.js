@@ -19,6 +19,10 @@ const app = new Koa();
 
 const developmentMode = app.env === 'development';
 
+if (developmentMode){
+  require('dotenv').config();
+}
+
 app.keys = [
   'these secret keys are used to sign HTTP cookies',
   'to make sure only this app can generate a valid one',
