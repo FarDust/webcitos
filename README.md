@@ -1,87 +1,86 @@
+# Documentación TradeAway
 
+## Página en Heroku
+Para acceder a la página del proyecto, ir al siguiente link: https://webcitos.herokuapp.com
 
-# Webcitos
+## Prerequisitos
 
-Found us [here!](https://webcitos.herokuapp.com)
-
-## Prerequisites:
-
-  ### Docker build
+### Docker build
   * [Docker](https://www.docker.com/get-started)
 
-  #### Project Setup
-  * Clone repository
-  * Create container:
+### Standard Build
+* [PostgreSQL](https://github.com/IIC2513-2018-2/syllabus/wiki/Getting-Started#postgresql)
+  * Se necesita una base de datos con nombre y usuario/contraseña como están configurados en `src/config/database.js`
+* [Node.js v10.9.0](https://github.com/IIC2513-2018-2/syllabus/wiki/Node.js) o superior
+* [Yarn](https://yarnpkg.com)
+
+## Configuración del proyecto
+
+### Docker build
+  * Clonar el repositorio
+  * Crear contenedor:
     * `docker-compose build`
 
-  #### Run migrations
+### Standard build
+* Clonar repositorio
+* Instalar dependencias:
+  * `yarn install`
+* Configurar la base de datos
+
+## Configuración de la base de datos (development)
+
+### Docker build
   ```sh
   docker-compose exec web sequelize db:migrate
   ```
 
-  #### Run the app!
+### Standard build
+* Crear la base de datos
+  ```sh
+  ./node_modules/.bin/sequelize db:create webcitos_dev
+  ``` 
+* Correr las migraciones
+  ```sh
+  ./node_modules/.bin/sequelize db:migrate
+  ``` 
+ * Correr las seeds
+    ```sh
+   ./node_modules/.bin/sequelize db:seed:all
+    ``` 
+  
+## Correr la aplicación
+
+### Docker build
 
   ```sh
   docker-compose up web
   ```
-
-  ### Standard build
-  * [PostgreSQL](https://github.com/IIC2513-2017-2/syllabus/wiki/Getting-Started#postgresql)
-    * you will need a database with name and user/password as configured in `src/config/database.js`
-  * [Node.js v8.4.0](https://github.com/IIC2513-2017-2/syllabus/wiki/Node.js) or above
-  * [Yarn](https://yarnpkg.com)
-
-  #### Project Setup
-
-  * Clone repository
-  * Install dependencies:
-    * `yarn install`
-
-  #### Database Setup (development)
-
-  ##### Install postgresql
-  * On Mac OS X using Homebrew: `brew install postgresql`
-    * Start service: check [LaunchRocket](https://github.com/jimbojsb/launchrocket) or [lunchy](https://www.moncefbelyamani.com/how-to-install-postgresql-on-a-mac-with-homebrew-and-lunchy/) for postgresql service management
-  * [Other platforms](https://www.postgresql.org/download/)
-  * [More details](https://github.com/IIC2513-2017-2/syllabus/wiki/Getting-Started#postgresql)
-
-  ##### Create development database
-
-  ```sh
-  createdb webcitos_dev
-  ```
-
-  #### Run migrations
+  
+### Standard build
 ```sh
-./node_modules/.bin/sequelize db:migrate
+yarn start
 ```
 
-  #### Run the app!
+o
 
-  ```sh
-  yarn start
-  ```
+```sh
+node index.js
+```
 
-  or directly
+o
 
-  ```sh
-  node index.js
-  ```
+```sh
+./node_modules/.bin/nodemon
+```
 
-  or, if you want automatic restart after any change in your files
-
-  ```sh
-  ./node_modules/.bin/nodemon
-  ```
-
-  Now go to http://localhost:3000 and start browsing :)
+Luego ir a http://localhost:3000
 
 ## Rutas
 
-### INDEX
+### Index
 * GET ```/``` : Ruta principal
 
-### USUARIOS
+### Users
 * GET ```/users/``` : Lista todos los usuarios (no usado)
 * GET ```/users/new``` : Crea un nuevo modelo de usuario
 * GET ```/users/:id/edit``` : Permite la edición de un usuario
@@ -89,11 +88,18 @@ Found us [here!](https://webcitos.herokuapp.com)
 * POST ```/users/``` : Crea un nuevo usuario
 * PATCH ```/users/:id``` : Modifica un usuario existente
 
+### Publications
+### Items
+### Request
+### Trades
+### Reviews
+
+
 ## API
 
 La aplicación ofrece diversas funcionalidades a través de una API. Las funcionalidades son las siguientes:
 
-### PUBLICACIONES:
+### Publicaciones:
 
 #### Descripción: Mostrar todas las publicaciones.
 * Ruta: ```/api/publications```
@@ -108,7 +114,7 @@ La aplicación ofrece diversas funcionalidades a través de una API. Las funcion
 * Respuesta: Se retorna un json con información detallada sobre una publicación en particular.
 
 
-### ITEMS:
+### Items:
 
 #### Descripción: Mostrar todos los items.
 * Ruta: ```/api/items```
