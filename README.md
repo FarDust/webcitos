@@ -90,16 +90,43 @@ Luego ir a http://localhost:3000
 
 ### Publications
 ### Items
-### Request
+### Requests
 ### Trades
 ### Reviews
 
 
 ## API
 
-La aplicación ofrece diversas funcionalidades a través de una API. Las funcionalidades son las siguientes:
+La aplicación ofrece diversas funcionalidades a través de una API. El acceso a algunas funcionalidades es restringido a usuarios, en esos casos es necesario autenticarse antes de consultar la API. Las funcionalidades son las siguientes:
 
-### Publicaciones:
+### Users:
+
+#### Descripción: Autenticar al usuario para acceder a ciertas funcionalidades de la API.
+* Ruta: ```/api/users/session```
+* Método: POST
+* Parámetros: email, password
+* Respuesta: En caso de entregar parámetros válidos se responde con un token que permite acceder a los otros métodos de la API. En otro caso, se retorna un error 401.
+
+Ejemplo:
+
+```sh
+curl http://localhost:3000/api/users/session -X PUT -d '{"email": "Ivan.Wolf@gmail.com", "password": "123web"}' -H 'Content-Type: application/json'
+```
+
+#### Descripción: Autenticar al usuario para acceder a ciertas funcionalidades de la API.
+* Ruta: ```/api/users/me```
+* Método: GET
+* Parámetros: -
+* Header: 'Authorization: Bearer <TOKEN>'
+* Respuesta: En caso de entregar un token válido se responde con un json que contiene la información del usario al que pertenece el token. En otro caso, se retorna un error 401.
+
+Ejemplo:
+
+```sh
+curl http://localhost:3000/api/users/me -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTU0MzAxOTc1NX0.p0SV3cXlbHwoLDyFAewuN-IhUyy6LmBh3HZoXYDww-I'
+```
+
+### Publications:
 
 #### Descripción: Mostrar todas las publicaciones.
 * Ruta: ```/api/publications```
