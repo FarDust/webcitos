@@ -23,7 +23,9 @@ div.card .card-image{
 }
 
 div.mini-card{
-  width: 45%;
+  width: 20vw;
+  margin: 1vw;
+  padding: 3px;
 }
 
 div.card .card-image.header{
