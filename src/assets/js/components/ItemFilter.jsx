@@ -24,7 +24,6 @@ export default class ItemFilter extends React.Component{
   handleSelection(selector, category) {
     if (selector === 'all') {
       this.handleClear();
-      this.props.handleResponse(this.props.fixedPublications);
     } else {
       const new_publications = this.props.publications.filter(pub => {
         return pub.item[category] === selector

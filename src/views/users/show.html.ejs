@@ -84,8 +84,8 @@
                   <div class="card-context empty centered-mid">
                       <p style="font-size: 30px"> Nothing to show </p>
                   <%} else {%>
-                  <div class="card-context empty centered">
-                    <p style="font-size: 30px" class="centered"> Create a Publication!</p>
+                  <div class="centered empty card-context">
+                    <p style="font-size: 30px"> Create a Publication!</p>
                     <i class="fas fa-plus fa-w-14 fa-3x"></i>
                   <%}%>
                 </div>
@@ -233,7 +233,7 @@
                   <li>
                     <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
                       <input type="hidden" name="_method" value="delete" />
-                      <button class="button-publi" type="submit">Delete</button>
+                      <button class="button-publi" type="submit">Discard</button>
                     </form>
                   </li>
                 </ul>
@@ -281,7 +281,7 @@
                 <div class="row">
                   <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
                     <input type="hidden" name="_method" value="delete" />
-                    <button class="button-publi" type="submit">Delete</button>
+                    <button class="button-publi" type="submit">Discard</button>
                   </form>
                 </div>
               </div>

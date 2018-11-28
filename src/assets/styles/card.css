@@ -34,6 +34,10 @@ div.card .card-context{
     overflow: auto;
 }
 
+a div.card .card-context p {
+  font-size: 30px;
+}
+
 div.card-context .card-header{
     text-overflow: clip;
     position: relative;

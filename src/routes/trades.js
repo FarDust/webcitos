@@ -111,14 +111,75 @@ router.patch('trades-update', '/:id', async (ctx) => {
     const request = await ctx.orm.request.findById(trade.id_request);
     const publication = await ctx.orm.publication.findById(request.publication_id);
     if (ctx.request.body.state == 'concreted') {
-      // dejar en inventory la publicacion
-      await publication.update({ state: 'inventory' }, { fields: ['state'] });
-      // dejar en inventory la otra publicacion
+      // dejar en traded la publicacion y cambiar dueño
+      await publication.update({ state: 'traded'}, { fields: ['state'] });
+
+      // Se crea una nueva publicacion con los datos cambiados, así no hay
+      // problemas con el request
+      const new_pub1 = await ctx.orm.publication.create({
+        'title': publication.title,
+        'description': publication.description,
+        'state': 'inventory',
+        'userID': trade.receptor.id,
+      });
+      // Se crea un item igual pero con la referencia a esta publicación
+      const item_pub1 = await publication.getItem();
+      await ctx.orm.item.create({
+        model: item_pub1.model,
+        brand: item_pub1.brand,
+        screenSize: item_pub1.screenSize,
+        category: item_pub1.category,
+        state: item_pub1.item_state,
+        aditional: item_pub1.aditional,
+        image: item_pub1.image,
+        publication_id: new_pub1.id,
+      })
+
+
+      // dejar en inventory la otra publicacion y cambiar dueño
       if (request.item_offered_id) {
         const item = await ctx.orm.item.findById(request.item_offered_id);
         const item_publication = await item.getPublication();
-        await item_publication.update({ state: 'inventory' }, { fields: ['state'] });
+        await item_publication.update({ state: 'traded'}, { fields: ['state'] });
+
+        // Se crea una nueva publicacion con los datos cambiados, así no hay
+        // problemas con el request
+        const new_pub2 = await ctx.orm.publication.create({
+          'title': item_publication.title,
+          'description': item_publication.description,
+          'state': 'inventory',
+          'userID': trade.emmiter.id,
+        });
+        // Se crea un item igual pero con la referencia a esta publicación
+        await ctx.orm.item.create({
+          model: item.model,
+          brand: item.brand,
+          screenSize: item.screenSize,
+          category: item.category,
+          state: item.item_state,
+          aditional: item.aditional,
+          image: item.image,
+          publication_id: new_pub2.id,
+        })
+
+        // Se destruyen los requests que ya no sirven
+        await item_publication.getRequests().then((requests) => {
+          requests.forEach(req => {
+            req.destroy();
+          })
+        });
       }
+
+      // Se destruyen los requests que ya no sirven
+      await publication.getRequests().then((requests) => {
+        requests.forEach(req => {
+          if (req.id !== request.id) {
+            req.destroy();
+          }
+        })
+      });
+
+
     } else if (ctx.request.body.state == 'not_concreted') {
       if (request.item_offered_id) {
         // dejar en el estado anterior la publicacion
