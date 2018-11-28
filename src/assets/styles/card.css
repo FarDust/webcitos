@@ -22,6 +22,10 @@ div.card .card-image{
     padding-right: 4px;
 }
 
+div.mini-card{
+  width: 45%;
+}
+
 div.card .card-image.header{
     max-width: 100%;
     overflow: hidden;

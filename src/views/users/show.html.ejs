@@ -39,7 +39,7 @@
         <div class="row card-group slider">
 
           <% info['publications'].forEach(publication => { %>
-          <div class="col-6">
+          <div class="mini-card">
             <div class="card">
               <div class="card-context">
               <a href="<%-showPublicationPath(publication)%>">
@@ -56,7 +56,7 @@
 
                         <% if (state.id === currentUser.id) { %>
                           <ul>
-                          <% if (publication.state !== 'pendent') { %>
+                          <% if (publication.state !== 'pendent' && publication.state !== 'traded') { %>
                             <li>
                               <button class="button-publi" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
                             </li>
