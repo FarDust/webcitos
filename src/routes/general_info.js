@@ -53,7 +53,7 @@ module.exports = {
         aux.request = req;
         const trad = await req.getTrade();
         aux.trade = trad;
-        if (trad && trad.state !== 'concreted') {
+        if (!trad || trad.state !== 'concreted') {
           const itm = await ctx.orm.item.findById(req.item_offered_id);
           aux.item = itm;
           // Aquí quiero el usuario de la publicacion del request, la publicacion del
