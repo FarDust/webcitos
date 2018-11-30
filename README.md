@@ -1,7 +1,7 @@
 # Documentación TradeAway
 
 ## Página en Heroku
-Para acceder a la página del proyecto, ir al siguiente link: https://webcitos.herokuapp.com
+Para acceder a la página del proyecto, ir al siguiente link: https://tradeaway.herokuapp.com/
 
 ## Prerequisitos
 
@@ -80,7 +80,7 @@ Luego ir a http://localhost:3000
 A continuación se tienen algunas líbrerías relevantes que fueron utilizadas en el proyecto:
 
 - Librería pkgcloud: utilizada para usar Google Cloud Storage para subir y descargar las imágenes de items, usuarios y algunas imágenes de vistas. Para usarla se necesitan credenciales que están en las variables de entorno.
-- Librería lodash: utilizada para desarrollar la API de TradeAway.
+- Librería lodash: utilizada para hacer los json con los que responde la API de TradeAway.
 - Librería jsonwebtoken: utilizada para autenticar usuarios a través de tokens en la API de TradeAway. Para usarla se necesitan credenciales que están en las variables de entorno.
 - Google Cloud Vision API: utilizada para identificar imágenes de items a subir por los usuarios para filtrar su ingreso a la página (solo se acepta tecnología portátil) e identificar atributos como su modelo y categoría. Para usarla se necesitan credenciales que están en las variables de entorno.
 
