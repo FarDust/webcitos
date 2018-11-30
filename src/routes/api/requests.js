@@ -47,7 +47,9 @@ router.post('request-api-new', '/new', async(ctx) => {
       });
       return allItemsId;
     })
-    ctx.assert(final.includes(itemOfferedId), 400, 'Item not found');
+
+    console.log(final, itemOfferedId)
+    ctx.assert(final.includes(parseInt(itemOfferedId)), 400, 'Item not found');
 
     // Se crea el request en caso de no fallar :D
     await ctx.orm.request.create({
