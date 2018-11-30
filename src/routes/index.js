@@ -13,6 +13,7 @@ router.get('/', async (ctx) => {
       if (pub.state !== 'traded' && pub.state !== 'inventory') {
         publications.push(pub);
       }
+    });
     let users_names = {};
     let items_ids = {};
     await forEach(publications, async (pub) => {
