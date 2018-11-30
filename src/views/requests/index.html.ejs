@@ -1,7 +1,11 @@
-<% if (publication_title) { %>
-  <h1>Requests of <%= publication_title %></h1>
-<% }else { %>
-  <h1>All your requests </h1>
+<% if (requests.length > 0) { %>
+  <% if (publication_title) { %>
+    <h2>Requests of <%= publication_title %></h2>
+  <% }else { %>
+    <h2>All your requests </h2>
+  <% } %>
+<% } else {%>
+  Ooops, nothing to see here.
 <% } %>
 
 <% if (requests.length > 0) { %>
