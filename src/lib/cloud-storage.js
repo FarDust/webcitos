@@ -1,17 +1,21 @@
 const fs = require('fs');
 const { storage } = require('pkgcloud');
-const googleConfig = require('../config/google');
 
-const GOOGLE_PROJECT_ID = 'zippy-carving-220123';
-const CONTAINER_NAME = 'webcitos_images';
+try {
+  require('dotenv').config();
+} catch{
 
+}
 let client;
 
 try {
   client = storage.createClient({
-    provider: 'google',
-    credentials: googleConfig,
-    projectId: GOOGLE_PROJECT_ID,
+    provider: 'google' ,
+    credentials: {
+      private_key: process.env.GOOGLE_PRIVATE_KEY,
+      client_email: process.env.GOOGLE_CLIENT_EMAIL,
+	  },
+    projectId: process.env.GOOGLE_PROJECT_ID,
   });
 } catch (e) {
   console.error('Cloud storage failed to initialize. Upload/download operations will throw error. More details: ', e);
@@ -32,7 +36,7 @@ function upload(localPath, remotePath) {
   return new Promise((resolve, reject) => {
     const readStream = fs.createReadStream(localPath);
     const writeStream = client.upload({
-      container: CONTAINER_NAME,
+      container: process.env.CONTAINER_NAME,
       remote: remotePath,
     });
     writeStream.on('error', reject);
@@ -48,7 +52,7 @@ function upload(localPath, remotePath) {
   */
 function download(remotePath) {
   assertClientInitialized();
-  return client.download({ container: CONTAINER_NAME, remote: encodeURIComponent(remotePath) });
+  return client.download({ container: process.env.CONTAINER_NAME, remote: encodeURIComponent(remotePath) });
 }
 
 function buildRemotePath(fileName, { directoryPath, namePrefix }) {
