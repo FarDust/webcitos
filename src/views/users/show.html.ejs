@@ -39,7 +39,7 @@
         <div class="row card-group slider">
 
           <% info['publications'].forEach(publication => { %>
-          <div class="col-6">
+          <div class="mini-card">
             <div class="card">
               <div class="card-context">
               <a href="<%-showPublicationPath(publication)%>">
@@ -48,15 +48,13 @@
                     <%= publication.description %>
                 </div>
                 <div class="card-footer">
-                  <div class="row">
                   <span>State:</span> <%= publication.state %>
-                  </div>
               </a>
-                  <div class="row centered">
+                  <div class="centered-mid">
 
                         <% if (state.id === currentUser.id) { %>
                           <ul>
-                          <% if (publication.state !== 'pendent') { %>
+                          <% if (publication.state !== 'pendent' && publication.state !== 'traded') { %>
                             <li>
                               <button class="button-publi" onclick="window.location.href='<%-showRequestsPath(publication)%>'"><%= publication.state=='gift' ? 'See petitions' : 'See offers' %></button>
                             </li>
@@ -77,15 +75,15 @@
             </div>
           </div>
           <% }) %>
-            <div class="col-6">
+            <div class="mini-card">
             <a href="<%=(currentUser.id==user_id)?newPublicationPath:''%>">
               <div class="card">
                 <% if (currentUser.id !== user.id) {%>
                   <div class="card-context empty centered-mid">
                       <p style="font-size: 30px"> Nothing to show </p>
                   <%} else {%>
-                  <div class="card-context empty centered">
-                    <p style="font-size: 30px" class="centered"> Create a Publication!</p>
+                  <div class="centered empty card-context">
+                    <p style="font-size: 30px"> Create a Publication!</p>
                     <i class="fas fa-plus fa-w-14 fa-3x"></i>
                   <%}%>
                 </div>
@@ -105,7 +103,7 @@
       <div class="content">
         <div class="row card-group slider">
           <% info['inventory'].forEach(inventorie => { %>
-          <div class="col-6">
+          <div class="mini-card">
             <div class="card">
               <div class="card-context">
               <a href="<%-showPublicationPath(inventorie)%>">
@@ -114,13 +112,9 @@
                     <%= inventorie.description %>
                 </div>
                 <div class="card-footer">
-                    <div class="row centered">
-                        <p>
-                          <span>State:</span> <%= inventorie.state %>
-                        </p>
-                    </div>
+                    <span>State:</span> <%= inventorie.state %>
               </a>
-                    <div class="row centered">
+                    <div class="centered-mid">
                         <% if (state.id === currentUser.id) { %>
                           <ul>
                             <li>
@@ -151,7 +145,7 @@
       <div class="content">
         <div class="row card-group slider">
           <% info['items'].forEach(item => { %>
-            <div class="col-6">
+            <div class="mini-card">
               <div class="card">
               <a href="<%=getItemShowPath(item.id)%>">
               <div class="card-context">
@@ -170,7 +164,7 @@
             </div>
           <%});%>
 
-          <div class="col-6">
+          <div class="mini-card">
           <a href="<%=(currentUser.id==user_id)?newPublicationPath:''%>">
             <div class="card">
               <% if (currentUser.id !== user.id) {%>
@@ -192,12 +186,12 @@
     </div>
 
     <div class="user-context">
-      <h1>Last Offers</h1>
+      <h1>Last Offers You Received</h1>
       <div class="content">
         <div class="row card-group slider">
           <% info['offered_requests'].forEach(ureq => { %>
             <% if (!ureq['pub_offered']) { %>
-              <div class="col-6">
+              <div class="mini-card">
                 <div class="card">
                   <a href="<%=showUserPath(ureq['req_user'])%>">
                     <h4 class="card-header"> Petition from <%=ureq['req_user'].name%></h4>
@@ -211,7 +205,7 @@
               </div>
 
             <%} else if (ureq['pub_offered'] && ureq['pub_offered'].state!=='pendent') { %>
-          <div class="col-6">
+          <div class="mini-card">
             <div class="card">
               <a href="<%=showUserPath(ureq['req_user'])%>">
               <h4 class="card-header">Offer from <%= ureq['req_user'].name %></h4>
@@ -233,7 +227,7 @@
                   <li>
                     <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
                       <input type="hidden" name="_method" value="delete" />
-                      <button class="button-publi" type="submit">Delete</button>
+                      <button class="button-publi" type="submit">Discard</button>
                     </form>
                   </li>
                 </ul>
@@ -243,7 +237,7 @@
           <%}%>
           <%})%>
 
-          <div class="col-6">
+          <div class="mini-card">
             <div class="card">
               <div class="card-context empty centered-mid">
                     <p style="font-size: 30px"> Nothing else to show </p>
@@ -257,12 +251,12 @@
     </div>
 
     <div class="user-context">
-      <h1>Your Last Offers</h1>
+      <h1>Last Things You Offered</h1>
       <div class="content">
       <button class="button-publi" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
         <div class="row card-group slider">
           <% info['mine_requests'].forEach(ureq => { %>
-          <div class="col-6">
+          <div class="mini-card">
             <div class="card">
               <a href="<%=showUserPath(ureq['user'])%>">
                 <div class="card-header">
@@ -281,14 +275,14 @@
                 <div class="row">
                   <form class="form-inline" action="<%= getDestroyRequestPath(ureq['request']) %>" method="post">
                     <input type="hidden" name="_method" value="delete" />
-                    <button class="button-publi" type="submit">Delete</button>
+                    <button class="button-publi" type="submit">Discard</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
           <%})%>
-          <div class="col-6">
+          <div class="mini-card">
             <div class="card">
               <div class="card-context empty centered-mid">
                     <p style="font-size: 30px"> Nothing else to show </p>
@@ -307,7 +301,7 @@
             <div class="row card-group slider">
               <% info['trades'].forEach(trade => { %>
                 <% if (trade.state === 'pendent') {%>
-                <div class="col-6">
+                <div class="mini-card">
                   <% if (trade.is_gift) {%>
                     <a href="<%=ShowTradePath(trade)%>">
                     <div class="card invisible-img-gift">
@@ -357,7 +351,7 @@
                 <%};%>
               <%});%>
 
-              <div class="col-6">
+              <div class="mini-card">
                 <div class="card">
                   <div class="card-context empty centered-mid">
                         <p style="font-size: 30px"> Nothing else to show</p>

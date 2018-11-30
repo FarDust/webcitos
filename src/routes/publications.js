@@ -16,7 +16,13 @@ router.param('id', async (id, ctx, next) => {
 });
 
 router.get('publications', '/', async (ctx) => {
-    const publications = await ctx.orm.publication.findAll();
+    const allPublications = await ctx.orm.publication.findAll();
+    const publications = [];
+    allPublications.forEach(pub => {
+      if (pub.state !== 'traded' && pub.state !== 'inventory') {
+        publications.push(pub);
+      }
+    });
     let users_names = {};
     let items_ids = {};
     await forEach(publications, async (pub) => {

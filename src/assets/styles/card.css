@@ -22,6 +22,12 @@ div.card .card-image{
     padding-right: 4px;
 }
 
+div.mini-card{
+  width: 20vw;
+  margin: 1vw;
+  padding: 3px;
+}
+
 div.card .card-image.header{
     max-width: 100%;
     overflow: hidden;
@@ -32,6 +38,10 @@ div.card .card-image.header{
 div.card .card-context{
     border-radius: 10px;
     overflow: auto;
+}
+
+a div.card .card-context p {
+  font-size: 30px;
 }
 
 div.card-context .card-header{

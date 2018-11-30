@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import publicationSubmitPath from './services';
+import ImageLoader from '../../images/loading.gif'
 
 /* source: https://hackernoon.com/tutorial-how-to-make-http-requests-in-react-part-3-daa6b31b66be */
 
 class PublicationForm extends Component {
   constructor (props) {
     super(props)
-    console.log(publicationSubmitPath);
     this.state = {
       submited: false,
       image: '',
@@ -15,6 +15,7 @@ class PublicationForm extends Component {
       labels: [],
       model: undefined,
       brand: undefined,
+      loading: true,
       SubmitPath: '/publications',
     }
     this.admited_labels = [
@@ -27,17 +28,18 @@ class PublicationForm extends Component {
       'gadget',
       'smartphone',
     ]
-    this.handleImage = this.handleImage.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.removeImage = this.removeImage.bind(this)
+    this.handleImage = this.handleImage.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.removeImage = this.removeImage.bind(this);
+    this.resetLoading = this.resetLoading.bind(this);
   }
 
   handleImage(event) {
     let file = event.target.files[0];
     let reader = new FileReader();
     let url = reader.readAsDataURL(file);
-    const uploadedFile = event.target; 
-    this.setState({ uploadedFile: uploadedFile, })
+    const uploadedFile = event.target;
+    this.setState({ uploadedFile: uploadedFile});
     reader.onloadend = function (e) {
       this.setState({
         image: reader.result,
@@ -58,9 +60,11 @@ class PublicationForm extends Component {
             model: model,
             brand: brand,
             submited: true,
+            loading: false,
           })
         })
     }.bind(this);
+    this.resetLoading();
   }
 
   handleSubmit(event) {
@@ -78,6 +82,10 @@ class PublicationForm extends Component {
 
   removeImage() {
     this.setState({ image: '', labels: [], submited: false,})
+  }
+
+  resetLoading() {
+    this.setState({ loading: true })
   }
 
   render() {
@@ -131,13 +139,26 @@ class PublicationForm extends Component {
       } else {
         message = "Show us what you want to submit";
       }
-      return (
-        <div>
+      if (this.state.loading && this.state.image) {
+        return (<div>
+          <span>Checking your image...</span><br/>
+          <div className="centered-mid">
+            <img className="col-2" src={ImageLoader} alt="" />
+          </div>
+          <div className="centered-mid">
+            <h3> Loading... </h3>
+          </div>
+        </div>
+      )} else {
+        return (
+          <div>
           <span>{message}</span><br/>
           <input className="col-12" type="file" name="image" id="image" onChange={this.handleImage} />
           <img className="col-12" src={this.state.image} alt="" />
-        </div>
-      )
+          </div>
+        )
+      }
+
     }
   }
 }
@@ -156,14 +177,14 @@ class ItemForm extends React.Component {
     this.handleModel = this.handleModel.bind(this);
   }
 
-  handleSlider(event) { 
+  handleSlider(event) {
     this.setState({ screenSize: event.target.value })
   }
 
   handleCategory(event) {
     this.setState({ category: event.target.value })
    }
-  
+
   handleModel(event) {
     this.setState({ model: event.target.value })
   }
@@ -171,7 +192,7 @@ class ItemForm extends React.Component {
   handleBrand(event) {
     this.setState({ brand: event.target.value })
   }
-  
+
   render() {
     return (
       <div>

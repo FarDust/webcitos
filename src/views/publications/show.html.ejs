@@ -48,7 +48,7 @@
       <% } %>
     </div>
   </div>
-  <% if(requests.length > 0 && publication.userID === currentUser.id) {%>
+  <% if(requests.length > 0 && publication.userID === currentUser.id && publication.state !== 'traded') {%>
   <h2>Offers received</h2>
   <div class="content">
     <div class="row card-group slider">
