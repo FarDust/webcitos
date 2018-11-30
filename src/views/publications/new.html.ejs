@@ -1,3 +1,17 @@
+<% if (locals.errors) { %>
+  <div class="error_notice" >
+    <div class="alert_i">
+      <img class="infoimg" src="https://storage.googleapis.com/webcitos_images/information.png"/>
+    </div>
+    <div>
+      <p>You must correct the following errors to continue:</p>
+      <% Object.keys(errors).forEach(prop => { %>
+        <p><%= prop %>: <%= errors[prop].message %></p>
+      <% }) %>
+    </div>
+  </div>
+<% } %>
+
 <div class="center">
   <h2>Want to add a publication?</h2>
   <div id="PublicationForm" data-googleApiLink='/search/test/' data-submitPath="<% submitPath %>">
