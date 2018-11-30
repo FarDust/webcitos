@@ -12,27 +12,11 @@
   </head>
 
   <body>
-    <!--logo
-    <div class="logo-container top" id="home">
-      <a href="/" class="logo">
-        Trade<span class="Music">Away</span>
-      </a>
-    </div>
-    -->
     <!--topbar-->
     <ul class="topbar">
       <li class="logo-navbar"><a class="logo-a" href="/" title="TradeAway App"></a></li>
       <li><a href="/publications">Publications</a></li>
       <% if (locals.currentUser) { %>
-        <!--searh-bar
-        <li id="react-search">
-          <form id="search" class="form-inline" action="<%= searchPath  %>" method="get">
-            <input type="text" id="query" name="query" placeholder="Publications... "/>
-            <button class="icon-container" type="submit"><i class="fas fa-search"></i></button>
-          </form>
-        </li>
-        -->
-      <li><a href="/items">Items</a></li>
 
       <li class="functional">
         <form class="form-button" action="<%= destroySessionPath %>" method="post">
