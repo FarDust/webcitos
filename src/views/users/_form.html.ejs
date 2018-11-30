@@ -1,12 +1,4 @@
 <form class="crud" action="<%= submitPath %>" method="post" enctype="multipart/form-data">
-    <% if (locals.errors) { %>
-      <p class="errors">You must correct the following errors to continue:</p>
-      <ul>
-        <% Object.keys(errors).forEach(prop => { %>
-          <li><%= prop %>: <%= errors[prop].message %></li>
-        <% }) %>
-      </ul>
-    <% } %>
     <% if (!user.isNewRecord) { %>
       <input type="hidden" name="_method" value="patch" />
     <% } %>
@@ -45,11 +37,11 @@
   </div>
   <div class="center">
     <label for="image">
-      <span>Image</span>
+      <span>Profile image</span>
       <input class="form-centered" type="file" name="image" id="image" value="<%= user.image %>" />
     </label>
   </div>
   <div class="actions center">
-      <input class="form-centered" id="button-form" type="submit" value="<%= user.isNewRecord ? 'Create' : 'Edit' %>" />
+      <input class="form-centered" id="button-form" type="submit" value="<%= user.isNewRecord ? 'Create account' : 'Edit' %>" />
   </div>
 </form>

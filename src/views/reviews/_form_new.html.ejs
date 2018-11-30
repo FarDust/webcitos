@@ -4,8 +4,8 @@
   <% } %>
   <div class="center">
     <label for="fullfillment_offer">
-      <span class="form">Fullfilment offer</span><br/>
-      <input class="form-centered" type="number" max="5" name="fullfillment_offer" id="fullfillment_offer" value="<%= review.fullfillment_offer %>" /><br/>
+      <span class="form">Rate the fullfilment of their offer</span><br/>
+      <input placeholder="Rate from 0 to 5 stars" class="form-centered" type="number" max="5" min="0" name="fullfillment_offer" id="fullfillment_offer" value="<%= review.fullfillment_offer %>" /><br/>
         <% if (locals.errors && errors.fullfillment_offer) { %>
           <span class="error"><%= errors.fullfillment_offer.message %></span>
         <% } %>
@@ -13,8 +13,8 @@
   </div>
   <div class="center">
     <label for="quality_offered">
-      <span class="form">Quality offered</span><br/>
-      <input class="form-centered" type="number" max="5" name="quality_offered" id="quality_offered" value="<%= review.quality_offered %>" /><br/>
+      <span class="form">Rate the quality offered</span><br/>
+      <input placeholder="Rate from 0 to 5 stars" class="form-centered" type="number" max="5" min="0" name="quality_offered" id="quality_offered" value="<%= review.quality_offered %>" /><br/>
         <% if (locals.errors && errors.quality_offered) { %>
           <span class="error"><%= errors.quality_offered.message %></span>
         <% } %>
@@ -22,8 +22,8 @@
   </div>
   <div class="center">
     <label for="puntuality">
-      <span class="form">Puntuality</span><br/>
-      <input class="form-centered" type="number" max="5" name="puntuality" id="puntuality" value="<%= review.puntuality %>" /><br/>
+      <span class="form">Rate their puntuality</span><br/>
+      <input placeholder="Rate from 0 to 5 stars" class="form-centered" type="number" max="5" min="0" name="puntuality" id="puntuality" value="<%= review.puntuality %>" /><br/>
         <% if (locals.errors && errors.puntuality) { %>
           <span class="error"><%= errors.puntuality.message %></span>
         <% } %>
@@ -31,7 +31,7 @@
   </div>
   <div class="center">
       <label for="content">
-        <span class="form">Content</span><br/>
+        <span class="form">Any aditional comments?</span><br/>
         <textarea rows="5" class="form-centered" type="text" name="content" id="content" value="<%= review.content %>" ></textarea>
           <% if (locals.errors && errors.content) { %>
             <span class="error"><%= errors.content.message %></span>
@@ -42,6 +42,6 @@
       <input class="form-centered" type="hidden" name="trade_id" id="trade_id" value="<%=trade_id%>" />
     <% } %>
   <div class="actions center">
-    <input class="form-centered" id="button-form" type="submit" value="<%= review.isNewRecord ? 'Create' : 'Edit' %>" />
+    <input class="form-centered" id="button-form" type="submit" value="<%= review.isNewRecord ? 'Create review' : 'Edit' %>" />
   </div>
 </form>

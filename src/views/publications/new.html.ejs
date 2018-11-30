@@ -1,10 +1,20 @@
+<% if (locals.errors) { %>
+  <div class="error_notice" >
+    <div class="alert_i">
+      <img class="infoimg" src="https://storage.googleapis.com/webcitos_images/information.png"/>
+    </div>
+    <div>
+      <p>You must correct the following errors to continue:</p>
+      <% Object.keys(errors).forEach(prop => { %>
+        <p><%= prop %>: <%= errors[prop].message %></p>
+      <% }) %>
+    </div>
+  </div>
+<% } %>
+
 <div class="center">
-  <h1>Create publication</h1>
-</div>
-<%# This special tag is an EJS comment %>
-<%# And the one below is similar to the one we've been using to output values to the template's result %>
-<%# but we cannot use the same one here since it automatically escapes HTML (converting <div> to &lt;div&gt;, for example) %>
-<%# The one below, instead, will write its value directly to the end result, no escaping %>
-<div class="center">
-  <%- include('_form') %>
+  <h2>Want to add a publication?</h2>
+  <div id="PublicationForm" data-googleApiLink='/search/test/' data-submitPath="<% submitPath %>">
+    <%- include('_form') %>
+  </div>
 </div>

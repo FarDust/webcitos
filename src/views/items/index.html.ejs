@@ -1,13 +1,12 @@
 <div class="products">
     <div class="pcard">
         <% items.forEach((item) => { %>
-          <a class="box" href="<%= getShowPath(item) %>" style="text-decoration:none;">
+          <a class="box" href="<%= getShowPath(item) %>">
             <img class="imgcard" src="<%= getItemImagePath(item) %>" alt="Photo of the item"/>
             <h4><%= item.model %></h4>
-            Brand: <%= item.brand %> <br/>
-            Current state: <%= item.state %> <br/>
-            Category: <%= item.category %>
-            <br>
+            <p>Brand: <%= item.brand %> <br>
+            Current state: <%= item.state %> <br>
+            Category: <%= item.category %></p>
             <!--
             <a href="<%= getPublicationPath(item.publication_id) %>">See publication</a>
             <a href="<%= getShowPath(item) %>">View details</a>

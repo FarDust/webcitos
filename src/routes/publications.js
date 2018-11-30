@@ -2,6 +2,7 @@ const KoaRouter = require('koa-router');
 const { forEach } = require('p-iteration');
 const Sequelize = require('sequelize');
 const { getTradeInfo } = require('./general_info');
+const cloudStorage = require('../lib/cloud-storage');
 
 
 const router = new KoaRouter();
@@ -15,8 +16,13 @@ router.param('id', async (id, ctx, next) => {
 });
 
 router.get('publications', '/', async (ctx) => {
-  if (ctx.state.currentUser) {
-    const publications = await ctx.orm.publication.findAll();
+    const allPublications = await ctx.orm.publication.findAll();
+    const publications = [];
+    allPublications.forEach(pub => {
+      if (pub.state !== 'traded' && pub.state !== 'inventory') {
+        publications.push(pub);
+      }
+    });
     let users_names = {};
     let items_ids = {};
     await forEach(publications, async (pub) => {
@@ -26,6 +32,7 @@ router.get('publications', '/', async (ctx) => {
     await forEach(publications, async (pub) => {
       const item = await pub.getItem();
       items_ids[pub.id] = item.id;
+      pub.dataValues['item'] = item;
     });
     return ctx.render('publications/index', {
       publications,
@@ -37,9 +44,7 @@ router.get('publications', '/', async (ctx) => {
       getEditPath: publication => ctx.router.url('publications-edit', publication.id),
       getDestroyPath: publication => ctx.router.url('publications-destroy', publication.id),
     });
-  }
-  ctx.flashMessage.notice = 'Please, log in to access these features';
-  ctx.redirect('/');
+
 });
 
 router.get('publications-new', '/new', (ctx) => {
@@ -47,6 +52,7 @@ router.get('publications-new', '/new', (ctx) => {
     return ctx.render('publications/new',
       {
         publication: ctx.orm.publication.build(),
+        item: ctx.orm.item.build(),
         submitPath: ctx.router.url('publications-create'),
       });
   }
@@ -55,19 +61,62 @@ router.get('publications-new', '/new', (ctx) => {
 });
 
 router.post('publications-create', '/', async (ctx) => {
-  const publication = ctx.orm.publication.build(ctx.request.body);
-  try {
-    await publication.save(ctx.request.body);
-    ctx.redirect(ctx.router.url('items-new', { pid: publication.id }));
-  } catch (error) {
-    if (!isValidationError(error)) throw error;
-    await ctx.render('publications/new', {
-      publication,
-      errors: getFirstErrors(error),
-      submitPath: ctx.router.url('publications-create'),
+  const publication = ctx.orm.publication.build({
+    title: ctx.request.body.title,
+    description: ctx.request.body.description,
+    state: ctx.request.body.state,
+    userID: ctx.state.currentUser.id,
+  });
+  const item = ctx.orm.item.build({
+      model: ctx.request.body.model,
+      brand: ctx.request.body.brand,
+      screenSize: ctx.request.body.screenSize,
+      category: ctx.request.body.category,
+      state: ctx.request.body.item_state,
+      aditional: ctx.request.body.aditional,
+      publication_id: 0,
     });
+  try {
+    await publication.save({
+      title: ctx.request.body.title,
+      description: ctx.request.body.description,
+      state: ctx.request.body.state,
+      userID: ctx.state.currentUser.id,
+    });
+    const item = ctx.orm.item.build({
+      model: ctx.request.body.model,
+      brand: ctx.request.body.brand,
+      screenSize: ctx.request.body.screenSize,
+      category: ctx.request.body.category,
+      state: ctx.request.body.item_state,
+      aditional: ctx.request.body.aditional,
+      publication_id: publication.id,
+    });
+    await item.save({
+      model: ctx.request.body.model,
+      brand: ctx.request.body.brand,
+      screenSize: ctx.request.body.screenSize,
+      category: ctx.request.body.category,
+      state: ctx.request.body.item_state,
+      aditional: ctx.request.body.aditional,
+      publication_id: publication.id,
+    });
+    if (ctx.request.files.image.name) {
+      const { path: localImagePath, name: localImageName } = ctx.request.files.image;
+      const remoteImagePath = cloudStorage.buildRemotePath(localImageName, { directoryPath: 'items/images', namePrefix: item.id });
+      await cloudStorage.upload(localImagePath, remoteImagePath);
+      await item.update({ image: remoteImagePath });
+    } else {
+      await item.update({ image: 'items/images/item-placeholder.png' });
+    }
+    ctx.redirect(ctx.router.url('publications-show', item.publication_id));
+  } catch (error) {
+    ctx.flashMessage.notice = 'Title required has to be at least 5 characters long';
+    if (!isValidationError(error)) throw error;
+    ctx.redirect('/');
   }
 });
+
 
 router.get('publications-show', '/:id', async (ctx) => {
   if (ctx.state.currentUser) {

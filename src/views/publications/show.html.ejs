@@ -1,16 +1,32 @@
 <div class="products">
   <div class="pcard_show">
     <a class="box_show_1" href="<%= userPath(user) %>" style="text-decoration:none;">
-      <h1><%= publication.title %></h1>
-      <h2>State: <%= publication.state %></h2>
-      <%= publication.description %> <br>
+      <div class="header_card">
+        <div class="title_header">
+          <h2><%= publication.title %></h2>
+        </div>
+        <div>
+          <% if(publication.state == 'exchange') { %>
+          <img class="stateimg-show" src="https://storage.googleapis.com/webcitos_images/exchange.png" alt="State"/>
+          <% } else if (publication.state == 'gift') {%>
+          <img class="stateimg-show" src="https://storage.googleapis.com/webcitos_images/gift.png" alt="State"/>
+          <% } else if (publication.state == 'pendent') { %>
+          <img class="stateimg-show" src="https://storage.googleapis.com/webcitos_images/sand-clock.png" alt="State"/>
+          <% } else { %>
+          <img class="stateimg-show" src="https://storage.googleapis.com/webcitos_images/box.png" alt="State"/>
+          <% } %>
+        </div>
+      </div>
+      <p><%= publication.description %></p>
       <h4> Uploaded by <%=user.name%></h4>
       <img class="imgcard_publi_user rounded" src="<%= getUserImagePath(user) %>" alt="avatar"/>
-      <h4>Information</h4>
+      <h4>Contact details</h4>
       Phone: <%=user.phone%> <br>
       E-mail: <%=user.email%> <br> <br>
       <% if (publication.userID === currentUser.id) { %>
-        <button class="button-publi" onclick="window.location.href='<%= editPublicationPath(publication) %>'">Edit publication</button>
+        <form class="form-button-publi" action="<%=editPublicationPath(publication)%>">
+          <input type="submit" value="Edit publication" />
+        </form>
       <% } else if (publication.state == 'gift' || publication.state == 'exchange'){ %>
         <form class="form-button-publi" action="<%=createRequestPath(publication)%>">
           <input type="submit" value="Create a new offer" />
@@ -32,7 +48,7 @@
       <% } %>
     </div>
   </div>
-  <% if(requests.length > 0 && publication.userID === currentUser.id) {%>
+  <% if(requests.length > 0 && publication.userID === currentUser.id && publication.state !== 'traded') {%>
   <h2>Offers received</h2>
   <div class="content">
     <div class="row card-group slider">

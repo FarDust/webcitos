@@ -15,15 +15,11 @@ function openNav() {
     }
     open = true;
   }
-  // document.body.style['background-color'] = "black";
-  // document.body.style['opacity'] = "0.5";
 }
 
 function closeNav() {
   document.getElementById('lateral-menu').style.width = '0%';
   document.getElementById('right-arrow').style['margin-left'] = '0';
   document.getElementById('main').style['margin-left'] = '0';
-  // document.body.style['background-color'] = baseColor;
-  // document.body.style['opacity'] = "1";
   open = false;
 }

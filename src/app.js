@@ -10,6 +10,7 @@ const override = require('koa-override-method');
 const assets = require('./assets');
 const mailer = require('./mailers');
 const routes = require('./routes');
+const apiRoutes = require('./routes/api');
 const orm = require('./models');
 const slick = require('react-slick');
 
@@ -17,6 +18,10 @@ const slick = require('react-slick');
 const app = new Koa();
 
 const developmentMode = app.env === 'development';
+
+if (developmentMode){
+  require('dotenv').config();
+}
 
 app.keys = [
   'these secret keys are used to sign HTTP cookies',
@@ -81,6 +86,9 @@ render(app, {
 });
 
 mailer(app);
+
+// Routing middleware
+app.use(apiRoutes.routes());
 
 // Routing middleware
 app.use(routes.routes());

@@ -1,36 +1,27 @@
-<div class="center">
-  
-</div>
-<%# This special tag is an EJS comment %>
-<%# And the one below is similar to the one we've been using to output values to the template's result %>
-<%# but we cannot use the same one here since it automatically escapes HTML (converting <div> to &lt;div&gt;, for example) %>
-<%# The one below, instead, will write its value directly to the end result, no escaping %>
-<div class="row">
-  <div class="col-2"></div>
-  <div class="col-8">
-    <div class="card">
-      <div class="card-context">
-        <div class="card-header">
-          <h2><p class="center">Welcome to TradeAway App!</p></h2>
-          <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-              <p class="center">
-                The App that helps you trade the stuff that you
-                dont need for stuff that you want
-              </p>
-            </div>
-            <div class="col-2"></div>
-          </div>
-        </div>
-        <div class="card-content">
-          <%- include('_form') %>
-        </div>
-        <div class="card-footer">
-
-        </div>
-      </div>
+<% if (locals.errors) { %>
+  <div class="error_notice" >
+    <div class="alert_i">
+      <img class="infoimg" src="https://storage.googleapis.com/webcitos_images/information.png"/>
+    </div>
+    <div>
+      <p>You must correct the following errors to continue:</p>
+      <% Object.keys(errors).forEach(prop => { %>
+        <p><%= prop %>: <%= errors[prop].message %></p>
+      <% }) %>
     </div>
   </div>
-  <div class="col-2"></div>
-</div>
+<% } %>
+
+<div class="col-2"></div>
+  <div class="col-8">
+      <div class="row">
+        <h2><p class="center">Welcome to the TradeAway App!</p></h2>
+        <p class="center">
+            The App that helps you trade the stuff that you
+            don't need for stuff that you want! <br> <br> <br>
+            Please, fill in your data to create your account:
+        </p>
+        <%- include('_form') %>
+      </div>
+  </div>
+<div class="col-2"></div>

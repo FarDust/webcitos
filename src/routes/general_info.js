@@ -53,30 +53,32 @@ module.exports = {
         aux.request = req;
         const trad = await req.getTrade();
         aux.trade = trad;
-        const itm = await ctx.orm.item.findById(req.item_offered_id);
-        aux.item = itm;
-        if (category === "mine") {
+        if (!trad || trad.state !== 'concreted') {
+          const itm = await ctx.orm.item.findById(req.item_offered_id);
+          aux.item = itm;
           // Aquí quiero el usuario de la publicacion del request, la publicacion del
           // request y el item ofrecido por mi hacia ellos
-          const publ = await ctx.orm.publication.findById(req.publication_id);
-          aux.publication = publ;
-          const usr = await ctx.orm.user.findById(publ.userID);
-          aux.user = usr;
-        }
-        // Aquí quiero el usuario y el item del request, mientras quiero la publicacion
-        // del item del request
-        else
-        {
-          const usr = await ctx.orm.user.findById(req.userID);
-          aux.user = usr;
-          try {
-            const publ = await itm.getPublication();
+          if (category === "mine") {
+            const publ = await ctx.orm.publication.findById(req.publication_id);
             aux.publication = publ;
-          } catch (e) {
-            aux.publication = null;
+            const usr = await ctx.orm.user.findById(publ.userID);
+            aux.user = usr;
           }
+          // Aquí quiero el usuario y el item del request, mientras quiero la publicacion
+          // del item del request
+          else
+          {
+            const usr = await ctx.orm.user.findById(req.userID);
+            aux.user = usr;
+            try {
+              const publ = await itm.getPublication();
+              aux.publication = publ;
+            } catch (e) {
+              aux.publication = null;
+            }
+          }
+          final.push(aux);
         }
-        final.push(aux);
       });
       return final;
   },

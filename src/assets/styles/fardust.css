@@ -1,11 +1,12 @@
 body {
   margin: 0;
-  margin-top: 120px;
+  margin-top: 64px;
   padding: 0px;
   font-size: 100%;
   background-color: white;
   font-family: 'Roboto', sans-serif;
-  background-color: #eeeeee;
+  background-color: #f2f2f2;
+  color: #2c3e50;
 }
 
 /*info*/
@@ -87,14 +88,16 @@ iframe{
 /* Menu */
 ul.topbar {
     list-style-type: none;
-    margin-top: 56px;
+    margin-top: 0px;
     padding: 0;
     overflow: hidden;
-    background-color: #db5449;
+    background-color: white;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1;
+    box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.2);
+    height: 48px;
 }
 
 ul.topbar li {
@@ -103,19 +106,21 @@ ul.topbar li {
 
 ul.topbar li a {
     display: block;
-    color: black;
+    color: #2c3e50;
+    font-weight: bold;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
 }
 
 ul.topbar li a:hover:not(.active) {
-    background-color: #ff8575;
+    border-bottom: 2px solid #db5449; 
 }
 
 ul.topbar li a.active{
-  background-color: #db5449;
-  color: black;
+    background-color: #db5449;
+    color: black;
 }
 
 ul.topbar li.right {
@@ -171,7 +176,6 @@ input[type=submit]:hover {
 
 form {
   border-radius: 3px;
-  background-color: #f2f2f2;
   padding: 20px;
   align-items: center;
 }
@@ -323,6 +327,9 @@ img.side-menu{
   margin: auto;
   width: 50%;
   padding: 10px;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  text-align: left;
+  color: #2c3e50;
 }
 
 .sidenav {

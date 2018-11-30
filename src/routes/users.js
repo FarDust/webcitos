@@ -163,7 +163,7 @@ router.get('users-show', '/:id', async (ctx) => {
     const requesting = [];
     var request_counter = 0;
     publications.forEach(async pub => {
-      if (request_counter < 20) {
+      if (request_counter < 20 && pub.state !== 'traded') {
         var many = await pub.getRequests();
         request_counter += many.length;
         many.forEach(async (req) => {
@@ -184,9 +184,11 @@ router.get('users-show', '/:id', async (ctx) => {
         let item = await pub.getItem();
         items.push(item);
       } else {
-        publication.push(pub);
-        let item = await pub.getItem();
-        items.push(item);
+        if (pub.state !== 'traded') {
+          publication.push(pub);
+          let item = await pub.getItem();
+          items.push(item);
+        }
       }
     });
 

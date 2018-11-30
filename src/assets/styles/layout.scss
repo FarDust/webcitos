@@ -1,6 +1,5 @@
 .form-button{
   /* CSS code for topbar form */
-  background-color: transparent;
   padding: 0px;
   align-items: unset;
 }
@@ -9,16 +8,18 @@
   padding: 14px 16px;
   width: 100%;
   margin: 0px;
-  text-transform: capitalize;
+  background-color: white;
+  font-family: 'Roboto', sans-serif;
+  color: #2c3e50;
+  font-weight: bold;
+  font-size: 100%;
 }
 
 ul li .form-button input[type=submit]:hover{
   padding: 14px 16px;
   width: unset;
   margin: 0px;
-  text-transform: capitalize;
-  background-color: #ff8575;
-  color: black;
+  border-bottom: 2px solid #db5449; 
 }
 
 ul li.functional{
@@ -64,4 +65,77 @@ ul li .form-inline{
 
 .topbar i.fa-clipboard {
   font-size: 19px;
+}
+
+.logo-navbar {
+  background-image: url('https://storage.googleapis.com/webcitos_images/logo.svg');
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: 50% 4px;
+  height: 45px;
+  width: 45px;
+}
+
+.logo-a {
+  display: block;
+  text-decoration: none;
+  height: 45px;
+  width: 45px;
+}
+
+.logo-navbar a.logo-a:hover:not(.active) {
+  border-bottom: 0px solid white; 
+}
+
+.alert_notice {
+  margin: 30px 20px;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  background: white;
+  width: 25%;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+}
+
+.error_notice {
+  margin: 30px 20px;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: #2c3e50;
+  background: white;
+  width: 40%;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+}
+
+.alert_i{
+  width: 20%;
+}
+
+.alert_info{
+  width: 75%;
+}
+
+.alert_x{
+  width: 5%;
+}
+
+.infoimg {
+  max-height: 12vh;
+  max-width: 2vw;
+  margin: 10px;
+}
+
+.far.fa-times-circle{
+  top: 15%;
+}
+
+input[type="file"]{
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: #db5449;
+}
+
+input[type="file"]:focus{
+  outline-color: #a32021;
+  outline-width: 2px;
 }

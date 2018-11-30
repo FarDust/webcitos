@@ -30,7 +30,7 @@ module.exports = {
     brand: 'Lhotse',
     aditional: 'Camera: 0.3 MP \n CPU: MRK6260 360MHz \n Bluetooth: V 3.0 \n RAM: 64 MB \n ROM: 128MB \n Admits Micro SD memory card \n Compatible with Android and iOS',
     state: 'Brand New',
-    category: 'Gadget',
+    category: 'Smartwatch',
     screenSize: 1.54,
     publication_id: 3,
     image: 'items/images/3-smartwatch.jpg',
