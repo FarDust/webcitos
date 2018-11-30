@@ -253,7 +253,9 @@
     <div class="user-context">
       <h1>Last Things You Offered</h1>
       <div class="content">
-      <button class="button-publi" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
+      <% if (info['mine_requests'].length > 0) { %>
+        <button class="button-publi" onclick="window.location.href='<%-showMineRequestsPath%>'">See all my offers</button>
+      <% } %>
         <div class="row card-group slider">
           <% info['mine_requests'].forEach(ureq => { %>
           <div class="mini-card">
