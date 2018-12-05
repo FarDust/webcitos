@@ -104,7 +104,7 @@ class PublicationForm extends Component {
           <form id="form" className="crud" action={this.state.SubmitPath} method="post">
             <div className="center">
               <img id="image" className="col-12" src={this.state.image} alt="pre-uploaded" />
-              <button className="button primary" onClick={this.removeImage}>Chosse another image</button>
+              <button className="button primary" onClick={this.removeImage}>Choose another image</button>
             </div>
             <div className="center">
               <label htmlFor="title">
