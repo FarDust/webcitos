@@ -152,14 +152,34 @@ class PublicationForm extends Component {
       )} else {
         return (
           <div>
-          <span>{message}</span><br/>
-          <input className="col-12" type="file" name="image" id="image" onChange={this.handleImage} />
-          <img className="col-12" src={this.state.image} alt="" />
+            <span>{message}</span><br />
+            <ImageInput handleImage={this.handleImage} />
+            <img className="col-12" src={this.state.image} alt="" />
           </div>
         )
       }
-
     }
+  }
+}
+
+class ImageInput extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    /* Source: https://speckyboy.com/custom-file-upload-fields/ */
+    return (
+      <div className="file-upload">
+        <div className="image-upload-wrap">
+          <input className="file-upload-input" type='file' onChange={this.props.handleImage} accept="image/*" />
+          <div className="drag-text">
+            <h3>Drag and drop a file or select add Image</h3>
+          </div>
+        </div>
+      </div>
+    )
   }
 }
 
