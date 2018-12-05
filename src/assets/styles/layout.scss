@@ -160,13 +160,13 @@ input[type="file"]:focus{
 
 .image-upload-wrap {
   margin-top: 20px;
-  border: 4px dashed #1FB264;
+  border: 4px dashed #db5449;
   position: relative;
 }
 
 .image-dropping,
 .image-upload-wrap:hover {
-  background-color: #1FB264;
+  background-color: #db5449;
   border: 4px dashed #ffffff;
 }
 
@@ -177,6 +177,6 @@ input[type="file"]:focus{
 .drag-text h3 {
   font-weight: 100;
   text-transform: uppercase;
-  color: #15824B;
+  color: #a32021;
   padding: 60px 0;
 }

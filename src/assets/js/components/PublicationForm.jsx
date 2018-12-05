@@ -169,6 +169,7 @@ class ImageInput extends React.Component {
   }
 
   render() {
+    /* Source: https://speckyboy.com/custom-file-upload-fields/ */
     return (
       <div className="file-upload">
         <div className="image-upload-wrap">
