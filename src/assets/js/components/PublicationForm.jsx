@@ -128,8 +128,8 @@ class PublicationForm extends Component {
               </label>
             </div>
             <ItemForm category={best_label} model={this.state.model} brand={this.state.brand} />
-            <div className="actions center" id="button-form">
-            <input className="form-centered" type="submit" value="Create" onClick={this.handleSubmit}/>
+            <div className="actions center">
+            <input className="form-centered" id="button-form" type="submit" value="Create" onClick={this.handleSubmit}/>
             </div>
           </form>
         </div>
