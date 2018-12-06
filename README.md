@@ -176,11 +176,11 @@ Ejemplo:
 curl http://localhost:3000/api/users/session -X PUT -d '{"email": "Ivan.Wolf@gmail.com", "password": "123web"}' -H 'Content-Type: application/json'
 ```
 
-#### Descripción: Autenticar al usuario para acceder a ciertas funcionalidades de la API.
+#### Descripción: Mostrar información del usuario.
 * Ruta: ```/api/users/me```
 * Método: GET
 * Parámetros: -
-* Header: 'Authorization: Bearer <TOKEN>'
+* Header: 'Authorization: Bearer TOKEN'
 * Respuesta: En caso de entregar un token válido se responde con un json que contiene la información del usario al que pertenece el token. En otro caso, se retorna un error 401.
 
 Ejemplo:
@@ -193,7 +193,7 @@ curl http://localhost:3000/api/users/me -H 'Authorization: Bearer eyJhbGciOiJIUz
 * Ruta: ```/api/users/my-publications```
 * Método: GET
 * Parámetros: -
-* Header: 'Authorization: Bearer <TOKEN>'
+* Header: 'Authorization: Bearer TOKEN'
 * Respuesta: En caso de entregar un token válido se retorna una lista con todas las publicaciones del usario al que pertenece el token, cada una siendo un json que muestra los detalles más básicos de la publicación. En otro caso, se retorna un error 401.
 
 ### Publications:
@@ -232,7 +232,7 @@ curl http://localhost:3000/api/users/me -H 'Authorization: Bearer eyJhbGciOiJIUz
 * Ruta: ```/api/requests/new```
 * Método: POST
 * Parámetros: publicationId, message, itemOfferedId (opcional, depende de si la publicación es para exchange o gift)
-* Header: 'Authorization: Bearer <TOKEN>', 'Content-Type: application/json'
+* Header: 'Authorization: Bearer TOKEN', 'Content-Type: application/json'
 * Respuesta: Retorna un json con la respuesta, si es negativa será 400 con una descripción breve del error. En caso de ser positiva se avisará con un mensaje de "Request created!".
 
 Ejemplo:
